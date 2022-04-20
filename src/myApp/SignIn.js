@@ -29,7 +29,7 @@ import SuiButton from "components/SuiButton";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
-import bgImg from "assets/images/curved-images/curved9.jpg";
+import bgImg from "assets/images/herbal.jpg";
 
 function SignIn() {
   const [rememberMe, setRememberMe] = useState(false);
@@ -39,7 +39,7 @@ function SignIn() {
   return (
     <BasicLayout
       title="Zahid Herbal Health Shop"
-      description="Place, Where you get inner peace as well as outer."
+      description="There's rosemary, that's for remembrance. Pray you, love, remember."
       image={bgImg}
     >
       <Card>
