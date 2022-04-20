@@ -147,7 +147,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
         {isMini ? null : (
           <SuiBox sx={(theme) => navbarRow(theme, { isMini })} className="rightt_align">
             <SuiBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in/basic">
+              <Link to="/sign-in">
                 <IconButton sx={navbarIconButton} size="small">
                   <Icon
                     sx={({ palette: { dark, white } }) => ({

@@ -1,19 +1,3 @@
-/**
-=========================================================
-* Soft UI Dashboard PRO React - v3.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-pro-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
 // @mui material components
@@ -24,28 +8,14 @@ import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
 
 // Soft UI Dashboard PRO React example components
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import PageLayout from "examples/LayoutContainers/PageLayout";
 
 // Authentication layout components
 import Footer from "layouts/authentication/components/Footer";
 
-// Soft UI Dashboard PRO React page layout routes
-import pageRoutes from "page.routes";
-
 function BasicLayout({ title, description, image, children }) {
   return (
     <PageLayout>
-      <DefaultNavbar
-        routes={pageRoutes}
-        action={{
-          type: "external",
-          route: "https://creative-tim.com/product/soft-ui-dashboard-pro-react",
-          label: "buy now",
-        }}
-        transparent
-        light
-      />
       <SuiBox
         width="calc(100% - 2rem)"
         minHeight="50vh"
@@ -68,8 +38,8 @@ function BasicLayout({ title, description, image, children }) {
       >
         <Grid container spacing={3} justifyContent="center" sx={{ textAlign: "center" }}>
           <Grid item xs={10} lg={4}>
-            <SuiBox mt={6} mb={1}>
-              <SuiTypography variant="h1" color="white" fontWeight="bold">
+            <SuiBox mt={0} mb={1}>
+              <SuiTypography variant="h3" color="white" fontWeight="bold">
                 {title}
               </SuiTypography>
             </SuiBox>

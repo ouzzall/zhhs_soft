@@ -15,9 +15,6 @@ Coded by www.creative-tim.com
 
 import { useState } from "react";
 
-// react-router-dom components
-import { Link } from "react-router-dom";
-
 // @mui material components
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
@@ -30,8 +27,6 @@ import SuiButton from "components/SuiButton";
 
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
-import Socials from "layouts/authentication/components/Socials";
-import Separator from "layouts/authentication/components/Separator";
 
 // Images
 import curved9 from "assets/images/curved-images/curved9.jpg";
@@ -43,18 +38,15 @@ function Basic() {
 
   return (
     <BasicLayout
-      title="Welcome!"
-      description="Use these awesome forms to login or create new account in your project for free."
+      title="Zahid Herbal Health Shop"
+      description="Place, Where you get inner peace as well as outer."
       image={curved9}
     >
       <Card>
-        <SuiBox p={3} mb={1} textAlign="center">
+        <SuiBox pt={3} textAlign="center">
           <SuiTypography variant="h5" fontWeight="medium">
             Sign in
           </SuiTypography>
-        </SuiBox>
-        <SuiBox mb={2}>
-          <Socials />
         </SuiBox>
         <SuiBox p={3}>
           <SuiBox component="form" role="form">
@@ -78,18 +70,6 @@ function Basic() {
             <SuiBox mt={4} mb={1}>
               <SuiButton variant="gradient" color="info" fullWidth>
                 sign in
-              </SuiButton>
-            </SuiBox>
-            <Separator />
-            <SuiBox mt={1} mb={3}>
-              <SuiButton
-                component={Link}
-                to="/authentication/sign-up/basic"
-                variant="gradient"
-                color="dark"
-                fullWidth
-              >
-                sign up
               </SuiButton>
             </SuiBox>
           </SuiBox>
