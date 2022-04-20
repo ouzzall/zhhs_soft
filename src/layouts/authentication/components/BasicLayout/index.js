@@ -23,7 +23,7 @@ function BasicLayout({ title, description, image, children }) {
         mx={2}
         my={2}
         pt={6}
-        pb={28}
+        pb={25}
         sx={{
           backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
             image &&
