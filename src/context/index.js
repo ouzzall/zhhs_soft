@@ -69,7 +69,7 @@ function SoftUIControllerProvider({ children }) {
     transparentSidenav: true,
     sidenavColor: "success",
     transparentNavbar: true,
-    fixedNavbar: true,
+    fixedNavbar: false,
     openConfigurator: false,
     direction: "ltr",
     layout: "dashboard",

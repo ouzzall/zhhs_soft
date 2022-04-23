@@ -58,7 +58,8 @@ import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useSoftUIController();
-  const { miniSidenav, transparentNavbar, fixedNavbar } = controller;
+  // const { miniSidenav, transparentNavbar, fixedNavbar } = controller;
+  const { miniSidenav, fixedNavbar } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
 
@@ -135,7 +136,8 @@ function DashboardNavbar({ absolute, light, isMini }) {
     <AppBar
       position={absolute ? "absolute" : navbarType}
       color="inherit"
-      sx={(theme) => navbar(theme, { transparentNavbar, absolute, light })}
+      // sx={(theme) => navbar(theme, { transparentNavbar, absolute, light })}
+      sx={(theme) => navbar(theme, { absolute, light })}
     >
       <Toolbar sx={(theme) => navbarContainer(theme)}>
         <SuiBox color="inherit" mb={{ xs: 1, md: 0 }} sx={(theme) => navbarRow(theme, { isMini })}>

@@ -20,7 +20,7 @@ function NewUser() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <SuiBox mt={1} mb={32}>
+      <SuiBox mt={3} mb={30}>
         <Grid container justifyContent="center">
           <Grid item xs={12} lg={8}>
             <Card sx={{ overflow: "visible" }}>

@@ -33,7 +33,7 @@ function NewMedicine() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <SuiBox mt={1} mb={8}>
+      <SuiBox mt={3} mb={5}>
         <Grid container justifyContent="center">
           <Grid item xs={12} lg={8}>
             <Card sx={{ overflow: "visible" }}>

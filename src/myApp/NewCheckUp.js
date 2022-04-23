@@ -59,7 +59,7 @@ function NewCheckUp() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <SuiBox pb={4}>
+      <SuiBox pb={4} pt={3}>
         <Grid container justifyContent="center">
           <Grid item xs={12} lg={12}>
             <SuiBox textAlign="center">
