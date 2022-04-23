@@ -91,6 +91,7 @@ import Profile from "myApp/Profile";
 import Users from "myApp/Users";
 import NewUser from "myApp/NewUser";
 import SignIn from "myApp/SignIn";
+import NewCheckUp from "myApp/NewCheckUp";
 // import Office from "examples/Icons/Office";
 // import SettingsIcon from "examples/Icons/Settings";
 // import Basket from "examples/Icons/Basket";
@@ -136,6 +137,14 @@ const routes = [
     route: "/check-ups",
     icon: "fa-solid fa-user-doctor",
     component: CheckUps,
+  },
+  {
+    myRoute: true,
+    name: "New Check Up",
+    key: "new-check-up",
+    route: "/check-ups/new-check-up",
+    icon: "fa-solid fa-user-doctor",
+    component: NewCheckUp,
   },
   {
     myRoute: true,
