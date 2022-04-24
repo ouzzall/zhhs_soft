@@ -71,7 +71,7 @@ function Profile() {
               </SuiTypography> */}
                 </SuiBox>
                 <SuiBox>
-                  <Link to="/check-ups">
+                  <Link to="/check-ups/new-check-up">
                     <SuiButton variant="gradient" color="success">
                       New Check Up
                     </SuiButton>

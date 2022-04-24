@@ -41,7 +41,7 @@ import SmartHome from "layouts/dashboards/smart-home";
 // import General from "layouts/pages/projects/general";
 // import Timeline from "layouts/pages/projects/timeline";
 // import NewProject from "layouts/pages/projects/new-project";
-// import Widgets from "layouts/pages/widgets";
+import Widgets from "layouts/pages/widgets";
 // import Charts from "layouts/pages/charts";
 // import SweetAlerts from "layouts/pages/sweet-alerts";
 // import Notifications from "layouts/pages/notifications";
@@ -84,7 +84,7 @@ import CheckUps from "myApp/CheckUps";
 import WalkingCustomer from "myApp/WalkingCustomer";
 import Medicines from "myApp/Medicines";
 import Patients from "myApp/Patients";
-import ProductsList from "layouts/ecommerce/products/products-list";
+// import ProductsList from "layouts/ecommerce/products/products-list";
 import NewPatient from "myApp/NewPatient";
 import NewMedicine from "myApp/NewMedicine";
 import Profile from "myApp/Profile";
@@ -92,6 +92,8 @@ import Users from "myApp/Users";
 import NewUser from "myApp/NewUser";
 import SignIn from "myApp/SignIn";
 import NewCheckUp from "myApp/NewCheckUp";
+import PatientBill from "myApp/PatientBill";
+import PatientPrescription from "myApp/PatientPrescription";
 // import Office from "examples/Icons/Office";
 // import SettingsIcon from "examples/Icons/Settings";
 // import Basket from "examples/Icons/Basket";
@@ -173,6 +175,22 @@ const routes = [
   },
   {
     myRoute: true,
+    name: "Patient Bill",
+    key: "patient-bill",
+    route: "/patients/profile/patient-bill",
+    icon: "fa-solid fa-hospital-user",
+    component: PatientBill,
+  },
+  {
+    myRoute: true,
+    name: "Patient Prescription",
+    key: "patient-prescription",
+    route: "/patients/profile/patient-prescription",
+    icon: "fa-solid fa-hospital-user",
+    component: PatientPrescription,
+  },
+  {
+    myRoute: true,
     type: "collapse",
     name: "Walking Customers",
     key: "walking-customers",
@@ -188,7 +206,7 @@ const routes = [
     key: "cost-estimation",
     route: "/cost-estimation",
     icon: "fa-solid fa-money-bill-1",
-    component: ProductsList,
+    component: Widgets,
   },
   {
     myRoute: true,

@@ -27,8 +27,11 @@ import Icon from "@mui/material/Icon";
 import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
 
-function Breadcrumbs({ icon, title, route, light }) {
+function Breadcrumbs({ icon, title, names, route, light }) {
   const routes = route.slice(0, -1);
+
+  // BELOW ARE THE EXACT ROUTES jinke links sahi hain breadcrumbs k liye
+  names.pop();
 
   return (
     <SuiBox mr={{ xs: 0, xl: 8 }}>
@@ -97,6 +100,7 @@ Breadcrumbs.defaultProps = {
 Breadcrumbs.propTypes = {
   icon: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
+  names: PropTypes.node.isRequired,
   route: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
   light: PropTypes.bool,
 };

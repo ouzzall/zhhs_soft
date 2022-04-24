@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Soft UI Dashboard PRO React - v3.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-pro-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import "main.css";
 
 import { useState, useEffect } from "react";
@@ -49,7 +34,8 @@ import {
 } from "examples/Navbars/DashboardNavbar/styles";
 
 // Soft UI Dashboard PRO React context
-import { useSoftUIController, setTransparentNavbar, setMiniSidenav } from "context";
+import { useSoftUIController, setMiniSidenav } from "context";
+// import { useSoftUIController, setTransparentNavbar, setMiniSidenav } from "context";
 
 // Images
 import team2 from "assets/images/team-2.jpg";
@@ -62,6 +48,20 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const { miniSidenav, fixedNavbar } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
+  //
+  const newRoutes = [];
+  for (let i = 0; i < route.length; i += 1) {
+    if (i === 0) newRoutes.push(route[i]);
+    if (i === 1) newRoutes.push(`${route[i - 1]}/${route[i]}`);
+    if (i === 2) newRoutes.push(`${route[i - 2]}/${route[i - 1]}/${route[i]}`);
+    if (i === 3) newRoutes.push(`${route[(i = 3)]}/${route[i - 2]}/${route[i - 1]}/${route[i]}`);
+    if (i === 4)
+      newRoutes.push(
+        `${route[i - 4]}/${route[(i = 3)]}/${route[i - 2]}/${route[i - 1]}/${route[i]}`
+      );
+  }
+  // console.log(route);
+  // console.log(newRoutes);
 
   useEffect(() => {
     // Setting the navbar type
@@ -73,7 +73,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
     // A function that sets the transparent state of the navbar.
     function handleTransparentNavbar() {
-      setTransparentNavbar(dispatch, (fixedNavbar && window.scrollY === 0) || !fixedNavbar);
+      // setTransparentNavbar(dispatch, (fixedNavbar && window.scrollY === 0) || !fixedNavbar);
     }
 
     /** 
@@ -141,7 +141,13 @@ function DashboardNavbar({ absolute, light, isMini }) {
     >
       <Toolbar sx={(theme) => navbarContainer(theme)}>
         <SuiBox color="inherit" mb={{ xs: 1, md: 0 }} sx={(theme) => navbarRow(theme, { isMini })}>
-          <Breadcrumbs icon="home" title={route[route.length - 1]} route={route} light={light} />
+          <Breadcrumbs
+            icon="home"
+            title={route[route.length - 1]}
+            names={newRoutes}
+            route={route}
+            light={light}
+          />
           <Icon fontSize="medium" sx={navbarDesktopMenu} onClick={handleMiniSidenav}>
             {miniSidenav ? "menu_open" : "menu"}
           </Icon>

@@ -1,5 +1,6 @@
 import SuiButton from "components/SuiButton";
 import ActionCell from "layouts/ecommerce/products/products-list/components/ActionCell";
+import { Link } from "react-router-dom";
 
 export default {
   columns: [
@@ -21,14 +22,18 @@ export default {
       cDays: "25",
       cCost: "2500",
       cBtn1: (
-        <SuiButton color="info" size="small" variant="gradient">
-          Download
-        </SuiButton>
+        <Link to="/patients/profile/patient-bill">
+          <SuiButton variant="gradient" size="small" color="info">
+            View
+          </SuiButton>
+        </Link>
       ),
       cBtn2: (
-        <SuiButton color="info" size="small" variant="gradient">
-          Download
-        </SuiButton>
+        <Link to="/patients/profile/patient-prescription">
+          <SuiButton variant="gradient" size="small" color="info">
+            View
+          </SuiButton>
+        </Link>
       ),
       cCheck: <ActionCell />,
     },
@@ -39,14 +44,18 @@ export default {
       cDays: "30",
       cCost: "3000",
       cBtn1: (
-        <SuiButton color="info" size="small" variant="gradient">
-          Download
-        </SuiButton>
+        <Link to="/patients/profile/patient-bill">
+          <SuiButton variant="gradient" size="small" color="info">
+            View
+          </SuiButton>
+        </Link>
       ),
       cBtn2: (
-        <SuiButton color="info" size="small" variant="gradient">
-          Download
-        </SuiButton>
+        <Link to="/patients/profile/patient-prescription">
+          <SuiButton variant="gradient" size="small" color="info">
+            View
+          </SuiButton>
+        </Link>
       ),
       cCheck: <ActionCell />,
     },
@@ -57,14 +66,18 @@ export default {
       cDays: "15",
       cCost: "1700",
       cBtn1: (
-        <SuiButton color="info" size="small" variant="gradient">
-          Download
-        </SuiButton>
+        <Link to="/patients/profile/patient-bill">
+          <SuiButton variant="gradient" size="small" color="info">
+            View
+          </SuiButton>
+        </Link>
       ),
       cBtn2: (
-        <SuiButton color="info" size="small" variant="gradient">
-          Download
-        </SuiButton>
+        <Link to="/patients/profile/patient-prescription">
+          <SuiButton variant="gradient" size="small" color="info">
+            View
+          </SuiButton>
+        </Link>
       ),
       cCheck: <ActionCell />,
     },
@@ -75,14 +88,18 @@ export default {
       cDays: "45",
       cCost: "3500",
       cBtn1: (
-        <SuiButton color="info" size="small" variant="gradient">
-          Download
-        </SuiButton>
+        <Link to="/patients/profile/patient-bill">
+          <SuiButton variant="gradient" size="small" color="info">
+            View
+          </SuiButton>
+        </Link>
       ),
       cBtn2: (
-        <SuiButton color="info" size="small" variant="gradient">
-          Download
-        </SuiButton>
+        <Link to="/patients/profile/patient-prescription">
+          <SuiButton variant="gradient" size="small" color="info">
+            View
+          </SuiButton>
+        </Link>
       ),
       cCheck: <ActionCell />,
     },
@@ -93,14 +110,18 @@ export default {
       cDays: "15",
       cCost: "2500",
       cBtn1: (
-        <SuiButton color="info" size="small" variant="gradient">
-          Download
-        </SuiButton>
+        <Link to="/patients/profile/patient-bill">
+          <SuiButton variant="gradient" size="small" color="info">
+            View
+          </SuiButton>
+        </Link>
       ),
       cBtn2: (
-        <SuiButton color="info" size="small" variant="gradient">
-          Download
-        </SuiButton>
+        <Link to="/patients/profile/patient-prescription">
+          <SuiButton variant="gradient" size="small" color="info">
+            View
+          </SuiButton>
+        </Link>
       ),
       cCheck: <ActionCell />,
     },
@@ -111,14 +132,18 @@ export default {
       cDays: "20",
       cCost: "400",
       cBtn1: (
-        <SuiButton color="info" size="small" variant="gradient">
-          Download
-        </SuiButton>
+        <Link to="/patients/profile/patient-bill">
+          <SuiButton variant="gradient" size="small" color="info">
+            View
+          </SuiButton>
+        </Link>
       ),
       cBtn2: (
-        <SuiButton color="info" size="small" variant="gradient">
-          Download
-        </SuiButton>
+        <Link to="/patients/profile/patient-prescription">
+          <SuiButton variant="gradient" size="small" color="info">
+            View
+          </SuiButton>
+        </Link>
       ),
       cCheck: <ActionCell />,
     },
@@ -129,14 +154,18 @@ export default {
       cDays: "18",
       cCost: "2300",
       cBtn1: (
-        <SuiButton color="info" size="small" variant="gradient">
-          Download
-        </SuiButton>
+        <Link to="/patients/profile/patient-bill">
+          <SuiButton variant="gradient" size="small" color="info">
+            View
+          </SuiButton>
+        </Link>
       ),
       cBtn2: (
-        <SuiButton color="info" size="small" variant="gradient">
-          Download
-        </SuiButton>
+        <Link to="/patients/profile/patient-prescription">
+          <SuiButton variant="gradient" size="small" color="info">
+            View
+          </SuiButton>
+        </Link>
       ),
       cCheck: <ActionCell />,
     },
