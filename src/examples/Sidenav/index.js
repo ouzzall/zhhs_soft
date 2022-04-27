@@ -102,7 +102,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
 
   return (
     <SidenavRoot {...rest} variant="permanent" ownerState={{ transparentSidenav, miniSidenav }}>
-      <SuiBox pt={3} pb={1} px={4} textAlign="center">
+      <SuiBox pt={2} pb={0} px={4} textAlign="center">
         <SuiBox
           display={{ xs: "block", xl: "none" }}
           position="absolute"
@@ -116,13 +116,10 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             <Icon sx={{ fontWeight: "bold" }}>close</Icon>
           </SuiTypography>
         </SuiBox>
-        <SuiBox component={NavLink} to="/" display="flex" alignItems="center">
-          {brand && <SuiBox component="img" src={brand} alt="Soft UI Logo" width="2rem" />}
-          <SuiBox
-            width={!brandName && "100%"}
-            sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}
-          >
-            <SuiTypography component="h6" variant="button" fontWeight="medium">
+        <SuiBox component={NavLink} to="/" display="" alignItems="center">
+          {brand && <SuiBox component="img" src={brand} alt="Soft UI Logo" width="3rem" />}
+          <SuiBox sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}>
+            <SuiTypography ml={1} component="h6" variant="button" fontWeight="medium">
               {brandName}
             </SuiTypography>
           </SuiBox>

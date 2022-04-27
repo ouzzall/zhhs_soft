@@ -37,6 +37,7 @@ function OutlinedCounterCard({ color, count, title, prefix, suffix }) {
       border={`${borderWidth[1]} dashed ${secondary.main}`}
       textAlign="center"
       py={2}
+      className="earning_check"
     >
       <SuiTypography variant="h6" color={color} fontWeight="medium" textTransform="capitalize">
         {title}

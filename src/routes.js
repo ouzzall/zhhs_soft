@@ -20,11 +20,9 @@
   10. The `component` key is used to store the component of its route.
 */
 
-import "main.css";
-
 // Soft UI Dashboard PRO React layouts
 // import Default from "layouts/dashboards/default";
-import SmartHome from "layouts/dashboards/smart-home";
+// import SmartHome from "layouts/dashboards/smart-home";
 // import Automotive from "layouts/dashboards/automotive";
 // import VRDefault from "layouts/dashboards/virtual-reality/vr-default";
 // import VRInfo from "layouts/dashboards/virtual-reality/vr-info";
@@ -41,7 +39,7 @@ import SmartHome from "layouts/dashboards/smart-home";
 // import General from "layouts/pages/projects/general";
 // import Timeline from "layouts/pages/projects/timeline";
 // import NewProject from "layouts/pages/projects/new-project";
-import Widgets from "layouts/pages/widgets";
+// import Widgets from "layouts/pages/widgets";
 // import Charts from "layouts/pages/charts";
 // import SweetAlerts from "layouts/pages/sweet-alerts";
 // import Notifications from "layouts/pages/notifications";
@@ -77,14 +75,20 @@ import Widgets from "layouts/pages/widgets";
 // import VerificationIllustration from "layouts/authentication/2-step-verification/illustration";
 // import Error404 from "layouts/authentication/error/404";
 // import Error500 from "layouts/authentication/error/500";
-
-// Soft UI Dashboard PRO React icons
-import CheckUps from "myApp/CheckUps";
 // import SweetAlerts from "layouts/pages/sweet-alerts";
-import WalkingCustomer from "myApp/WalkingCustomer";
+// import ProductsList from "layouts/ecommerce/products/products-list";
+// import Office from "examples/Icons/Office";
+// import SettingsIcon from "examples/Icons/Settings";
+// import Basket from "examples/Icons/Basket";
+// import Document from "examples/Icons/Document";
+// import SpaceShip from "examples/Icons/SpaceShip";
+// import CustomerSupport from "examples/Icons/CustomerSupport";
+// import CreditCard from "examples/Icons/CreditCard";
+
+import CheckUps from "myApp/CheckUps";
+import NewWalkingCustomer from "myApp/NewWalkingCustomer";
 import Medicines from "myApp/Medicines";
 import Patients from "myApp/Patients";
-// import ProductsList from "layouts/ecommerce/products/products-list";
 import NewPatient from "myApp/NewPatient";
 import NewMedicine from "myApp/NewMedicine";
 import Profile from "myApp/Profile";
@@ -94,13 +98,14 @@ import SignIn from "myApp/SignIn";
 import NewCheckUp from "myApp/NewCheckUp";
 import PatientBill from "myApp/PatientBill";
 import PatientPrescription from "myApp/PatientPrescription";
-// import Office from "examples/Icons/Office";
-// import SettingsIcon from "examples/Icons/Settings";
-// import Basket from "examples/Icons/Basket";
-// import Document from "examples/Icons/Document";
-// import SpaceShip from "examples/Icons/SpaceShip";
-// import CustomerSupport from "examples/Icons/CustomerSupport";
-// import CreditCard from "examples/Icons/CreditCard";
+import OperationalCosts from "myApp/OperationalCosts";
+import NewOperationalCost from "myApp/NewOperationalCost";
+import CostEstimation from "myApp/CostEstimation";
+import SpendingsDetail from "myApp/SpendingsDetail";
+import PatientsOutput from "myApp/PatientsOutput";
+import WalkingOutput from "myApp/WalkingOutput";
+import WalkingCustomers from "myApp/WalkingCustomers";
+import MyHomeDashboard from "myApp/MyHomeDashboard";
 
 const routes = [
   {
@@ -110,7 +115,7 @@ const routes = [
     key: "dashboard",
     route: "/dashboard",
     icon: "fa-solid fa-house-user",
-    component: SmartHome,
+    component: MyHomeDashboard,
   },
   {
     myRoute: true,
@@ -196,7 +201,32 @@ const routes = [
     key: "walking-customers",
     route: "/walking-customers",
     icon: "fa-solid fa-person-walking",
-    component: WalkingCustomer,
+    component: WalkingCustomers,
+  },
+  {
+    myRoute: true,
+    name: "New Walking Customer",
+    key: "new-walking-customers",
+    route: "/walking-customers/new-walking-customer",
+    icon: "fa-solid fa-person-walking",
+    component: NewWalkingCustomer,
+  },
+  {
+    myRoute: true,
+    type: "collapse",
+    name: "Operational Costs",
+    key: "operational-costs",
+    route: "/operational-costs",
+    icon: "fa-solid fa-money-bill-1",
+    component: OperationalCosts,
+  },
+  {
+    myRoute: true,
+    name: "New Operational Cost",
+    key: "new-operational-cost",
+    route: "/operational-costs/new-operational-cost",
+    icon: "fa-solid fa-money-bill-1",
+    component: NewOperationalCost,
   },
   { type: "divider", key: "divider-1" },
   {
@@ -205,8 +235,32 @@ const routes = [
     name: "Cost Estimation",
     key: "cost-estimation",
     route: "/cost-estimation",
-    icon: "fa-solid fa-money-bill-1",
-    component: Widgets,
+    icon: "fa-solid fa-money-bill-trend-up",
+    component: CostEstimation,
+  },
+  {
+    myRoute: true,
+    name: "Spendings Detail",
+    key: "spendings-detail",
+    route: "/cost-estimation/spendings-detail",
+    icon: "fa-solid fa-money-bill-trend-up",
+    component: SpendingsDetail,
+  },
+  {
+    myRoute: true,
+    name: "Patients Output",
+    key: "patients-output",
+    route: "/cost-estimation/patients-output",
+    icon: "fa-solid fa-money-bill-trend-up",
+    component: PatientsOutput,
+  },
+  {
+    myRoute: true,
+    name: "Walking Output",
+    key: "walking-output",
+    route: "/cost-estimation/walking-output",
+    icon: "fa-solid fa-money-bill-trend-up",
+    component: WalkingOutput,
   },
   {
     myRoute: true,

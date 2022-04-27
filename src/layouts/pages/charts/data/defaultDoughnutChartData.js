@@ -14,10 +14,10 @@ Coded by www.creative-tim.com
 */
 
 export default {
-  labels: ["Creative Tim", "Github", "Bootsnipp", "Dev.to", "Codeinwp"],
+  labels: ["Total Spendings", "Patients Output", "Walking Output", "Total Output", "Total Profit"],
   datasets: {
-    label: "Projects",
-    backgroundColors: ["info", "dark", "error", "secondary", "primary"],
-    data: [15, 20, 12, 60, 20],
+    label: "Cost Estimation",
+    backgroundColors: ["primary", "secondary", "dark", "info", "success"],
+    data: [150, 100, 100, 200, 50],
   },
 };

@@ -23,6 +23,7 @@ import routes from "routes";
 
 // Soft UI Dashboard PRO React contexts
 import { useSoftUIController, setMiniSidenav } from "context";
+import brand from "./assets/logo/ZHHS-1-01 small.png";
 // import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
 export default function App() {
@@ -106,7 +107,7 @@ export default function App() {
         <>
           <Sidenav
             color={sidenavColor}
-            // brand={brand}
+            brand={brand}
             brandName="Zahid Herbal Health Shop"
             routes={routes}
             onMouseEnter={handleOnMouseEnter}

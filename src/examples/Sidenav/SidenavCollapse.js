@@ -45,6 +45,7 @@ import {
   faMoneyBill1,
   faHouseUser,
   faPersonWalking,
+  faMoneyBillTrendUp,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -54,7 +55,8 @@ library.add(
   faHospitalUser,
   faUserGroup,
   faMoneyBill1,
-  faPersonWalking
+  faPersonWalking,
+  faMoneyBillTrendUp
 );
 
 function SidenavCollapse({ color, icon, name, children, active, noCollapse, open, ...rest }) {

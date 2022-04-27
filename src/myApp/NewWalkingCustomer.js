@@ -39,7 +39,7 @@ function getStepContent(stepIndex) {
   }
 }
 
-function WalkingCustomer() {
+function NewWalkingCustomer() {
   const history = useHistory();
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
@@ -102,4 +102,4 @@ function WalkingCustomer() {
   );
 }
 
-export default WalkingCustomer;
+export default NewWalkingCustomer;
