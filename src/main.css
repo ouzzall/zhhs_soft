@@ -3,7 +3,7 @@
 }
 
 .font_clr_2 {
-  color: white;
+  color: white !important;
 }
 
 .rightt_align {
@@ -69,6 +69,16 @@
 }
 
 .earning_check:hover {
-  background-color: aliceblue;
+  background-color: rgb(13, 49, 80);
   cursor: pointer;
+}
+
+.custom_card:hover {
+  cursor: pointer;
+}
+
+.custom_card {
+  height: 100px;
+  color: white !important;
+  background: linear-gradient(310deg, rgb(33, 82, 255), rgb(33, 212, 253)) !important;
 }
