@@ -19,6 +19,8 @@ import DataTable from "examples/Tables/DataTable";
 import PatientsCheckUpsData from "layouts/applications/data-tables/data/PatientsCheckUpsData";
 import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
 import gradientLineChartData from "layouts/dashboards/default/data/gradientLineChartData";
+import WeatherCard from "examples/Cards/WeatherCard";
+import iconSunCloud from "assets/images/small-logos/icon-sun-cloud.png";
 
 function MyHomeDashboard() {
   return (
@@ -27,8 +29,18 @@ function MyHomeDashboard() {
       <SuiBox pt={3}>
         <SuiBox mb={3}>
           <Grid container spacing={3}>
+            <Grid item xs={12} md={7}>
+              <GradientLineChart title="Success of Sales" chart={gradientLineChartData} />
+            </Grid>
             <Grid item xs={12} xl={5}>
               <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <WeatherCard
+                    title="weather today"
+                    weather={{ location: "San Francisco", degree: 29 }}
+                    icon={{ component: iconSunCloud, text: "cloudy" }}
+                  />
+                </Grid>
                 <Grid item xs={12} md={6}>
                   <DefaultCounterCard
                     count={113}
@@ -62,9 +74,6 @@ function MyHomeDashboard() {
                   />
                 </Grid>
               </Grid>
-            </Grid>
-            <Grid item xs={12} md={7}>
-              <GradientLineChart title="Success of Sales" chart={gradientLineChartData} />
             </Grid>
           </Grid>
         </SuiBox>

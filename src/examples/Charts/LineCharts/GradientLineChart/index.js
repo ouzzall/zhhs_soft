@@ -98,7 +98,7 @@ function GradientLineChart({ title, description, height, chart }) {
 GradientLineChart.defaultProps = {
   title: "",
   description: "",
-  height: "13.6rem",
+  height: "21.5rem",
 };
 
 // Typechecking props for the GradientLineChart
