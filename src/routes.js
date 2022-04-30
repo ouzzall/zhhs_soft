@@ -106,6 +106,7 @@ import PatientsOutput from "myApp/PatientsOutput";
 import WalkingOutput from "myApp/WalkingOutput";
 import WalkingCustomers from "myApp/WalkingCustomers";
 import MyHomeDashboard from "myApp/MyHomeDashboard";
+import EditMedicine from "myApp/EditMedicine";
 
 const routes = [
   {
@@ -129,12 +130,21 @@ const routes = [
   },
   {
     myRoute: true,
-    name: "Medicines",
+    name: "New Medicine",
     key: "new-medicine",
     route: "/medicines/new-medicine",
     icon: "fa-solid fa-capsules",
     // component: ,
     component: NewMedicine,
+  },
+  {
+    myRoute: true,
+    name: "Edit Medicine",
+    key: "edit-medicine",
+    route: "/medicines/edit-medicine/:id",
+    icon: "fa-solid fa-capsules",
+    // component: ,
+    component: EditMedicine,
   },
   {
     myRoute: true,

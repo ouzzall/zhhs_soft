@@ -23,6 +23,8 @@ import WeatherCard from "examples/Cards/WeatherCard";
 import iconSunCloud from "assets/images/small-logos/icon-sun-cloud.png";
 
 function MyHomeDashboard() {
+  // console.log("HELLO FROM CONSOLE");
+
   return (
     <DashboardLayout>
       <DashboardNavbar />

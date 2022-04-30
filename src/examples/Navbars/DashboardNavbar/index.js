@@ -90,7 +90,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   }, [dispatch, fixedNavbar]);
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
-  const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
+  // const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
 
   // Render the notifications menu
@@ -148,7 +148,8 @@ function DashboardNavbar({ absolute, light, isMini }) {
             route={route}
             light={light}
           />
-          <Icon fontSize="medium" sx={navbarDesktopMenu} onClick={handleMiniSidenav}>
+          {/* <Icon fontSize="medium" sx={navbarDesktopMenu} onClick={handleMiniSidenav}></Icon> */}
+          <Icon fontSize="medium" sx={navbarDesktopMenu}>
             {miniSidenav ? "menu_open" : "menu"}
           </Icon>
         </SuiBox>
@@ -183,7 +184,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                   {miniSidenav ? "menu_open" : "menu"}
                 </Icon>
               </IconButton>
-              <IconButton
+              {/* <IconButton
                 size="small"
                 color="inherit"
                 sx={navbarIconButton}
@@ -193,7 +194,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 onClick={handleOpenMenu}
               >
                 <Icon className={light ? "text-white" : "text-dark"}>notifications</Icon>
-              </IconButton>
+              </IconButton> */}
               {renderMenu()}
             </SuiBox>
           </SuiBox>

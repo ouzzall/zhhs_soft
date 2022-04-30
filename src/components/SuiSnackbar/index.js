@@ -1,26 +1,11 @@
-/**
-=========================================================
-* Soft UI Dashboard PRO React - v3.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-pro-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
+
+import "main.css";
 
 // @mui material components
 import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import Icon from "@mui/material/Icon";
-import Divider from "@mui/material/Divider";
 import Fade from "@mui/material/Fade";
 
 // Soft UI Dashboard PRO React components
@@ -28,37 +13,31 @@ import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
 
 // Soft UI Dashboard PRO React base styles
-import typography from "assets/theme/base/typography";
 
 // Custom styles for the SuiSnackbar
 import SuiSnackbarIconRoot from "components/SuiSnackbar/SuiSnackbarIconRoot";
 
 function SuiSnackbar({ color, icon, title, dateTime, content, close, bgWhite, ...rest }) {
-  const { size } = typography;
   let titleColor;
   let dateTimeColor;
-  let dividerColor;
 
   if (bgWhite) {
     titleColor = color;
     dateTimeColor = "dark";
-    dividerColor = false;
   } else if (color === "light") {
     titleColor = "dark";
     dateTimeColor = "text";
-    dividerColor = false;
   } else {
     titleColor = "white";
     dateTimeColor = "white";
-    dividerColor = true;
   }
 
   return (
     <Snackbar
       TransitionComponent={Fade}
-      autoHideDuration={5000}
+      autoHideDuration={3000}
       anchorOrigin={{
-        vertical: "bottom",
+        vertical: "top",
         horizontal: "right",
       }}
       {...rest}
@@ -76,6 +55,7 @@ function SuiSnackbar({ color, icon, title, dateTime, content, close, bgWhite, ..
         shadow="md"
         borderRadius="md"
         p={1}
+        className="hide_back"
       >
         <SuiBox
           display="flex"
@@ -115,10 +95,6 @@ function SuiSnackbar({ color, icon, title, dateTime, content, close, bgWhite, ..
               close
             </Icon>
           </SuiBox>
-        </SuiBox>
-        <Divider sx={{ margin: 0 }} light={dividerColor} />
-        <SuiBox p={1.5} color={bgWhite || color === "light" ? "text" : "white"} fontSize={size.sm}>
-          {content}
         </SuiBox>
       </SuiBox>
     </Snackbar>

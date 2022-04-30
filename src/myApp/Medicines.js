@@ -1,4 +1,3 @@
-// @mui material components
 import Card from "@mui/material/Card";
 
 import "main.css";
@@ -13,14 +12,172 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
-import MedicinesData from "layouts/applications/data-tables/data/MedicinesData";
-
 import Grid from "@mui/material/Grid";
 import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniStatisticsCard";
 import SuiButton from "components/SuiButton";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { Oval } from "react-loader-spinner";
+import { Icon, Tooltip } from "@mui/material";
+import Swal from "sweetalert2";
+import { useEffect, useState } from "react";
 
 function Medicines() {
+  const history = useHistory();
+
+  const [medicinesData, setMedicinesData] = useState(null);
+  const [isPending, setIsPending] = useState(true);
+  const [errorL, setError] = useState(null);
+
+  const [shelfCount, setShelfCount] = useState(0);
+  const [selfCount, setSelfCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
+
+  useEffect(() => {
+    const abortCont = new AbortController();
+
+    fetch(`http://localhost/zhhs_soft_server/api/medicines`, {
+      signal: abortCont.signal,
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw Error("Not Fetching data from server.");
+        }
+        return res.json();
+      })
+      .then((result) => {
+        // console.log(result);
+        setMedicinesData(result.data);
+        setIsPending(false);
+        setError(false);
+        setShelfCount(result.data[0][0]);
+        setSelfCount(result.data[0][1]);
+        setTotalCount(result.data[0][2]);
+      })
+      .catch((err) => {
+        // console.log(err.name === "AbortError");
+        if (err.name === "AbortError") {
+          // console.log("Fetch Aborted.");
+        } else {
+          setError(err.message);
+          setMedicinesData(null);
+          setIsPending(false);
+        }
+      });
+
+    return () => abortCont.abort();
+  }, [`http://localhost/zhhs_soft_server/api/medicines`]);
+
+  let medData = "";
+
+  function handleEdit(e) {
+    // console.log(e);
+    history.push(`/medicines/edit-medicine/${e}`);
+  }
+
+  function handleDelete(e) {
+    // console.log(e);
+
+    const newSwal = Swal.mixin({
+      customClass: {
+        confirmButton: "button button-success",
+        cancelButton: "button button-error",
+      },
+      buttonsStyling: false,
+    });
+
+    newSwal
+      .fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          setIsPending(true);
+          setMedicinesData(null);
+          fetch(`http://localhost/zhhs_soft_server/api/medicines/delete-medicine/${e}`, {
+            method: "POST",
+            // headers: { "content-Type": "application/json" },
+            // body: formData,
+          })
+            .then((response) => response.json())
+            .then((resultIn) => {
+              // console.log(resultIn);
+              setMedicinesData(resultIn.data);
+              setIsPending(false);
+              setError(false);
+              setShelfCount(resultIn.data[0][0]);
+              setSelfCount(resultIn.data[0][1]);
+              setTotalCount(resultIn.data[0][2]);
+            });
+          Swal.fire("Deleted!", "Your medicine has been deleted.", "success");
+          // console.log(medicinesData);
+        }
+      });
+  }
+
+  if (medicinesData) {
+    // console.log(medicinesData[1], isPending, errorL);
+    // console.log(medicinesData[1]);
+
+    medicinesData[1].forEach((element) => {
+      if (element.type === "Self") {
+        element.price = "-";
+        element.stock = "-";
+        element.expiry_date = "-";
+      }
+      element.action = (
+        <SuiBox display="flex" alignItems="center">
+          <SuiBox ml={1}>
+            <SuiTypography
+              variant="body1"
+              color="secondary"
+              sx={{ cursor: "pointer", lineHeight: 0 }}
+            >
+              <Tooltip title="Edit Medicine" placement="top" onClick={() => handleEdit(element.id)}>
+                <Icon>edit</Icon>
+              </Tooltip>
+            </SuiTypography>
+          </SuiBox>
+          <SuiBox ml={1}>
+            <SuiTypography
+              variant="body1"
+              color="secondary"
+              sx={{ cursor: "pointer", lineHeight: 0 }}
+            >
+              <Tooltip
+                title="Delete Medicine"
+                placement="left"
+                onClick={() => handleDelete(element.id)}
+              >
+                <Icon>delete</Icon>
+              </Tooltip>
+            </SuiTypography>
+          </SuiBox>
+        </SuiBox>
+      );
+      // console.log(element);
+    });
+
+    medData = {
+      columns: [
+        { Header: "ID", accessor: "id" },
+        { Header: "MEDICINE NAME", accessor: "name", width: "25%" },
+        { Header: "MEDICINE TYPE", accessor: "type", width: "20%" },
+        { Header: "MEDICINE EXPIRY", accessor: "expiry_date" },
+        { Header: "MEDICINE COUNT", accessor: "stock" },
+        { Header: "MEDICINE PRICE (Rs)", accessor: "price" },
+        { Header: "ACTION", accessor: "action", width: "9%" },
+      ],
+
+      rows: medicinesData[1],
+    };
+
+    // console.log(medData);
+  }
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -32,7 +189,7 @@ function Medicines() {
                 <SuiBox mb={3}>
                   <MiniStatisticsCard
                     title={{ text: "Shelf Count", fontWeight: "bold" }}
-                    count="656"
+                    count={selfCount}
                     // percentage={{ color: "success", text: "+55%" }}
                     icon={{ color: "success", component: "fa-solid fa-pills" }}
                   />
@@ -42,7 +199,7 @@ function Medicines() {
                 <SuiBox mb={3}>
                   <MiniStatisticsCard
                     title={{ text: "Self Count", fontWeight: "bold" }}
-                    count="130"
+                    count={shelfCount}
                     // percentage={{ color: "success", text: "+3%" }}
                     icon={{ color: "success", component: "fa-solid fa-hand-holding-medical" }}
                   />
@@ -52,7 +209,7 @@ function Medicines() {
                 <SuiBox mb={3}>
                   <MiniStatisticsCard
                     title={{ text: "Total Count", fontWeight: "bold" }}
-                    count="686"
+                    count={totalCount}
                     // percentage={{ color: "error", text: "-2%" }}
                     icon={{ color: "success", component: "fa-solid fa-house-medical-circle-check" }}
                   />
@@ -93,7 +250,21 @@ function Medicines() {
               </Link>
             </SuiBox>
           </SuiBox>
-          <DataTable table={MedicinesData} canSearch />
+          {errorL && (
+            <Grid container direction="row" justifyContent="center" alignItems="center">
+              <SuiBox p={3} pb={15}>
+                {errorL}
+              </SuiBox>
+            </Grid>
+          )}
+          {isPending && (
+            <Grid container direction="row" justifyContent="center" alignItems="center">
+              <SuiBox p={3} pb={15}>
+                <Oval color="#74c40e" height={80} width={80} />
+              </SuiBox>
+            </Grid>
+          )}
+          {medicinesData && <DataTable table={medData} canSearch />}
         </Card>
       </SuiBox>
       <Footer />
