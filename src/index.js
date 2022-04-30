@@ -5,12 +5,16 @@ import App from "App";
 
 // Soft UI Context Provider
 import { SoftUIControllerProvider } from "context";
+import { Provider } from "react-redux";
+import store from "store";
 
 ReactDOM.render(
-  <BrowserRouter>
-    <SoftUIControllerProvider>
-      <App />
-    </SoftUIControllerProvider>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <SoftUIControllerProvider>
+        <App />
+      </SoftUIControllerProvider>
+    </BrowserRouter>
+  </Provider>,
   document.getElementById("root")
 );

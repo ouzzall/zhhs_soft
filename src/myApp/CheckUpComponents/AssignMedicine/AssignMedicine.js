@@ -21,6 +21,9 @@ import {
   faPersonWalking,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { setShelfMedicines } from "reducers/assignMedicineSlice";
 
 library.add(
   faCapsules,
@@ -34,6 +37,23 @@ library.add(
 );
 
 function AssignMedicine() {
+  const shelfMedicines = useSelector((state) => state.assign_medicine.shelfMedicines);
+  const selfMedicines = useSelector((state) => state.assign_medicine.selfMedicines);
+
+  const [shelfMedicineInput, setShelfMedicineInput] = useState(null);
+  const [selfMedicineInput, setSelfMedicineInput] = useState(null);
+  const dispatch = useDispatch();
+
+  const addShelfMedicine = () => {
+    dispatch(setShelfMedicines([
+      ...shelfMedicines,
+      {
+        id: shelfMedicineInput.value,
+        name: shelfMedicineInput.label,
+      }
+    ]))
+  }
+
   return (
     <SuiBox>
       <SuiBox width="80%" textAlign="center" mx="auto">
@@ -61,16 +81,20 @@ function AssignMedicine() {
                     <SuiSelect
                       defaultValue={{ value: "", label: "Search Here..." }}
                       options={[
-                        { value: "clothing", label: "Flagyl" },
-                        { value: "electronics", label: "Entamizole" },
-                        { value: "furniture", label: "Jamishirin" },
-                        { value: "others", label: "Toot Siyah Sharbat" },
-                        { value: "real estate", label: "Co-Easy Day" },
+                        { value: "flagyl", label: "Flagyl" },
+                        { value: "entamizole", label: "Entamizole" },
+                        { value: "jamishirin", label: "Jamishirin" },
+                        { value: "tootsyah", label: "Toot Siyah Sharbat" },
+                        { value: "coeasyday", label: "Co-Easy Day" },
                       ]}
+                      onChange={(event) => {
+                        // console.log(event);
+                        setShelfMedicineInput(event);
+                      }}
                     />
                   </Grid>
                   <Grid item xs={3} md={1} justifyContent="flex-end" display="flex">
-                    <SuiButton color="success">Add</SuiButton>
+                    <SuiButton color="success" onClick={addShelfMedicine}>Add</SuiButton>
                   </Grid>
                 </Grid>
               </SuiBox>
@@ -118,7 +142,8 @@ function AssignMedicine() {
                     </SuiTypography>
                   </Grid>
                 </Grid>
-                <Grid container spacing={3} p={1}>
+                {shelfMedicines.map((value, index) => (
+                  <Grid container spacing={3} p={1}>
                   <Grid item xs={3} md={3}>
                     <SuiTypography
                       variant="body2"
@@ -127,7 +152,7 @@ function AssignMedicine() {
                       mt={1}
                       pl={1.5}
                     >
-                      Flagyl 10 mg
+                      {value.name}
                     </SuiTypography>
                   </Grid>
                   <Grid item xs={1} md={1} className="cnt_align">
@@ -165,7 +190,11 @@ function AssignMedicine() {
                   </Grid>
                   <Grid item xs={2} md={2} className="cnt_align">
                     <SuiTypography variant="overline" fontWeight="regular" color="dark">
-                      <SuiButton variant="gradient" color="primary" size="medium">
+                      <SuiButton variant="gradient" color="primary" size="medium" onClick={() => {
+                        const medicines = [...shelfMedicines];
+                        medicines.splice(index, 1);
+                        dispatch(setShelfMedicines([...medicines]));
+                      }}>
                         <FontAwesomeIcon
                           icon="fa-solid fa-trash-can"
                           size="lg"
@@ -175,63 +204,7 @@ function AssignMedicine() {
                     </SuiTypography>
                   </Grid>
                 </Grid>
-                <Grid container spacing={3} p={1}>
-                  <Grid item xs={3} md={3}>
-                    <SuiTypography
-                      variant="body2"
-                      fontWeight="regular"
-                      color="dark"
-                      mt={1}
-                      pl={1.5}
-                    >
-                      Hydrylin Syrup
-                    </SuiTypography>
-                  </Grid>
-                  <Grid item xs={1} md={1} className="cnt_align">
-                    <SuiTypography variant="overline" fontWeight="regular" color="dark">
-                      <SuiInput inputProps={{ type: "number" }} defaultValue={2} />
-                    </SuiTypography>
-                  </Grid>
-                  <Grid item xs={1} md={1} className="cnt_align">
-                    <SuiTypography variant="overline" fontWeight="regular" color="dark">
-                      <SuiInput inputProps={{ type: "number" }} defaultValue={1} />
-                    </SuiTypography>
-                  </Grid>
-                  <Grid item xs={1} md={1} className="cnt_align">
-                    <SuiTypography variant="overline" fontWeight="regular" color="dark">
-                      <SuiInput inputProps={{ type: "number" }} defaultValue={2} />
-                    </SuiTypography>
-                  </Grid>
-                  <Grid item xs={1} md={1} className="cnt_align">
-                    <SuiTypography variant="overline" fontWeight="regular" color="dark">
-                      <SuiInput inputProps={{ type: "number" }} defaultValue={5} />
-                    </SuiTypography>
-                  </Grid>
-                  <Grid item xs={3} md={3} className="cnt_align">
-                    <SuiSelect
-                      defaultValue={{ value: "Table Spoon", label: "Table Spoon" }}
-                      options={[
-                        { value: "Table Spoon", label: "Table Spoon" },
-                        { value: "Tea Spoon", label: "Tea Spoon" },
-                        { value: "Tablet", label: "Tablet" },
-                        { value: "Capsule", label: "Capsule" },
-                        { value: "Half Cup", label: "Half Cup" },
-                        { value: "Full Cup", label: "Full Cup" },
-                      ]}
-                    />
-                  </Grid>
-                  <Grid item xs={2} md={2} className="cnt_align">
-                    <SuiTypography variant="overline" fontWeight="regular" color="dark">
-                      <SuiButton variant="gradient" color="primary" size="medium">
-                        <FontAwesomeIcon
-                          icon="fa-solid fa-trash-can"
-                          size="lg"
-                          className="font_clr_2"
-                        />
-                      </SuiButton>
-                    </SuiTypography>
-                  </Grid>
-                </Grid>
+                ))}
               </SuiBox>
             </SuiBox>
           </Grid>
