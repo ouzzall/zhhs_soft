@@ -141,7 +141,7 @@ const routes = [
     myRoute: true,
     name: "Edit Medicine",
     key: "edit-medicine",
-    route: "/medicines/edit-medicine/:id",
+    route: "/medicines/edit-medicine",
     icon: "fa-solid fa-capsules",
     // component: ,
     component: EditMedicine,

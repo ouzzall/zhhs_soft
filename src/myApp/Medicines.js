@@ -71,11 +71,13 @@ function Medicines() {
 
   function handleEdit(e) {
     // console.log(e);
-    history.push(`/medicines/edit-medicine/${e}`);
+    history.push(`/medicines/edit-medicine`, { id: e });
   }
 
   function handleDelete(e) {
     // console.log(e);
+
+    const sendId = new URLSearchParams({ id: e }).toString();
 
     const newSwal = Swal.mixin({
       customClass: {
@@ -97,7 +99,7 @@ function Medicines() {
         if (result.isConfirmed) {
           setIsPending(true);
           setMedicinesData(null);
-          fetch(`http://localhost/zhhs_soft_server/api/medicines/delete-medicine/${e}`, {
+          fetch(`http://localhost/zhhs_soft_server/api/medicines/delete-medicine?${sendId}`, {
             method: "POST",
             // headers: { "content-Type": "application/json" },
             // body: formData,

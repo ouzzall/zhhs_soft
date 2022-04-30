@@ -17,7 +17,7 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import Footer from "examples/Footer";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import SuiSnackbar from "components/SuiSnackbar";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
 
 function EditMedicine() {
@@ -28,7 +28,12 @@ function EditMedicine() {
   const [count, setCount] = useState("");
 
   const history = useHistory();
-  const { id } = useParams();
+  // console.log(history.location.state.id);
+  const { id } = history.location.state;
+  const sendId = new URLSearchParams({ id }).toString();
+  // console.log(id);
+
+  // const { id } = useParams();
   // console.log(id);
 
   const [medicineData, setMedicineData] = useState(null);
@@ -39,7 +44,9 @@ function EditMedicine() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`http://localhost/zhhs_soft_server/api/medicines/edit-medicine/${id}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/medicines/edit-medicine?${sendId}`, {
+      // method: "GET",
+      // headers: { "content-Type": "application/json" },
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -72,7 +79,7 @@ function EditMedicine() {
       });
 
     return () => abortCont.abort();
-  }, [`http://localhost/zhhs_soft_server/api/medicines/edit-medicine/${id}`]);
+  }, [`http://localhost/zhhs_soft_server/api/medicines/edit-medicine?${sendId}`]);
 
   const [errorSB, setErrorSB] = useState(false);
   const [errorText, setErrorText] = useState("");
@@ -112,7 +119,7 @@ function EditMedicine() {
     formData.append("expiry_date", expiry);
     formData.append("stock", count);
 
-    fetch(`http://localhost/zhhs_soft_server/api/medicines/edit-medicine/${id}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/medicines/edit-medicine?${sendId}`, {
       method: "POST",
       // headers: { "content-Type": "application/json" },
       body: formData,
