@@ -108,7 +108,7 @@ export default function App() {
           <Sidenav
             color={sidenavColor}
             brand={brand}
-            brandName="Zahid Herbal Health Shop"
+            brandName="Zahid Herbal Dawakhana"
             routes={routes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}

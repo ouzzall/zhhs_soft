@@ -38,7 +38,7 @@ function SignIn() {
 
   return (
     <BasicLayout
-      title="Zahid Herbal Health Shop"
+      title="Zahid Herbal Dawakhana"
       description="There's rosemary, that's for remembrance. Pray you, love, remember."
       image={bgImg}
     >

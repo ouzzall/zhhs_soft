@@ -38,7 +38,7 @@ function Basic() {
 
   return (
     <BasicLayout
-      title="Zahid Herbal Health Shop"
+      title="Zahid Herbal Dawakhana"
       description="Place, Where you get inner peace as well as outer."
       image={curved9}
     >

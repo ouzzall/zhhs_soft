@@ -37,8 +37,7 @@ function PatientPrescription() {
                   <Grid item xs={12} md={4}>
                     {/* <SuiBox component="img" src={logoCT} width="25%" p={1} mb={1} /> */}
                     <SuiTypography variant="h6" fontWeight="medium" mt={2}>
-                      Zahid Herbal Health Shop, near G. T. Road, Swami Nagar Lahore, Punjab,
-                      Pakistan
+                      Zahid Herbal Dawakhana, near G. T. Road, Swami Nagar Lahore, Punjab, Pakistan
                     </SuiTypography>
                     <SuiBox mt={1} mb={2}>
                       <SuiTypography display="block" variant="body2" color="secondary">
