@@ -125,7 +125,7 @@ function Patients() {
               sx={{ cursor: "pointer", lineHeight: 0 }}
             >
               <Tooltip
-                title="Preview product"
+                title="Patient Profile"
                 placement="top"
                 onClick={() => history.push("/patients/profile")}
               >
