@@ -108,6 +108,7 @@ import WalkingCustomers from "myApp/WalkingCustomers";
 import MyHomeDashboard from "myApp/MyHomeDashboard";
 import EditMedicine from "myApp/EditMedicine";
 import EditPatient from "myApp/EditPatient";
+import EditUser from "myApp/EditUser";
 
 const routes = [
   {
@@ -297,6 +298,14 @@ const routes = [
     route: "/user-management/new-user",
     icon: "fa-solid fa-user-group",
     component: NewUser,
+  },
+  {
+    myRoute: true,
+    name: "User Management",
+    key: "edit-user",
+    route: "/user-management/edit-user",
+    icon: "fa-solid fa-user-group",
+    component: EditUser,
   },
   {
     myRoute: true,
