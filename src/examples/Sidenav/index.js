@@ -119,7 +119,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         <SuiBox component={NavLink} to="/" display="" alignItems="center">
           {brand && <SuiBox component="img" src={brand} alt="Soft UI Logo" width="3rem" />}
           <SuiBox sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}>
-            <SuiTypography ml={1} component="h6" variant="button" fontWeight="medium">
+            <SuiTypography ml={0} component="h6" variant="button" fontWeight="medium">
               {brandName}
             </SuiTypography>
           </SuiBox>

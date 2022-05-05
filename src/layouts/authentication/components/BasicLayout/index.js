@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import brand from "assets/logo/ZHHS-1-01 small 2.png";
+import brand from "assets/logo/white-bg-logo-2.png";
 // @mui material components
 import Grid from "@mui/material/Grid";
 

@@ -23,7 +23,7 @@ import routes from "routes";
 
 // Soft UI Dashboard PRO React contexts
 import { useSoftUIController, setMiniSidenav } from "context";
-import brand from "./assets/logo/ZHHS-1-01 small.png";
+import brand from "./assets/logo/no-bg-logo.png";
 // import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
 export default function App() {
