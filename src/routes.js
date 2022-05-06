@@ -109,6 +109,7 @@ import MyHomeDashboard from "myApp/MyHomeDashboard";
 import EditMedicine from "myApp/EditMedicine";
 import EditPatient from "myApp/EditPatient";
 import EditUser from "myApp/EditUser";
+import EditOperationalCost from "myApp/EditOperationalCost";
 
 const routes = [
   {
@@ -247,6 +248,14 @@ const routes = [
     route: "/operational-costs/new-operational-cost",
     icon: "fa-solid fa-money-bill-1",
     component: NewOperationalCost,
+  },
+  {
+    myRoute: true,
+    name: "Edit Operational Cost",
+    key: "edit-operational-cost",
+    route: "/operational-costs/edit-operational-cost",
+    icon: "fa-solid fa-money-bill-1",
+    component: EditOperationalCost,
   },
   { type: "divider", key: "divider-1" },
   {

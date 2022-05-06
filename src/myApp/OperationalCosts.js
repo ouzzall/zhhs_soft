@@ -3,6 +3,9 @@ import Card from "@mui/material/Card";
 
 import "main.css";
 
+import { Oval } from "react-loader-spinner";
+import Tooltip from "@mui/material/Tooltip";
+
 // Soft UI Dashboard PRO React components
 import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
@@ -14,19 +17,167 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 import SuiButton from "components/SuiButton";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Grid } from "@mui/material";
 
 import Icon from "@mui/material/Icon";
 // Soft UI Dashboard PRO React example components
 import TimelineItem from "examples/Timeline/TimelineItem";
-import OperationalCostsData from "layouts/applications/data-tables/data/OperationalCostsData";
+import Swal from "sweetalert2";
+import { useEffect, useState } from "react";
 
 function OperationalCosts() {
+  const history = useHistory();
+
+  const [costsData, setCostsData] = useState(null);
+  const [isPending, setIsPending] = useState(true);
+  const [errorL, setError] = useState(null);
+
+  // const [lastFive, setLastFive] = useState([]);
+
+  useEffect(() => {
+    const abortCont = new AbortController();
+
+    fetch(`http://localhost/zhhs_soft_server/api/costs`, {
+      signal: abortCont.signal,
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw Error("Not Fetching data from server.");
+        }
+        return res.json();
+      })
+      .then((result) => {
+        // console.log(result);
+        setCostsData(result.data);
+        setIsPending(false);
+        setError(false);
+      })
+      .catch((err) => {
+        // console.log(err.name === "AbortError");
+        if (err.name === "AbortError") {
+          // console.log("Fetch Aborted.");
+        } else {
+          setError(err.message);
+          setCostsData(null);
+          setIsPending(false);
+        }
+      });
+
+    return () => abortCont.abort();
+  }, [`http://localhost/zhhs_soft_server/api/medicines`]);
+
+  let cosData = "";
+
+  function handleEdit(e) {
+    // console.log(e);
+    history.push(`/operational-costs/edit-operational-cost`, { id: e });
+  }
+
+  function handleDelete(e) {
+    // console.log(e);
+
+    const sendId = new URLSearchParams({ id: e }).toString();
+
+    const newSwal = Swal.mixin({
+      customClass: {
+        confirmButton: "button button-success",
+        cancelButton: "button button-error",
+      },
+      buttonsStyling: false,
+    });
+
+    newSwal
+      .fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          setIsPending(true);
+          setCostsData(null);
+          fetch(`http://localhost/zhhs_soft_server/api/costs/delete-cost?${sendId}`, {
+            method: "POST",
+            // headers: { "content-Type": "application/json" },
+            // body: formData,
+          })
+            .then((response) => response.json())
+            .then((resultIn) => {
+              // console.log(resultIn);
+              setCostsData(resultIn.data);
+              setIsPending(false);
+              setError(false);
+            });
+          Swal.fire("Deleted!", "Your item cost has been deleted.", "success");
+          // console.log(medicinesData);
+        }
+      });
+  }
+
+  if (costsData) {
+    // console.log(medicinesData[1], isPending, errorL);
+    // console.log(medicinesData[1]);
+
+    costsData[1].forEach((element) => {
+      if (element.type === "Self") {
+        element.price = "-";
+        element.stock = "-";
+        element.expiry_date = "-";
+      }
+      element.action = (
+        <SuiBox display="flex" alignItems="center">
+          <SuiBox ml={1}>
+            <SuiTypography
+              variant="body1"
+              color="secondary"
+              sx={{ cursor: "pointer", lineHeight: 0 }}
+            >
+              <Tooltip title="Edit Medicine" placement="top" onClick={() => handleEdit(element.id)}>
+                <Icon>edit</Icon>
+              </Tooltip>
+            </SuiTypography>
+          </SuiBox>
+          <SuiBox ml={1}>
+            <SuiTypography
+              variant="body1"
+              color="secondary"
+              sx={{ cursor: "pointer", lineHeight: 0 }}
+            >
+              <Tooltip
+                title="Delete Medicine"
+                placement="left"
+                onClick={() => handleDelete(element.id)}
+              >
+                <Icon>delete</Icon>
+              </Tooltip>
+            </SuiTypography>
+          </SuiBox>
+        </SuiBox>
+      );
+      // console.log(element);
+    });
+
+    cosData = {
+      columns: [
+        { Header: "ID", accessor: "id" },
+        { Header: "ITEM NAME", accessor: "name" },
+        { Header: "ITEM QUANTITY", accessor: "quantity" },
+        { Header: "ITEM COST", accessor: "cost" },
+        { Header: "ACTION", accessor: "action" },
+      ],
+
+      rows: costsData[1],
+    };
+
+    // console.log(medData);
+  }
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
-
       <SuiBox pt={3} pb={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4} md={4}>
@@ -34,59 +185,20 @@ function OperationalCosts() {
               <Card sx={{ height: "445px" }}>
                 <SuiBox pt={3} px={3}>
                   <SuiTypography variant="h6" fontWeight="medium">
-                    Last Five Operational Costs
+                    Last Six Operational Costs
                   </SuiTypography>
-                  <SuiBox mt={1} mb={2}>
-                    <SuiTypography variant="button" color="text" fontWeight="regular">
-                      <SuiTypography display="inline" variant="body2" verticalAlign="middle">
-                        <Icon
-                          sx={{
-                            fontWeight: "bold",
-                            color: ({ palette: { success } }) => success.main,
-                          }}
-                        >
-                          arrow_upward
-                        </Icon>
-                      </SuiTypography>
-                      &nbsp;
-                      <SuiTypography variant="button" color="text" fontWeight="medium">
-                        24
-                      </SuiTypography>{" "}
-                      Entries this month
-                    </SuiTypography>
-                  </SuiBox>
                 </SuiBox>
                 <SuiBox p={2}>
-                  <TimelineItem
-                    color="info"
-                    icon="inventory_2"
-                    title="Shop Rent"
-                    dateTime="26/04/2022"
-                  />
-                  <TimelineItem
-                    color="info"
-                    icon="inventory_2"
-                    title="Panadol Extra"
-                    dateTime="25/04/2022"
-                  />
-                  <TimelineItem
-                    color="info"
-                    icon="inventory_2"
-                    title="Plastic Bags"
-                    dateTime="24/04/2022"
-                  />
-                  <TimelineItem
-                    color="info"
-                    icon="inventory_2"
-                    title="Employ Fee"
-                    dateTime="23/04/2022"
-                  />
-                  <TimelineItem
-                    color="info"
-                    icon="inventory_2"
-                    title="Kalwanji 500 Grams"
-                    dateTime="22/04/2022"
-                  />
+                  {costsData &&
+                    costsData[0].map((one) => (
+                      <TimelineItem
+                        color="info"
+                        icon="inventory_2"
+                        title={one.name}
+                        dateTime={one.created_at}
+                        key={one.id}
+                      />
+                    ))}
                 </SuiBox>
               </Card>
             </SuiBox>
@@ -98,17 +210,8 @@ function OperationalCosts() {
                   <SuiTypography variant="h5" fontWeight="medium">
                     Operational Costs List
                   </SuiTypography>
-                  {/* <SuiTypography variant="button" fontWeight="regular" color="text">
-                There are two types of medicines. 1: Shelf, 2: Self. All of the medicines are
-                displayed below.
-              </SuiTypography> */}
                 </SuiBox>
                 <SuiBox>
-                  {/* <Link to="/patients/new-patient">
-                <SuiButton variant="gradient" color="success" className="margin_right_cls">
-                  Add Item
-                </SuiButton>
-              </Link> */}
                   <Link to="/operational-costs/new-operational-cost">
                     <SuiButton variant="gradient" color="success">
                       Add Cost
@@ -116,7 +219,21 @@ function OperationalCosts() {
                   </Link>
                 </SuiBox>
               </SuiBox>
-              <DataTable table={OperationalCostsData} canSearch />
+              {errorL && (
+                <Grid container direction="row" justifyContent="center" alignItems="center">
+                  <SuiBox p={3} pb={15}>
+                    {errorL}
+                  </SuiBox>
+                </Grid>
+              )}
+              {isPending && (
+                <Grid container direction="row" justifyContent="center" alignItems="center">
+                  <SuiBox p={3} pb={15}>
+                    <Oval color="#74c40e" height={80} width={80} />
+                  </SuiBox>
+                </Grid>
+              )}
+              {costsData && <DataTable table={cosData} canSearch />}
             </Card>
           </Grid>
         </Grid>
