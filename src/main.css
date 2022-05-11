@@ -86,3 +86,9 @@
 .hide_back {
   opacity: 0.9 !important;
 }
+
+.image_detail {
+  font-size: 12px;
+  overflow: auto;
+  width: 105px;
+}

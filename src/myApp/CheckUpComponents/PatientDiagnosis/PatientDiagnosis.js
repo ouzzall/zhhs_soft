@@ -1,6 +1,4 @@
 import { useState } from "react";
-import SuiDropzone from "components/SuiDropzone";
-
 // @mui material components
 import Grid from "@mui/material/Grid";
 
@@ -8,11 +6,21 @@ import Grid from "@mui/material/Grid";
 import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
 import SuiEditor from "components/SuiEditor";
+import { useDispatch, useSelector } from "react-redux";
+import { setDiagnosis } from "redux/patDiagnosis";
+// import SuiDropzone from "components/SuiDropzone";
+import MyDropzone from "myApp/DropZoneHook";
 
 function PatientDiagnosis() {
-  const [editorValue, setEditorValue] = useState(
-    "<p><strong>Symptoms:</strong><br><br><br><strong>Findings:</strong><br><br><br><strong>Care:</strong><br><br><br><strong>Suggestions:</strong><br><br><br><strong><em><u>By: Hakeem M. Ashraf</u></em></strong></p>"
-  );
+  const { patientDiagnosis } = useSelector((state) => state.patDiagnosis);
+  const [editorValue, setEditorValue] = useState(patientDiagnosis);
+
+  const dispatch = useDispatch();
+
+  function editorHandler(e) {
+    setEditorValue(e);
+    dispatch(setDiagnosis(e));
+  }
 
   return (
     <SuiBox>
@@ -31,7 +39,7 @@ function PatientDiagnosis() {
                 Diagnosis
               </SuiTypography>
             </SuiBox>
-            <SuiEditor value={editorValue} onChange={setEditorValue} />
+            <SuiEditor value={editorValue} onChange={editorHandler} />
           </Grid>
         </Grid>
       </SuiBox>
@@ -39,7 +47,14 @@ function PatientDiagnosis() {
         <SuiTypography component="label" variant="caption" fontWeight="bold">
           Upload Reports Here...
         </SuiTypography>
-        <SuiDropzone options={{ addRemoveLinks: true }} />
+        <MyDropzone>{}</MyDropzone>
+        {/* <SuiDropzone
+          options={{
+            addRemoveLinks: true,
+            maxFilesize: 10,
+            acceptedFiles: ".jpeg,.jpg,.png,.gif",
+          }}
+        /> */}
       </SuiBox>
     </SuiBox>
   );
