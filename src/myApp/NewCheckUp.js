@@ -25,6 +25,7 @@ import SearchPatient from "myApp/CheckUpComponents/SearchPatient/SearchPatient";
 import PatientDiagnosis from "myApp/CheckUpComponents/PatientDiagnosis/PatientDiagnosis";
 import AssignMedicine from "myApp/CheckUpComponents/AssignMedicine/AssignMedicine";
 import GenerateBill from "myApp/CheckUpComponents/GenerateBill/GenerateBill";
+import { useSelector } from "react-redux";
 
 function getSteps() {
   return [1, 2, 3, 4];
@@ -46,6 +47,12 @@ function getStepContent(stepIndex) {
 }
 
 function NewCheckUp() {
+  const { shelfMedList } = useSelector((state) => state.patMedicines);
+  const { selfMedList } = useSelector((state) => state.patMedicines);
+  const { patientId } = useSelector((state) => state.patId);
+  const { patientDiagnosis } = useSelector((state) => state.patDiagnosis);
+  const { patientReports } = useSelector((state) => state.patReports);
+
   const history = useHistory();
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
@@ -55,6 +62,22 @@ function NewCheckUp() {
 
   const handleNext = () => setActiveStep(activeStep + 1);
   const handleBack = () => setActiveStep(activeStep - 1);
+
+  function endingHandler() {
+    // !LastStep ? handleNext : history.push("/dashboard");
+    // console.log(LastStep);
+    if (LastStep) {
+      history.push("/dashboard");
+    } else if (secondLastStep) {
+      console.log(patientId);
+      console.log(patientDiagnosis);
+      console.log(patientReports);
+      console.log(shelfMedList);
+      console.log(selfMedList);
+    } else {
+      handleNext();
+    }
+  }
 
   return (
     <DashboardLayout>
@@ -82,18 +105,15 @@ function NewCheckUp() {
                 <SuiBox>
                   {getStepContent(activeStep)}
                   <SuiBox mt={3} width="100%" display="flex" justifyContent="space-between">
-                    {activeStep === 0 ? (
-                      <SuiBox />
-                    ) : (
+                    {activeStep === 1 || activeStep === 2 ? (
                       <SuiButton variant="gradient" color="light" onClick={handleBack}>
                         back
                       </SuiButton>
+                    ) : (
+                      <SuiBox />
                     )}
-                    <SuiButton
-                      variant="gradient"
-                      color="success"
-                      onClick={!LastStep ? handleNext : history.push("/dashboard")}
-                    >
+
+                    <SuiButton variant="gradient" color="success" onClick={endingHandler}>
                       {secondLastStep ? "FINISH CHECK UP" : <>{isLastStep ? "GO HOME" : "NEXT"}</>}
                     </SuiButton>
                   </SuiBox>
