@@ -1,28 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  checkMedicines: [],
-  changingPro: 0,
+  shelfMedList: [],
+  selfMedList: [],
 };
 
 export const medicinesSlice = createSlice({
   name: "patMedicine",
   initialState,
   reducers: {
-    addMed: (state, action) => {
+    setShelfList: (state, action) => {
       // state.checkMedicines.push(action.payload);
-      state.checkMedicines = action.payload;
-      // console.log(state.checkMedicines);
+      // console.log(action.payload);
+      state.shelfMedList = action.payload;
+      // console.log(state.shelfMedList);
     },
-    setChangingPro: (state, action) => {
+    setSelfList: (state, action) => {
       // state.checkMedicines.push(action.payload);
-      state.checkMedicines = action.payload;
-      // console.log(state.checkMedicines);
+      // console.log(action.payload);
+      state.selfMedList = action.payload;
+      // console.log(state.shelfMedList);
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addMed, setChangingPro } = medicinesSlice.actions;
+export const { setShelfList, setSelfList } = medicinesSlice.actions;
 
 export default medicinesSlice.reducer;

@@ -32,7 +32,7 @@ const SuiSelect = forwardRef(({ size, error, success, ...rest }, ref) => {
 
   return (
     <Select
-      menuPortalTarget={document.body}
+      // menuPortalTarget={document.body}
       menuPosition="fixed"
       {...rest}
       ref={ref}
