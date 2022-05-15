@@ -22,7 +22,10 @@ import SuiButton from "components/SuiButton";
 import CheckUpsData from "layouts/applications/data-tables/data/CheckUpsData";
 
 import { useDispatch } from "react-redux";
-import { setShelfList, setSelfList, setId, setDiagnosis, setReports } from "redux/patMedicines";
+import { setShelfList, setSelfList } from "redux/patMedicines";
+import { setReports } from "redux/patReports";
+import { setId } from "redux/patId";
+import { setDiagnosis } from "redux/patDiagnosis";
 import { useHistory } from "react-router-dom";
 
 function Profile() {
