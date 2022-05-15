@@ -13,11 +13,24 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
+import { useDispatch } from "react-redux";
+import { setShelfList, setSelfList } from "redux/patMedicines";
+import { useHistory } from "react-router-dom";
+
 import SuiButton from "components/SuiButton";
-import { Link } from "react-router-dom";
+
 import PreviousBillData from "layouts/applications/data-tables/data/PreviousBillData";
 
 function WalkingCustomers() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  function actionHandle() {
+    dispatch(setShelfList([]));
+    dispatch(setSelfList([]));
+    history.push("/walking-customers/new-walking-customer");
+  }
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -34,11 +47,9 @@ function WalkingCustomers() {
               </SuiTypography> */}
             </SuiBox>
             <SuiBox>
-              <Link to="/walking-customers/new-walking-customer">
-                <SuiButton variant="gradient" color="success">
-                  New Customer
-                </SuiButton>
-              </Link>
+              <SuiButton variant="gradient" color="success" onClick={actionHandle}>
+                New Customer
+              </SuiButton>
             </SuiBox>
           </SuiBox>
           <DataTable table={PreviousBillData} canSearch />

@@ -15,9 +15,21 @@ import DataTable from "examples/Tables/DataTable";
 
 import SuiButton from "components/SuiButton";
 import PatientsCheckUpsData from "layouts/applications/data-tables/data/PatientsCheckUpsData";
-import { Link } from "react-router-dom";
+
+import { useDispatch } from "react-redux";
+import { setShelfList, setSelfList } from "redux/patMedicines";
+import { useHistory } from "react-router-dom";
 
 function CheckUps() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  function actionHandle() {
+    dispatch(setShelfList([]));
+    dispatch(setSelfList([]));
+    history.push("/check-ups/new-check-up");
+  }
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -34,11 +46,9 @@ function CheckUps() {
               </SuiTypography> */}
             </SuiBox>
             <SuiBox>
-              <Link to="/check-ups/new-check-up">
-                <SuiButton variant="gradient" color="success">
-                  New Check Up
-                </SuiButton>
-              </Link>
+              <SuiButton variant="gradient" color="success" onClick={actionHandle}>
+                New Check Up
+              </SuiButton>
             </SuiBox>
           </SuiBox>
           <DataTable table={PatientsCheckUpsData} canSearch />

@@ -13,7 +13,6 @@ import DefaultCounterCard from "examples/Cards/CounterCards/DefaultCounterCard";
 
 // Images
 import { Card } from "@mui/material";
-import { Link } from "react-router-dom";
 import SuiButton from "components/SuiButton";
 import DataTable from "examples/Tables/DataTable";
 import PatientsCheckUpsData from "layouts/applications/data-tables/data/PatientsCheckUpsData";
@@ -22,8 +21,21 @@ import gradientLineChartData from "layouts/dashboards/default/data/gradientLineC
 import WeatherCard from "examples/Cards/WeatherCard";
 import iconSunCloud from "assets/images/small-logos/icon-sun-cloud.png";
 
+import { useDispatch } from "react-redux";
+import { setShelfList, setSelfList } from "redux/patMedicines";
+import { useHistory } from "react-router-dom";
+
 function MyHomeDashboard() {
   // console.log("HELLO FROM CONSOLE");
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  function actionHandle() {
+    dispatch(setShelfList([]));
+    dispatch(setSelfList([]));
+    history.push("/check-ups/new-check-up");
+  }
 
   return (
     <DashboardLayout>
@@ -96,11 +108,9 @@ function MyHomeDashboard() {
               </SuiTypography> */}
             </SuiBox>
             <SuiBox>
-              <Link to="/check-ups/new-check-up">
-                <SuiButton variant="gradient" color="success">
-                  New Check Up
-                </SuiButton>
-              </Link>
+              <SuiButton variant="gradient" color="success" onClick={actionHandle}>
+                New Check Up
+              </SuiButton>
             </SuiBox>
           </SuiBox>
           <DataTable table={PatientsCheckUpsData} canSearch />

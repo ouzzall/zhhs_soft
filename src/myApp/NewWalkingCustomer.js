@@ -100,7 +100,7 @@ function NewWalkingCustomer() {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           if (data.status === true) {
             // history.replace("/patients");
             // console.log(data);
