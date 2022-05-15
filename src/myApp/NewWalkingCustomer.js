@@ -23,6 +23,8 @@ import Footer from "examples/Footer";
 // Wizard page components
 import GenerateBill2 from "myApp/WCustomersComponents/GenerateBill2/GenerateBill2";
 import SelectMedicine from "myApp/WCustomersComponents/SelectMedicine/SelectMedicine";
+import { useSelector } from "react-redux";
+import SuiSnackbar from "components/SuiSnackbar";
 
 function getSteps() {
   return [1, 2];
@@ -40,6 +42,8 @@ function getStepContent(stepIndex) {
 }
 
 function NewWalkingCustomer() {
+  const { shelfMedList } = useSelector((state) => state.patMedicines);
+  const { selfMedList } = useSelector((state) => state.patMedicines);
   const history = useHistory();
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
@@ -48,11 +52,74 @@ function NewWalkingCustomer() {
   const secondLastStep = activeStep === steps.length - 2;
 
   const handleNext = () => setActiveStep(activeStep + 1);
-  const handleBack = () => setActiveStep(activeStep - 1);
+  // const handleBack = () => setActiveStep(activeStep - 1);
+
+  const [errorText, setErrorText] = useState("");
+  const [errorSB, setErrorSB] = useState(false);
+
+  const closeErrorSB = () => setErrorSB(false);
+  const renderErrorSB = (
+    <SuiSnackbar
+      color="error"
+      icon="warning"
+      title={errorText}
+      content=""
+      dateTime=""
+      open={errorSB}
+      onClose={closeErrorSB}
+      close={closeErrorSB}
+    />
+  );
+
+  function endingHandler() {
+    // !LastStep ? handleNext : history.push("/dashboard");
+    // console.log(LastStep);
+    if (LastStep) {
+      history.push("/dashboard");
+    } else if (secondLastStep) {
+      // console.log(patientId);
+      // console.log(patientDiagnosis);
+      // console.log(patientReports);
+      // console.log(shelfMedList);
+      // console.log(selfMedList);
+
+      const formData = new FormData();
+
+      formData.append("shelf_medicines", JSON.stringify(shelfMedList));
+      formData.append("self_medicines", JSON.stringify(selfMedList));
+
+      // console.log(selfMedList[0]);
+      // console.log(shelfMedList[0]);
+      // formData.append("self_medicines", selfMedList[0]);
+      // formData.append("shelf_medicines", shelfMedList[0]);
+
+      fetch("http://localhost/zhhs_soft_server/api/walking-customer/new-walking-customer", {
+        method: "POST",
+        // headers: { "content-Type": "application/json" },
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data.status === true) {
+            // history.replace("/patients");
+            // console.log(data);
+            handleNext();
+          } else if (data.status === false) {
+            // console.log(data);
+            setErrorText(data.message);
+            setErrorSB(true);
+          }
+        });
+    } else {
+      handleNext();
+    }
+  }
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
+      {renderErrorSB}
       <SuiBox pb={4} pt={3}>
         <Grid container justifyContent="center">
           <Grid item xs={12} lg={12}>
@@ -76,18 +143,9 @@ function NewWalkingCustomer() {
                 <SuiBox>
                   {getStepContent(activeStep)}
                   <SuiBox mt={3} width="100%" display="flex" justifyContent="space-between">
-                    {activeStep === 0 ? (
-                      <SuiBox />
-                    ) : (
-                      <SuiButton variant="gradient" color="light" onClick={handleBack}>
-                        back
-                      </SuiButton>
-                    )}
-                    <SuiButton
-                      variant="gradient"
-                      color="success"
-                      onClick={!LastStep ? handleNext : history.push("/dashboard")}
-                    >
+                    {activeStep === 1 || activeStep === 2 ? <SuiBox /> : <SuiBox />}
+
+                    <SuiButton variant="gradient" color="success" onClick={endingHandler}>
                       {secondLastStep ? "FINISH" : <>{isLastStep ? "GO HOME" : "NEXT"}</>}
                     </SuiButton>
                   </SuiBox>
