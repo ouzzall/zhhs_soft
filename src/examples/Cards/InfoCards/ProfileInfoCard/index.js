@@ -1,43 +1,20 @@
-/**
-=========================================================
-* Soft UI Dashboard PRO React - v3.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-pro-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// react-routers components
-import { Link } from "react-router-dom";
-
 // prop-types is library for typechecking of props
 import PropTypes from "prop-types";
 
 // @mui material components
 import Card from "@mui/material/Card";
-import Divider from "@mui/material/Divider";
 import Tooltip from "@mui/material/Tooltip";
 import Icon from "@mui/material/Icon";
 
 // Soft UI Dashboard PRO React components
 import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
+import { useHistory } from "react-router-dom";
 
-// Soft UI Dashboard PRO React base styles
-import colors from "assets/theme/base/colors";
-import typography from "assets/theme/base/typography";
-
-function ProfileInfoCard({ title, description, info, social, action }) {
+function ProfileInfoCard({ title, info, action }) {
+  const history = useHistory();
   const labels = [];
   const values = [];
-  const { socialMediaColors } = colors;
-  const { size } = typography;
 
   // Convert this form `objectKey` of the object key in to this `object key`
   Object.keys(info).forEach((el) => {
@@ -66,52 +43,29 @@ function ProfileInfoCard({ title, description, info, social, action }) {
     </SuiBox>
   ));
 
-  // Render the card social media icons
-  const renderSocial = social.map(({ link, icon, color }) => (
-    <SuiBox
-      key={color}
-      component="a"
-      href={link}
-      target="_blank"
-      rel="noreferrer"
-      fontSize={size.lg}
-      color={socialMediaColors[color].main}
-      pr={1}
-      pl={0.5}
-      lineHeight={1}
-    >
-      {icon}
-    </SuiBox>
-  ));
-
   return (
     <Card sx={{ height: "100%" }}>
       <SuiBox display="flex" justifyContent="space-between" alignItems="center" pt={2} px={2}>
         <SuiTypography variant="h6" fontWeight="medium" textTransform="capitalize">
           {title}
         </SuiTypography>
-        <SuiTypography component={Link} to={action.route} variant="body2" color="secondary">
+        <SuiTypography
+          onClick={() => {
+            history.push(`/patients/edit-patient`, { id: action.route });
+          }}
+          variant="body2"
+          color="secondary"
+        >
           <Tooltip title={action.tooltip} placement="top">
             <Icon>edit</Icon>
           </Tooltip>
         </SuiTypography>
       </SuiBox>
-      <SuiBox p={2}>
-        <SuiBox mb={2} lineHeight={1}>
-          <SuiTypography variant="button" color="text" fontWeight="regular">
-            {description}
-          </SuiTypography>
-        </SuiBox>
-        <SuiBox opacity={0.3}>
-          <Divider />
-        </SuiBox>
-        <SuiBox>
+      <SuiBox>
+        <SuiBox p={2}>
           {renderItems}
           <SuiBox display="flex" py={1} pr={2}>
-            <SuiTypography variant="button" fontWeight="bold" textTransform="capitalize">
-              social: &nbsp;
-            </SuiTypography>
-            {renderSocial}
+            {}
           </SuiBox>
         </SuiBox>
       </SuiBox>
@@ -122,11 +76,9 @@ function ProfileInfoCard({ title, description, info, social, action }) {
 // Typechecking props for the ProfileInfoCard
 ProfileInfoCard.propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
   info: PropTypes.objectOf(PropTypes.string).isRequired,
-  social: PropTypes.arrayOf(PropTypes.object).isRequired,
   action: PropTypes.shape({
-    route: PropTypes.string.isRequired,
+    route: PropTypes.number.isRequired,
     tooltip: PropTypes.string.isRequired,
   }).isRequired,
 };

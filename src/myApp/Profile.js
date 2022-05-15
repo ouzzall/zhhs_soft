@@ -1,10 +1,5 @@
 import Grid from "@mui/material/Grid";
 
-// @mui icons
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import InstagramIcon from "@mui/icons-material/Instagram";
-
 // Soft UI Dashboard PRO React components
 import SuiBox from "components/SuiBox";
 
@@ -27,54 +22,102 @@ import { setReports } from "redux/patReports";
 import { setId } from "redux/patId";
 import { setDiagnosis } from "redux/patDiagnosis";
 import { useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Oval } from "react-loader-spinner";
 
 function Profile() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { id } = history.location.state;
+  const sendId = new URLSearchParams({ id }).toString();
+  // console.log(id);
 
   function actionHandle() {
     dispatch(setShelfList([]));
     dispatch(setSelfList([]));
     dispatch(setId(0));
-    dispatch(setDiagnosis(""));
+    dispatch(
+      setDiagnosis(
+        "<p><strong>Symptoms:</strong><br><br><br><strong>Findings:</strong><br><br><br><strong>Care:</strong><br><br><br><strong>Suggestions:</strong><br><br><br><strong><em><u>By: Hakeem M. Ashraf</u></em></strong></p>"
+      )
+    );
     dispatch(setReports([]));
     history.push("/check-ups/new-check-up");
   }
 
+  const [getData, setGetData] = useState(null);
+  const [isPending, setIsPending] = useState(true);
+  const [errorL, setError] = useState(null);
+
+  useEffect(() => {
+    const abortCont = new AbortController();
+
+    fetch(`http://localhost/zhhs_soft_server/api/patients/profile?${sendId}`, {
+      // method: "GET",
+      // headers: { "content-Type": "application/json" },
+      signal: abortCont.signal,
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw Error("Not Fetching data from server.");
+        }
+        return res.json();
+      })
+      .then((result) => {
+        // console.log(result);
+        setGetData(result.data);
+        setIsPending(false);
+        setError(false);
+      })
+      .catch((err) => {
+        // console.log(err.name === "AbortError");
+        if (err.name === "AbortError") {
+          // console.log("Fetch Aborted.");
+        } else {
+          setError(err.message);
+          setGetData(null);
+          setIsPending(false);
+        }
+      });
+
+    return () => abortCont.abort();
+  }, [`http://localhost/zhhs_soft_server/api/patients/profile?${sendId}`]);
+
   return (
     <DashboardLayout>
-      <Header />
+      {getData && <Header name={getData.name} />}
       <SuiBox mt={5} mb={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4} xl={4}>
-            <ProfileInfoCard
-              title="profile information"
-              description="Hi, I’m Anas Asharf. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ipsum mauris, efficitur placerat purus in, semper rutrum tellus. Aenean vel hendrerit odio. Maecenas in dolor lorem."
-              info={{
-                fullName: "Muhammad Anas Ashraf",
-                mobile: "03214569789",
-                email: "anas@mail.com",
-                location: "Pakistan",
-              }}
-              social={[
-                {
-                  link: "#",
-                  icon: <FacebookIcon />,
-                  color: "facebook",
-                },
-                {
-                  link: "#",
-                  icon: <TwitterIcon />,
-                  color: "twitter",
-                },
-                {
-                  link: "#",
-                  icon: <InstagramIcon />,
-                  color: "instagram",
-                },
-              ]}
-              action={{ route: "", tooltip: "Edit Profile" }}
-            />
+            {errorL && (
+              <Grid container direction="row" justifyContent="center" alignItems="center">
+                <SuiBox p={3} pb={15}>
+                  {errorL}
+                </SuiBox>
+              </Grid>
+            )}
+            {isPending && (
+              <Grid container direction="row" justifyContent="center" alignItems="center">
+                <SuiBox pt={25} pb={15}>
+                  <Oval color="#74c40e" height={80} width={80} />
+                </SuiBox>
+              </Grid>
+            )}
+            {getData && (
+              <ProfileInfoCard
+                title="profile information"
+                info={{
+                  name: getData.name,
+                  fatherName: getData.father_name,
+                  gender: getData.gender,
+                  age: getData.age,
+                  weight: getData.weight,
+                  height: getData.height,
+                  phone: getData.phone,
+                }}
+                action={{ route: getData.id, tooltip: "Edit Profile" }}
+              />
+            )}
           </Grid>
           <Grid item xs={12} md={8} xl={8}>
             <Card>

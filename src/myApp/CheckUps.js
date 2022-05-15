@@ -31,7 +31,11 @@ function CheckUps() {
     dispatch(setShelfList([]));
     dispatch(setSelfList([]));
     dispatch(setId(0));
-    dispatch(setDiagnosis(""));
+    dispatch(
+      setDiagnosis(
+        "<p><strong>Symptoms:</strong><br><br><br><strong>Findings:</strong><br><br><br><strong>Care:</strong><br><br><br><strong>Suggestions:</strong><br><br><br><strong><em><u>By: Hakeem M. Ashraf</u></em></strong></p>"
+      )
+    );
     dispatch(setReports([]));
     history.push("/check-ups/new-check-up");
   }

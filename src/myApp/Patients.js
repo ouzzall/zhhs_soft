@@ -127,7 +127,9 @@ function Patients() {
               <Tooltip
                 title="Patient Profile"
                 placement="top"
-                onClick={() => history.push("/patients/profile")}
+                onClick={() => {
+                  history.push(`/patients/profile`, { id: element.id });
+                }}
               >
                 <Icon>visibility</Icon>
               </Tooltip>
