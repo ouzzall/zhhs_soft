@@ -17,7 +17,7 @@ import SuiButton from "components/SuiButton";
 import PatientsCheckUpsData from "layouts/applications/data-tables/data/PatientsCheckUpsData";
 
 import { useDispatch } from "react-redux";
-import { setShelfList, setSelfList } from "redux/patMedicines";
+import { setShelfList, setSelfList, setId, setDiagnosis, setReports } from "redux/patMedicines";
 import { useHistory } from "react-router-dom";
 
 function CheckUps() {
@@ -27,6 +27,9 @@ function CheckUps() {
   function actionHandle() {
     dispatch(setShelfList([]));
     dispatch(setSelfList([]));
+    dispatch(setId(0));
+    dispatch(setDiagnosis(""));
+    dispatch(setReports([]));
     history.push("/check-ups/new-check-up");
   }
 

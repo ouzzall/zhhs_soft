@@ -22,7 +22,7 @@ import WeatherCard from "examples/Cards/WeatherCard";
 import iconSunCloud from "assets/images/small-logos/icon-sun-cloud.png";
 
 import { useDispatch } from "react-redux";
-import { setShelfList, setSelfList } from "redux/patMedicines";
+import { setShelfList, setSelfList, setId, setDiagnosis, setReports } from "redux/patMedicines";
 import { useHistory } from "react-router-dom";
 
 function MyHomeDashboard() {
@@ -34,6 +34,9 @@ function MyHomeDashboard() {
   function actionHandle() {
     dispatch(setShelfList([]));
     dispatch(setSelfList([]));
+    dispatch(setId(0));
+    dispatch(setDiagnosis(""));
+    dispatch(setReports([]));
     history.push("/check-ups/new-check-up");
   }
 
