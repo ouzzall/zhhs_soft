@@ -26,6 +26,7 @@ import PatientDiagnosis from "myApp/CheckUpComponents/PatientDiagnosis/PatientDi
 import AssignMedicine from "myApp/CheckUpComponents/AssignMedicine/AssignMedicine";
 import GenerateBill from "myApp/CheckUpComponents/GenerateBill/GenerateBill";
 import { useSelector } from "react-redux";
+import SuiSnackbar from "components/SuiSnackbar";
 
 function getSteps() {
   return [1, 2, 3, 4];
@@ -63,17 +64,70 @@ function NewCheckUp() {
   const handleNext = () => setActiveStep(activeStep + 1);
   const handleBack = () => setActiveStep(activeStep - 1);
 
+  const [errorText, setErrorText] = useState("");
+  const [errorSB, setErrorSB] = useState(false);
+
+  const closeErrorSB = () => setErrorSB(false);
+  const renderErrorSB = (
+    <SuiSnackbar
+      color="error"
+      icon="warning"
+      title={errorText}
+      content=""
+      dateTime=""
+      open={errorSB}
+      onClose={closeErrorSB}
+      close={closeErrorSB}
+    />
+  );
+
   function endingHandler() {
     // !LastStep ? handleNext : history.push("/dashboard");
     // console.log(LastStep);
     if (LastStep) {
       history.push("/dashboard");
     } else if (secondLastStep) {
-      console.log(patientId);
-      console.log(patientDiagnosis);
-      console.log(patientReports);
-      console.log(shelfMedList);
-      console.log(selfMedList);
+      // console.log(patientId);
+      // console.log(patientDiagnosis);
+      // console.log(patientReports);
+      // console.log(shelfMedList);
+      // console.log(selfMedList);
+
+      const formData = new FormData();
+
+      formData.append("user_id", patientId);
+      formData.append("diagnosis", patientDiagnosis);
+
+      for (let i = 0; i < patientReports.length; i += 1) {
+        formData.append(`reports[${i}]`, patientReports[i]);
+      }
+
+      formData.append("shelf_medicines", JSON.stringify(shelfMedList));
+      formData.append("self_medicines", JSON.stringify(selfMedList));
+
+      // console.log(selfMedList[0]);
+      // console.log(shelfMedList[0]);
+      // formData.append("self_medicines", selfMedList[0]);
+      // formData.append("shelf_medicines", shelfMedList[0]);
+
+      fetch("http://localhost/zhhs_soft_server/api/check-ups/new-check-up", {
+        method: "POST",
+        // headers: { "content-Type": "application/json" },
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // console.log(data);
+          if (data.status === true) {
+            // history.replace("/patients");
+            // console.log(data);
+            handleNext();
+          } else if (data.status === false) {
+            // console.log(data);
+            setErrorText(data.message);
+            setErrorSB(true);
+          }
+        });
     } else {
       handleNext();
     }
@@ -82,6 +136,7 @@ function NewCheckUp() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
+      {renderErrorSB}
       <SuiBox pb={4} pt={3}>
         <Grid container justifyContent="center">
           <Grid item xs={12} lg={12}>

@@ -416,6 +416,7 @@ function AssignMedicine() {
       night: medNit,
       days: medDaz,
       taking: medTak,
+      price: medPri,
     };
 
     // console.log(finalObj);
