@@ -65,7 +65,7 @@ function OperationalCosts() {
       });
 
     return () => abortCont.abort();
-  }, [`http://localhost/zhhs_soft_server/api/medicines`]);
+  }, [`http://localhost/zhhs_soft_server/api/costs`]);
 
   let cosData = "";
 
