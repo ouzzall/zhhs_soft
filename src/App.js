@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 // react-router components
-import { Route, Switch, Redirect, useLocation } from "react-router-dom";
+import { Route, Switch, Redirect, useLocation, useHistory } from "react-router-dom";
 
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
@@ -27,6 +27,17 @@ import brand from "./assets/logo/no-bg-logo.png";
 // import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
 export default function App() {
+  const history = useHistory();
+  // console.log("HELLO FROM APP");
+
+  if (localStorage.getItem("phone")) {
+    if (window.location.href === "http://localhost:3000/sign-in") history.push("/dashboard");
+  } else if (window.location.href === "http://localhost:3000/sign-in") {
+    //
+  } else {
+    history.push("/sign-in");
+  }
+
   const [controller, dispatch] = useSoftUIController();
   // const { miniSidenav, direction, layout, openConfigurator, sidenavColor } = controller;
   const { miniSidenav, direction, layout, sidenavColor } = controller;

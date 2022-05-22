@@ -3,7 +3,7 @@ import "main.css";
 import { useState, useEffect } from "react";
 
 // react-router components
-import { useLocation, Link } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
@@ -38,16 +38,26 @@ import { useSoftUIController, setMiniSidenav } from "context";
 // import { useSoftUIController, setTransparentNavbar, setMiniSidenav } from "context";
 
 // Images
-import team2 from "assets/images/team-2.jpg";
-import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
+// import team2 from "assets/images/team-2.jpg";
+import team2 from "assets/images/profile-pic.jpg";
 
 function DashboardNavbar({ absolute, light, isMini }) {
+  const history = useHistory();
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useSoftUIController();
   // const { miniSidenav, transparentNavbar, fixedNavbar } = controller;
   const { miniSidenav, fixedNavbar } = controller;
   const [openMenu, setOpenMenu] = useState(false);
-  const route = useLocation().pathname.split("/").slice(1);
+  let route = "";
+  // console.log(useLocation().pathname);
+  if (useLocation().pathname === "/") {
+    // console.log("hello1");
+    route = ["dashboard"];
+  } else {
+    // console.log("hello2");
+    route = useLocation().pathname.split("/").slice(1);
+  }
+
   //
   const newRoutes = [];
   for (let i = 0; i < route.length; i += 1) {
@@ -90,8 +100,15 @@ function DashboardNavbar({ absolute, light, isMini }) {
   }, [dispatch, fixedNavbar]);
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
-  // const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
+  const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
+
+  function logoutHandler() {
+    setOpenMenu(false);
+    localStorage.removeItem("phone");
+    localStorage.removeItem("name");
+    history.push("/sign-in");
+  }
 
   // Render the notifications menu
   const renderMenu = () => (
@@ -104,30 +121,13 @@ function DashboardNavbar({ absolute, light, isMini }) {
       }}
       open={Boolean(openMenu)}
       onClose={handleCloseMenu}
-      sx={{ mt: 2 }}
+      sx={{ mt: 2, ml: -3 }}
     >
       <NotificationItem
         image={<img src={team2} alt="person" />}
-        title={["New message", "from Laur"]}
-        date="13 minutes ago"
-        onClick={handleCloseMenu}
-      />
-      <NotificationItem
-        image={<img src={logoSpotify} alt="person" />}
-        title={["New album", "by Travis Scott"]}
-        date="1 day"
-        onClick={handleCloseMenu}
-      />
-      <NotificationItem
-        color="secondary"
-        image={
-          <Icon fontSize="small" sx={{ color: ({ palette: { white } }) => white.main }}>
-            payment
-          </Icon>
-        }
-        title={["", "Payment successfully completed"]}
-        date="2 days"
-        onClick={handleCloseMenu}
+        title={[localStorage.getItem("name")]}
+        date="Log Out"
+        onClick={logoutHandler}
       />
     </Menu>
   );
@@ -156,24 +156,22 @@ function DashboardNavbar({ absolute, light, isMini }) {
         {isMini ? null : (
           <SuiBox sx={(theme) => navbarRow(theme, { isMini })} className="rightt_align">
             <SuiBox color={light ? "white" : "inherit"}>
-              <Link to="/sign-in">
-                <IconButton sx={navbarIconButton} size="small">
-                  <Icon
-                    sx={({ palette: { dark, white } }) => ({
-                      color: light ? white.main : dark.main,
-                    })}
-                  >
-                    account_circle
-                  </Icon>
-                  <SuiTypography
-                    variant="button"
-                    fontWeight="medium"
-                    color={light ? "white" : "dark"}
-                  >
-                    Sign in
-                  </SuiTypography>
-                </IconButton>
-              </Link>
+              <IconButton sx={navbarIconButton} onClick={handleOpenMenu} size="small">
+                <Icon
+                  sx={({ palette: { dark, white } }) => ({
+                    color: light ? white.main : dark.main,
+                  })}
+                >
+                  account_circle
+                </Icon>
+                <SuiTypography
+                  variant="button"
+                  fontWeight="medium"
+                  color={light ? "white" : "dark"}
+                >
+                  {localStorage.getItem("name")}
+                </SuiTypography>
+              </IconButton>
               <IconButton
                 size="small"
                 color="inherit"
