@@ -217,7 +217,7 @@ function Medicines() {
                   />
                 </SuiBox>
               </Grid>
-              <Grid item xs={6} sm={3}>
+              {/* <Grid item xs={6} sm={3}>
                 <SuiBox mb={3}>
                   <MiniStatisticsCard
                     title={{ text: "Revenue", fontWeight: "bold" }}
@@ -229,7 +229,7 @@ function Medicines() {
                     }}
                   />
                 </SuiBox>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
         </SuiBox>

@@ -35,22 +35,6 @@ import { useHistory } from "react-router-dom";
 function MyHomeDashboard() {
   // console.log("HELLO FROM CONSOLE");
 
-  const chartData = {
-    labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    datasets: [
-      {
-        label: "Patients",
-        color: "info",
-        data: [50, 40, 300, 220, 300, 250, 400, 230, 0],
-      },
-      {
-        label: "Walking Customers",
-        color: "dark",
-        data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
-      },
-    ],
-  };
-
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -104,6 +88,7 @@ function MyHomeDashboard() {
   }, [`http://localhost/zhhs_soft_server/api/my-dashboard`]);
 
   let useData = "";
+  let chartData = "";
 
   function handleDelete(e) {
     // console.log(e);
@@ -220,6 +205,24 @@ function MyHomeDashboard() {
     };
 
     // console.log(medData);
+  }
+
+  if (checkData) {
+    chartData = {
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      datasets: [
+        {
+          label: "Patients",
+          color: "info",
+          data: checkData[2],
+        },
+        {
+          label: "Walking Customers",
+          color: "dark",
+          data: checkData[3],
+        },
+      ],
+    };
   }
 
   return (
