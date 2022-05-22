@@ -110,6 +110,7 @@ import EditMedicine from "myApp/EditMedicine";
 import EditPatient from "myApp/EditPatient";
 import EditUser from "myApp/EditUser";
 import EditOperationalCost from "myApp/EditOperationalCost";
+import OnlyBill from "myApp/OnlyBill";
 
 const routes = [
   {
@@ -203,7 +204,7 @@ const routes = [
     myRoute: true,
     name: "Patient Bill",
     key: "patient-bill",
-    route: "/patients/profile/patient-bill",
+    route: "/check-ups/patient-bill",
     icon: "fa-solid fa-hospital-user",
     component: PatientBill,
   },
@@ -211,10 +212,11 @@ const routes = [
     myRoute: true,
     name: "Patient Prescription",
     key: "patient-prescription",
-    route: "/patients/profile/patient-prescription",
+    route: "/check-ups/patient-prescription",
     icon: "fa-solid fa-hospital-user",
     component: PatientPrescription,
   },
+
   {
     myRoute: true,
     type: "collapse",
@@ -223,6 +225,14 @@ const routes = [
     route: "/walking-customers",
     icon: "fa-solid fa-person-walking",
     component: WalkingCustomers,
+  },
+  {
+    myRoute: true,
+    name: "Random Bill",
+    key: "random-bill",
+    route: "/walking-customers/random-bill",
+    icon: "fa-solid fa-person-walking",
+    component: OnlyBill,
   },
   {
     myRoute: true,

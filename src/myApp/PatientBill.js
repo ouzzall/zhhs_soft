@@ -18,8 +18,53 @@ import colors from "assets/theme/base/colors";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+import { useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Oval } from "react-loader-spinner";
 
 function PatientBill() {
+  const history = useHistory();
+  // console.log(history.location.state.id);
+  const { id } = history.location.state;
+  const sendId = new URLSearchParams({ id }).toString();
+  // console.log(sendId);
+
+  const [billData, setBillData] = useState(null);
+  const [isPending, setIsPending] = useState(true);
+  const [errorL, setError] = useState(null);
+
+  useEffect(() => {
+    const abortCont = new AbortController();
+
+    fetch(`http://localhost/zhhs_soft_server/api/view-bill?${sendId}`, {
+      signal: abortCont.signal,
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw Error("Not Fetching data from server.");
+        }
+        return res.json();
+      })
+      .then((result) => {
+        // console.log(result);
+        setBillData(result.data);
+        setIsPending(false);
+        setError(false);
+      })
+      .catch((err) => {
+        // console.log(err.name === "AbortError");
+        if (err.name === "AbortError") {
+          // console.log("Fetch Aborted.");
+        } else {
+          setError(err.message);
+          setBillData(null);
+          setIsPending(false);
+        }
+      });
+
+    return () => abortCont.abort();
+  }, [`http://localhost/zhhs_soft_server/api/view-bill?${sendId}`]);
+
   const { borderWidth } = borders;
   const { light } = colors;
   const borderBottom = `${borderWidth[1]} solid ${light.main}`;
@@ -27,341 +72,304 @@ function PatientBill() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <SuiBox mt={{ xs: 3, md: 3 }} mb={{ xs: 3, md: 3 }}>
-        <Grid container justifyContent="center">
-          <Grid item xs={12} sm={10} md={8}>
-            <Card>
-              {/* Invoice header */}
-              <SuiBox p={3}>
-                <Grid container justifyContent="space-between">
-                  <Grid item xs={12} md={4}>
-                    {/* <SuiBox component="img" src={logoCT} width="25%" p={1} mb={1} /> */}
-                    <SuiTypography variant="h6" fontWeight="medium" mt={2}>
-                      Zahid Herbal Dawakhana, near G. T. Road, Swami Nagar Lahore, Punjab, Pakistan
-                    </SuiTypography>
-                    <SuiBox mt={1} mb={2}>
-                      <SuiTypography display="block" variant="body2" color="secondary">
-                        Phone: 0321-3487892
+      {errorL && (
+        <Grid container direction="row" justifyContent="center" alignItems="center">
+          <SuiBox p={3} pb={15}>
+            {errorL}
+          </SuiBox>
+        </Grid>
+      )}
+      {isPending && (
+        <Grid container direction="row" justifyContent="center" alignItems="center">
+          <SuiBox p={15} pb={15}>
+            <Oval color="#74c40e" height={80} width={80} />
+          </SuiBox>
+        </Grid>
+      )}
+      {billData && (
+        <SuiBox mt={{ xs: 3, md: 3 }} mb={{ xs: 3, md: 3 }}>
+          <Grid container justifyContent="center">
+            <Grid item xs={12} sm={10} md={8}>
+              <Card>
+                {/* Invoice header */}
+                <SuiBox p={3}>
+                  <Grid container justifyContent="space-between">
+                    <Grid item xs={12} md={4}>
+                      {/* <SuiBox component="img" src={logoCT} width="25%" p={1} mb={1} /> */}
+                      <SuiTypography variant="h6" fontWeight="medium" mt={2}>
+                        Zahid Herbal Dawakhana, near G. T. Road, Swami Nagar Lahore, Punjab,
+                        Pakistan
                       </SuiTypography>
-                    </SuiBox>
-                  </Grid>
-                  <Grid item xs={12} md={7} lg={7}>
-                    <SuiBox width="100%" textAlign={{ xs: "left", md: "right" }} mt={2}>
-                      <SuiBox mt={0}>
-                        <SuiTypography variant="h6" fontWeight="medium">
-                          Billed to: Mushtaq Shaffiq Bhatti
+                      <SuiBox mt={1} mb={2}>
+                        <SuiTypography display="block" variant="body2" color="secondary">
+                          Phone: 0321-3487892
                         </SuiTypography>
                       </SuiBox>
-                      <SuiBox mb={1}>
-                        <SuiTypography variant="body2" color="secondary">
-                          Phone: 0322-4898598
-                          {/* <br />
+                    </Grid>
+                    <Grid item xs={12} md={7} lg={7}>
+                      <SuiBox width="100%" textAlign={{ xs: "left", md: "right" }} mt={2}>
+                        <SuiBox mt={0}>
+                          <SuiTypography variant="h6" fontWeight="medium">
+                            Billed to: {billData[0].name}
+                          </SuiTypography>
+                        </SuiBox>
+                        <SuiBox mb={1}>
+                          <SuiTypography variant="body2" color="secondary">
+                            Phone: {billData[0].phone}
+                            {/* <br />
                           San Francisco CA
                           <br />
                           California */}
+                          </SuiTypography>
+                        </SuiBox>
+                      </SuiBox>
+                    </Grid>
+                  </Grid>
+                  <SuiBox mt={{ xs: 5, md: 5 }}>
+                    <Grid container justifyContent="space-between">
+                      <Grid item xs={12} md={4}>
+                        <SuiTypography variant="h6" color="secondary" fontWeight="medium">
+                          Invoice No
+                        </SuiTypography>
+                        <SuiTypography variant="h6" fontWeight="medium">
+                          #{billData[0].id}
+                        </SuiTypography>
+                      </Grid>
+                      <Grid item xs={12} md={7} lg={5}>
+                        <SuiBox
+                          width="100%"
+                          display="flex"
+                          flexDirection={{ xs: "column", md: "row" }}
+                          alignItems={{ xs: "flex-start", md: "center" }}
+                          textAlign={{ xs: "left", md: "right" }}
+                          mt={{ xs: 3, md: 0 }}
+                        >
+                          <SuiBox width="50%">
+                            <SuiTypography variant="h6" color="secondary" fontWeight="medium">
+                              Invoice Date:
+                            </SuiTypography>
+                          </SuiBox>
+                          <SuiBox width="50%">
+                            <SuiTypography variant="h6" fontWeight="medium">
+                              {billData[0].created_at}
+                            </SuiTypography>
+                          </SuiBox>
+                        </SuiBox>
+                      </Grid>
+                    </Grid>
+                  </SuiBox>
+                </SuiBox>
+                <SuiBox p={3}>
+                  <SuiBox width="100%" overflow="auto">
+                    <Table sx={{ minWidth: "32rem" }}>
+                      <SuiBox component="thead">
+                        <TableRow>
+                          <SuiBox
+                            component="th"
+                            width={{ xs: "45%", md: "50%" }}
+                            py={1.5}
+                            px={1}
+                            textAlign="left"
+                            borderBottom={borderBottom}
+                          >
+                            <SuiTypography variant="h6" color="text" fontWeight="medium">
+                              Items
+                            </SuiTypography>
+                          </SuiBox>
+                          <SuiBox
+                            component="th"
+                            py={1.5}
+                            pl={3}
+                            pr={1}
+                            textAlign="left"
+                            borderBottom={borderBottom}
+                          >
+                            <SuiTypography variant="h6" color="text" fontWeight="medium">
+                              Qty
+                            </SuiTypography>
+                          </SuiBox>
+                          <SuiBox
+                            component="th"
+                            py={1.5}
+                            pl={3}
+                            pr={1}
+                            textAlign="left"
+                            borderBottom={borderBottom}
+                          >
+                            <SuiTypography variant="h6" color="text" fontWeight="medium">
+                              Rate
+                            </SuiTypography>
+                          </SuiBox>
+                          <SuiBox
+                            component="th"
+                            py={1.5}
+                            pl={3}
+                            pr={1}
+                            textAlign="left"
+                            borderBottom={borderBottom}
+                          >
+                            <SuiTypography variant="h6" color="text" fontWeight="medium">
+                              Amount
+                            </SuiTypography>
+                          </SuiBox>
+                        </TableRow>
+                      </SuiBox>
+                      <TableBody>
+                        {billData[1].map((value) => {
+                          let medicineCount = 0;
+                          if (value.type === "Shelf") {
+                            medicineCount = value.morning + value.noon + value.night;
+                            medicineCount *= value.days;
+                            // console.log(medicineCount);
+                          } else if (value.type === "Self") {
+                            medicineCount = 1;
+                            // console.log(medicineCount);
+                          }
+
+                          return (
+                            <TableRow key={value.id}>
+                              <SuiBox
+                                component="td"
+                                textAlign="left"
+                                p={1}
+                                borderBottom={borderBottom}
+                              >
+                                <SuiTypography variant="body2" color="text">
+                                  {value.name}
+                                </SuiTypography>
+                              </SuiBox>
+                              <SuiBox
+                                component="td"
+                                textAlign="left"
+                                py={1}
+                                pr={1}
+                                pl={3}
+                                borderBottom={borderBottom}
+                              >
+                                <SuiTypography variant="body2" color="text">
+                                  {medicineCount}
+                                </SuiTypography>
+                              </SuiBox>
+                              <SuiBox
+                                component="td"
+                                textAlign="left"
+                                py={1}
+                                pr={1}
+                                pl={3}
+                                borderBottom={borderBottom}
+                              >
+                                <SuiTypography variant="body2" color="text">
+                                  {value.price_specific}
+                                </SuiTypography>
+                              </SuiBox>
+                              <SuiBox
+                                component="td"
+                                textAlign="left"
+                                py={1}
+                                pr={1}
+                                pl={3}
+                                borderBottom={borderBottom}
+                              >
+                                <SuiTypography variant="body2" color="text">
+                                  {value.price_total}
+                                </SuiTypography>
+                              </SuiBox>
+                            </TableRow>
+                          );
+                        })}
+
+                        <TableRow>
+                          <SuiBox
+                            component="td"
+                            textAlign="left"
+                            p={1}
+                            borderBottom={borderBottom}
+                          />
+                          <SuiBox
+                            component="td"
+                            textAlign="left"
+                            py={1}
+                            pr={1}
+                            pl={3}
+                            borderBottom={borderBottom}
+                          />
+                          <SuiBox
+                            component="td"
+                            textAlign="left"
+                            py={1}
+                            pr={1}
+                            pl={3}
+                            borderBottom={borderBottom}
+                          >
+                            <SuiTypography variant="h5">Total</SuiTypography>
+                          </SuiBox>
+                          <SuiBox
+                            component="td"
+                            textAlign="left"
+                            py={1}
+                            pr={1}
+                            pl={3}
+                            borderBottom={borderBottom}
+                          >
+                            <SuiTypography variant="h5">
+                              Rs. {billData[0].check_up_price}
+                            </SuiTypography>
+                          </SuiBox>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </SuiBox>
+                </SuiBox>
+
+                {/* Invoice footer */}
+                <SuiBox p={3} mt={7}>
+                  <Grid container>
+                    <Grid item xs={12} lg={5}>
+                      <SuiTypography variant="h5" fontWeight="medium">
+                        Thank you!
+                      </SuiTypography>
+                      <SuiBox mt={1} mb={2} lineHeight={0}>
+                        <SuiTypography variant="button" fontWeight="regular" color="secondary">
+                          If you encounter any issues related to the medicine you can contact us at:
                         </SuiTypography>
                       </SuiBox>
-                    </SuiBox>
-                  </Grid>
-                </Grid>
-                <SuiBox mt={{ xs: 5, md: 5 }}>
-                  <Grid container justifyContent="space-between">
-                    <Grid item xs={12} md={4}>
-                      <SuiTypography variant="h6" color="secondary" fontWeight="medium">
-                        Invoice No
-                      </SuiTypography>
-                      <SuiTypography variant="h6" fontWeight="medium">
-                        #0453119
+                      <SuiTypography
+                        component="span"
+                        variant="h6"
+                        fontWeight="medium"
+                        color="secondary"
+                      >
+                        email:{" "}
+                        <SuiTypography component="span" variant="h6" fontWeight="medium">
+                          zhhs@gmail.com
+                        </SuiTypography>
                       </SuiTypography>
                     </Grid>
-                    <Grid item xs={12} md={7} lg={5}>
+                    <Grid item xs={12} lg={7}>
                       <SuiBox
                         width="100%"
+                        height={{ xs: "auto", md: "100%" }}
                         display="flex"
-                        flexDirection={{ xs: "column", md: "row" }}
-                        alignItems={{ xs: "flex-start", md: "center" }}
-                        textAlign={{ xs: "left", md: "right" }}
-                        mt={{ xs: 3, md: 0 }}
+                        justifyContent={{ xs: "flex-start", md: "flex-end" }}
+                        alignItems="flex-end"
+                        mt={{ xs: 2, md: 0 }}
                       >
-                        <SuiBox width="50%">
-                          <SuiTypography variant="h6" color="secondary" fontWeight="medium">
-                            Invoice Date:
-                          </SuiTypography>
-                        </SuiBox>
-                        <SuiBox width="50%">
-                          <SuiTypography variant="h6" fontWeight="medium">
-                            24/04/2022
-                          </SuiTypography>
-                        </SuiBox>
+                        <SuiButton
+                          variant="gradient"
+                          color="info"
+                          onClick={() => window.print(this)}
+                        >
+                          print
+                        </SuiButton>
                       </SuiBox>
-                      {/* <SuiBox
-                        width="100%"
-                        display="flex"
-                        flexDirection={{ xs: "column", md: "row" }}
-                        alignItems={{ xs: "flex-start", md: "center" }}
-                        textAlign={{ xs: "left", md: "right" }}
-                      >
-                        <SuiBox width="50%">
-                          <SuiTypography variant="h6" color="secondary" fontWeight="medium">
-                            Due date:
-                          </SuiTypography>
-                        </SuiBox>
-                        <SuiBox width="50%">
-                          <SuiTypography variant="h6" fontWeight="medium">
-                            11/03/2019
-                          </SuiTypography>
-                        </SuiBox>
-                      </SuiBox> */}
                     </Grid>
                   </Grid>
                 </SuiBox>
-              </SuiBox>
-
-              {/* Invoice table */}
-              <SuiBox p={3}>
-                <SuiBox width="100%" overflow="auto">
-                  <Table sx={{ minWidth: "32rem" }}>
-                    <SuiBox component="thead">
-                      <TableRow>
-                        <SuiBox
-                          component="th"
-                          width={{ xs: "45%", md: "50%" }}
-                          py={1.5}
-                          px={1}
-                          textAlign="left"
-                          borderBottom={borderBottom}
-                        >
-                          <SuiTypography variant="h6" color="text" fontWeight="medium">
-                            Items
-                          </SuiTypography>
-                        </SuiBox>
-                        <SuiBox
-                          component="th"
-                          py={1.5}
-                          pl={3}
-                          pr={1}
-                          textAlign="left"
-                          borderBottom={borderBottom}
-                        >
-                          <SuiTypography variant="h6" color="text" fontWeight="medium">
-                            Qty
-                          </SuiTypography>
-                        </SuiBox>
-                        <SuiBox
-                          component="th"
-                          py={1.5}
-                          pl={3}
-                          pr={1}
-                          textAlign="left"
-                          borderBottom={borderBottom}
-                        >
-                          <SuiTypography variant="h6" color="text" fontWeight="medium">
-                            Rate
-                          </SuiTypography>
-                        </SuiBox>
-                        <SuiBox
-                          component="th"
-                          py={1.5}
-                          pl={3}
-                          pr={1}
-                          textAlign="left"
-                          borderBottom={borderBottom}
-                        >
-                          <SuiTypography variant="h6" color="text" fontWeight="medium">
-                            Amount
-                          </SuiTypography>
-                        </SuiBox>
-                      </TableRow>
-                    </SuiBox>
-                    <TableBody>
-                      <TableRow>
-                        <SuiBox component="td" textAlign="left" p={1} borderBottom={borderBottom}>
-                          <SuiTypography variant="body2" color="text">
-                            Flagyl 10mg
-                          </SuiTypography>
-                        </SuiBox>
-                        <SuiBox
-                          component="td"
-                          textAlign="left"
-                          py={1}
-                          pr={1}
-                          pl={3}
-                          borderBottom={borderBottom}
-                        >
-                          <SuiTypography variant="body2" color="text">
-                            1
-                          </SuiTypography>
-                        </SuiBox>
-                        <SuiBox
-                          component="td"
-                          textAlign="left"
-                          py={1}
-                          pr={1}
-                          pl={3}
-                          borderBottom={borderBottom}
-                        >
-                          <SuiTypography variant="body2" color="text">
-                            9.00
-                          </SuiTypography>
-                        </SuiBox>
-                        <SuiBox
-                          component="td"
-                          textAlign="left"
-                          py={1}
-                          pr={1}
-                          pl={3}
-                          borderBottom={borderBottom}
-                        >
-                          <SuiTypography variant="body2" color="text">
-                            9.00
-                          </SuiTypography>
-                        </SuiBox>
-                      </TableRow>
-                      <TableRow>
-                        <SuiBox component="td" textAlign="left" p={1} borderBottom={borderBottom}>
-                          <SuiTypography variant="body2" color="text">
-                            Majoon Specific 2
-                          </SuiTypography>
-                        </SuiBox>
-                        <SuiBox
-                          component="td"
-                          textAlign="left"
-                          py={1}
-                          pr={1}
-                          pl={3}
-                          borderBottom={borderBottom}
-                        >
-                          <SuiTypography variant="body2" color="text">
-                            3
-                          </SuiTypography>
-                        </SuiBox>
-                        <SuiBox
-                          component="td"
-                          textAlign="left"
-                          py={1}
-                          pr={1}
-                          pl={3}
-                          borderBottom={borderBottom}
-                        >
-                          <SuiTypography variant="body2" color="text">
-                            100.00
-                          </SuiTypography>
-                        </SuiBox>
-                        <SuiBox
-                          component="td"
-                          textAlign="left"
-                          py={1}
-                          pr={1}
-                          pl={3}
-                          borderBottom={borderBottom}
-                        >
-                          <SuiTypography variant="body2" color="text">
-                            300.00
-                          </SuiTypography>
-                        </SuiBox>
-                      </TableRow>
-                      <TableRow>
-                        <SuiBox component="td" textAlign="left" p={1}>
-                          <SuiTypography variant="body2" color="text">
-                            Sandal Sharbat
-                          </SuiTypography>
-                        </SuiBox>
-                        <SuiBox component="td" textAlign="left" py={1} pr={1} pl={3}>
-                          <SuiTypography variant="body2" color="text">
-                            1
-                          </SuiTypography>
-                        </SuiBox>
-                        <SuiBox component="td" textAlign="left" py={1} pr={1} pl={3}>
-                          <SuiTypography variant="body2" color="text">
-                            89.00
-                          </SuiTypography>
-                        </SuiBox>
-                        <SuiBox component="td" textAlign="left" py={1} pr={1} pl={3}>
-                          <SuiTypography variant="body2" color="text">
-                            89.00
-                          </SuiTypography>
-                        </SuiBox>
-                      </TableRow>
-                      <TableRow>
-                        <SuiBox component="td" textAlign="left" p={1} borderBottom={borderBottom} />
-                        <SuiBox
-                          component="td"
-                          textAlign="left"
-                          py={1}
-                          pr={1}
-                          pl={3}
-                          borderBottom={borderBottom}
-                        />
-                        <SuiBox
-                          component="td"
-                          textAlign="left"
-                          py={1}
-                          pr={1}
-                          pl={3}
-                          borderBottom={borderBottom}
-                        >
-                          <SuiTypography variant="h5">Total</SuiTypography>
-                        </SuiBox>
-                        <SuiBox
-                          component="td"
-                          textAlign="left"
-                          py={1}
-                          pr={1}
-                          pl={3}
-                          borderBottom={borderBottom}
-                        >
-                          <SuiTypography variant="h5">Rs. 498</SuiTypography>
-                        </SuiBox>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </SuiBox>
-              </SuiBox>
-
-              {/* Invoice footer */}
-              <SuiBox p={3} mt={7}>
-                <Grid container>
-                  <Grid item xs={12} lg={5}>
-                    <SuiTypography variant="h5" fontWeight="medium">
-                      Thank you!
-                    </SuiTypography>
-                    <SuiBox mt={1} mb={2} lineHeight={0}>
-                      <SuiTypography variant="button" fontWeight="regular" color="secondary">
-                        If you encounter any issues related to the medicine you can contact us at:
-                      </SuiTypography>
-                    </SuiBox>
-                    <SuiTypography
-                      component="span"
-                      variant="h6"
-                      fontWeight="medium"
-                      color="secondary"
-                    >
-                      email:{" "}
-                      <SuiTypography component="span" variant="h6" fontWeight="medium">
-                        zhhs@gmail.com
-                      </SuiTypography>
-                    </SuiTypography>
-                  </Grid>
-                  <Grid item xs={12} lg={7}>
-                    <SuiBox
-                      width="100%"
-                      height={{ xs: "auto", md: "100%" }}
-                      display="flex"
-                      justifyContent={{ xs: "flex-start", md: "flex-end" }}
-                      alignItems="flex-end"
-                      mt={{ xs: 2, md: 0 }}
-                    >
-                      <SuiButton variant="gradient" color="info" onClick={() => window.print(this)}>
-                        print
-                      </SuiButton>
-                    </SuiBox>
-                  </Grid>
-                </Grid>
-              </SuiBox>
-            </Card>
+              </Card>
+            </Grid>
           </Grid>
-        </Grid>
-      </SuiBox>
+        </SuiBox>
+      )}
       <Footer />
     </DashboardLayout>
   );

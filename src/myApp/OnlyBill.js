@@ -12,31 +12,31 @@ import SuiButton from "components/SuiButton";
 // Soft UI Dashboard PRO React base styles
 import borders from "assets/theme/base/borders";
 import colors from "assets/theme/base/colors";
-import { useHistory } from "react-router-dom";
 
 // Images
 // import logoCT from "assets/images/logo-ct.png";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Oval } from "react-loader-spinner";
 
-function PatientPrescription() {
+function OnlyBill() {
   const history = useHistory();
   // console.log(history.location.state.id);
   const { id } = history.location.state;
   const sendId = new URLSearchParams({ id }).toString();
   // console.log(sendId);
 
-  const [prescriptionData, setPrescriptionData] = useState(null);
+  const [billData, setBillData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [errorL, setError] = useState(null);
 
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`http://localhost/zhhs_soft_server/api/view-bill?${sendId}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/view-walk?${sendId}`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -47,7 +47,7 @@ function PatientPrescription() {
       })
       .then((result) => {
         // console.log(result);
-        setPrescriptionData(result.data);
+        setBillData(result.data);
         setIsPending(false);
         setError(false);
       })
@@ -57,13 +57,13 @@ function PatientPrescription() {
           // console.log("Fetch Aborted.");
         } else {
           setError(err.message);
-          setPrescriptionData(null);
+          setBillData(null);
           setIsPending(false);
         }
       });
 
     return () => abortCont.abort();
-  }, [`http://localhost/zhhs_soft_server/api/view-bill?${sendId}`]);
+  }, [`http://localhost/zhhs_soft_server/api/view-walk?${sendId}`]);
 
   const { borderWidth } = borders;
   const { light } = colors;
@@ -86,7 +86,7 @@ function PatientPrescription() {
           </SuiBox>
         </Grid>
       )}
-      {prescriptionData && (
+      {billData && (
         <SuiBox mt={{ xs: 3, md: 3 }} mb={{ xs: 3, md: 3 }}>
           <Grid container justifyContent="center">
             <Grid item xs={12} sm={10} md={8}>
@@ -110,13 +110,13 @@ function PatientPrescription() {
                       <SuiBox width="100%" textAlign={{ xs: "left", md: "right" }} mt={2}>
                         <SuiBox mt={0}>
                           <SuiTypography variant="h6" fontWeight="medium">
-                            Prescription to: {prescriptionData[0].name}
+                            Billed to: Random
                           </SuiTypography>
                         </SuiBox>
                         <SuiBox mb={1}>
-                          <SuiTypography variant="body2" color="secondary">
-                            Phone: {prescriptionData[0].phone}
-                          </SuiTypography>
+                          {/* <SuiTypography variant="body2" color="secondary">
+                            Phone: 0321-4295660
+                          </SuiTypography> */}
                         </SuiBox>
                       </SuiBox>
                     </Grid>
@@ -125,10 +125,10 @@ function PatientPrescription() {
                     <Grid container justifyContent="space-between">
                       <Grid item xs={12} md={4}>
                         <SuiTypography variant="h6" color="secondary" fontWeight="medium">
-                          Prescription No
+                          Invoice No
                         </SuiTypography>
                         <SuiTypography variant="h6" fontWeight="medium">
-                          #{prescriptionData[0].id}
+                          #{billData[0].id}
                         </SuiTypography>
                       </Grid>
                       <Grid item xs={12} md={7} lg={5}>
@@ -142,12 +142,12 @@ function PatientPrescription() {
                         >
                           <SuiBox width="50%">
                             <SuiTypography variant="h6" color="secondary" fontWeight="medium">
-                              Prescription Date:
+                              Invoice Date:
                             </SuiTypography>
                           </SuiBox>
                           <SuiBox width="50%">
                             <SuiTypography variant="h6" fontWeight="medium">
-                              {prescriptionData[0].created_at}
+                              {billData[0].created_at}
                             </SuiTypography>
                           </SuiBox>
                         </SuiBox>
@@ -168,8 +168,8 @@ function PatientPrescription() {
                             textAlign="left"
                             borderBottom={borderBottom}
                           >
-                            <SuiTypography variant="caption" color="text" fontWeight="medium">
-                              MEDICINE
+                            <SuiTypography variant="h6" color="text" fontWeight="medium">
+                              Items
                             </SuiTypography>
                           </SuiBox>
                           <SuiBox
@@ -180,8 +180,8 @@ function PatientPrescription() {
                             textAlign="left"
                             borderBottom={borderBottom}
                           >
-                            <SuiTypography variant="caption" color="text" fontWeight="medium">
-                              MRNG
+                            <SuiTypography variant="h6" color="text" fontWeight="medium">
+                              Qty
                             </SuiTypography>
                           </SuiBox>
                           <SuiBox
@@ -192,8 +192,8 @@ function PatientPrescription() {
                             textAlign="left"
                             borderBottom={borderBottom}
                           >
-                            <SuiTypography variant="caption" color="text" fontWeight="medium">
-                              NOON
+                            <SuiTypography variant="h6" color="text" fontWeight="medium">
+                              Rate
                             </SuiTypography>
                           </SuiBox>
                           <SuiBox
@@ -204,115 +204,118 @@ function PatientPrescription() {
                             textAlign="left"
                             borderBottom={borderBottom}
                           >
-                            <SuiTypography variant="caption" color="text" fontWeight="medium">
-                              NITE
-                            </SuiTypography>
-                          </SuiBox>
-                          <SuiBox
-                            component="th"
-                            py={1.5}
-                            pl={3}
-                            pr={1}
-                            textAlign="left"
-                            borderBottom={borderBottom}
-                          >
-                            <SuiTypography variant="caption" color="text" fontWeight="medium">
-                              TAKING
-                            </SuiTypography>
-                          </SuiBox>
-                          <SuiBox
-                            component="th"
-                            py={1.5}
-                            pl={3}
-                            pr={1}
-                            textAlign="left"
-                            borderBottom={borderBottom}
-                          >
-                            <SuiTypography variant="caption" color="text" fontWeight="medium">
-                              DAYS
+                            <SuiTypography variant="h6" color="text" fontWeight="medium">
+                              Amount
                             </SuiTypography>
                           </SuiBox>
                         </TableRow>
                       </SuiBox>
                       <TableBody>
-                        {prescriptionData[1].map((value) => (
-                          <TableRow key={value.id}>
-                            <SuiBox
-                              component="td"
-                              textAlign="left"
-                              p={1}
-                              borderBottom={borderBottom}
-                            >
-                              <SuiTypography variant="body2" color="text">
-                                {value.name}
-                              </SuiTypography>
-                            </SuiBox>
-                            <SuiBox
-                              component="td"
-                              textAlign="left"
-                              py={1}
-                              pr={1}
-                              pl={3}
-                              borderBottom={borderBottom}
-                            >
-                              <SuiTypography variant="body2" color="text">
-                                {value.morning}
-                              </SuiTypography>
-                            </SuiBox>
-                            <SuiBox
-                              component="td"
-                              textAlign="left"
-                              py={1}
-                              pr={1}
-                              pl={3}
-                              borderBottom={borderBottom}
-                            >
-                              <SuiTypography variant="body2" color="text">
-                                {value.noon}
-                              </SuiTypography>
-                            </SuiBox>
-                            <SuiBox
-                              component="td"
-                              textAlign="left"
-                              py={1}
-                              pr={1}
-                              pl={3}
-                              borderBottom={borderBottom}
-                            >
-                              <SuiTypography variant="body2" color="text">
-                                {value.night}
-                              </SuiTypography>
-                            </SuiBox>
-                            <SuiBox
-                              component="td"
-                              textAlign="left"
-                              py={1}
-                              pr={1}
-                              pl={3}
-                              borderBottom={borderBottom}
-                            >
-                              <SuiTypography variant="body2" color="text">
-                                {value.taking}
-                              </SuiTypography>
-                            </SuiBox>
-                            <SuiBox
-                              component="td"
-                              textAlign="left"
-                              py={1}
-                              pr={1}
-                              pl={3}
-                              borderBottom={borderBottom}
-                            >
-                              <SuiTypography variant="body2" color="text">
-                                {value.days}
-                              </SuiTypography>
-                            </SuiBox>
-                          </TableRow>
-                        ))}
+                        {billData[1].map((value) => {
+                          let medicineCount = 0;
+                          if (value.type === "Shelf") {
+                            medicineCount = value.morning + value.noon + value.night;
+                            medicineCount *= value.days;
+                            // console.log(medicineCount);
+                          } else if (value.type === "Self") {
+                            medicineCount = 1;
+                            // console.log(medicineCount);
+                          }
+
+                          return (
+                            <TableRow key={value.id}>
+                              <SuiBox
+                                component="td"
+                                textAlign="left"
+                                p={1}
+                                borderBottom={borderBottom}
+                              >
+                                <SuiTypography variant="body2" color="text">
+                                  {value.name}
+                                </SuiTypography>
+                              </SuiBox>
+                              <SuiBox
+                                component="td"
+                                textAlign="left"
+                                py={1}
+                                pr={1}
+                                pl={3}
+                                borderBottom={borderBottom}
+                              >
+                                <SuiTypography variant="body2" color="text">
+                                  {medicineCount}
+                                </SuiTypography>
+                              </SuiBox>
+                              <SuiBox
+                                component="td"
+                                textAlign="left"
+                                py={1}
+                                pr={1}
+                                pl={3}
+                                borderBottom={borderBottom}
+                              >
+                                <SuiTypography variant="body2" color="text">
+                                  {value.price_specific}
+                                </SuiTypography>
+                              </SuiBox>
+                              <SuiBox
+                                component="td"
+                                textAlign="left"
+                                py={1}
+                                pr={1}
+                                pl={3}
+                                borderBottom={borderBottom}
+                              >
+                                <SuiTypography variant="body2" color="text">
+                                  {value.price_total}
+                                </SuiTypography>
+                              </SuiBox>
+                            </TableRow>
+                          );
+                        })}
+
+                        <TableRow>
+                          <SuiBox
+                            component="td"
+                            textAlign="left"
+                            p={1}
+                            borderBottom={borderBottom}
+                          />
+                          <SuiBox
+                            component="td"
+                            textAlign="left"
+                            py={1}
+                            pr={1}
+                            pl={3}
+                            borderBottom={borderBottom}
+                          />
+                          <SuiBox
+                            component="td"
+                            textAlign="left"
+                            py={1}
+                            pr={1}
+                            pl={3}
+                            borderBottom={borderBottom}
+                          >
+                            <SuiTypography variant="h5">Total</SuiTypography>
+                          </SuiBox>
+                          <SuiBox
+                            component="td"
+                            textAlign="left"
+                            py={1}
+                            pr={1}
+                            pl={3}
+                            borderBottom={borderBottom}
+                          >
+                            <SuiTypography variant="h5">Rs. {billData[0].bill_price}</SuiTypography>
+                          </SuiBox>
+                        </TableRow>
                       </TableBody>
                     </Table>
                   </SuiBox>
                 </SuiBox>
+
+                {/* Invoice footer */}
                 <SuiBox p={3} mt={7}>
                   <Grid container>
                     <Grid item xs={12} lg={5}>
@@ -366,4 +369,4 @@ function PatientPrescription() {
   );
 }
 
-export default PatientPrescription;
+export default OnlyBill;

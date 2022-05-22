@@ -19,7 +19,7 @@ export default {
     {
       label: "Patients",
       color: "info",
-      data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+      data: [50, 40, 300, 220, 300, 250, 400, 230, 0],
     },
     {
       label: "Walking Customers",
