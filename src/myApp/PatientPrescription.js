@@ -13,6 +13,7 @@ import SuiButton from "components/SuiButton";
 import borders from "assets/theme/base/borders";
 import colors from "assets/theme/base/colors";
 import { useHistory } from "react-router-dom";
+import brand from "assets/logo/no-bg-logo.png";
 
 // Images
 // import logoCT from "assets/images/logo-ct.png";
@@ -69,6 +70,31 @@ function PatientPrescription() {
   const { light } = colors;
   const borderBottom = `${borderWidth[1]} solid ${light.main}`;
 
+  function printHandler() {
+    // console.log("patient_prescription", prescriptionData, localStorage.getItem("phone"));
+
+    const formData = new FormData();
+
+    formData.append("bill_type", "patient_prescription");
+    formData.append("user", localStorage.getItem("phone"));
+    formData.append("data", JSON.stringify(prescriptionData));
+
+    // console.log(selfMedList[0]);
+    // console.log(shelfMedList[0]);
+    // formData.append("self_medicines", selfMedList[0]);
+    // formData.append("shelf_medicines", shelfMedList[0]);
+
+    fetch("http://localhost/zhhs_soft_server/api/print", {
+      method: "POST",
+      // headers: { "content-Type": "application/json" },
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -92,46 +118,36 @@ function PatientPrescription() {
             <Grid item xs={12} sm={10} md={8}>
               <Card>
                 {/* Invoice header */}
-                <SuiBox p={3}>
+                <SuiBox p={3} pt={1}>
                   <Grid container justifyContent="space-between">
                     <Grid item xs={12} md={4}>
-                      {/* <SuiBox component="img" src={logoCT} width="25%" p={1} mb={1} /> */}
-                      <SuiTypography variant="h6" fontWeight="medium" mt={2}>
-                        Zahid Herbal Dawakhana, near G. T. Road, Swami Nagar Lahore, Punjab,
-                        Pakistan
-                      </SuiTypography>
-                      <SuiBox mt={1} mb={2}>
-                        <SuiTypography display="block" variant="body2" color="secondary">
-                          Phone: 0321-3487892
-                        </SuiTypography>
-                      </SuiBox>
+                      <SuiBox component="img" src={brand} alt="zhdk logo" width="8rem" />
                     </Grid>
                     <Grid item xs={12} md={7} lg={7}>
                       <SuiBox width="100%" textAlign={{ xs: "left", md: "right" }} mt={2}>
-                        <SuiBox mt={0}>
-                          <SuiTypography variant="h6" fontWeight="medium">
-                            Prescription to: {prescriptionData[0].name}
-                          </SuiTypography>
-                        </SuiBox>
-                        <SuiBox mb={1}>
-                          <SuiTypography variant="body2" color="secondary">
-                            Phone: {prescriptionData[0].phone}
+                        <SuiTypography variant="h6" fontWeight="medium" mt={2}>
+                          Zahid Herbal Dawakhana, near G. T. Road, Swami Nagar Lahore, Punjab,
+                          Pakistan
+                        </SuiTypography>
+                        <SuiBox mt={1} mb={2}>
+                          <SuiTypography display="block" variant="body2" color="secondary">
+                            Phone: {localStorage.getItem("phone")}
                           </SuiTypography>
                         </SuiBox>
                       </SuiBox>
                     </Grid>
                   </Grid>
-                  <SuiBox mt={{ xs: 5, md: 5 }}>
+                  <SuiBox mt={{ xs: 3, md: 3 }}>
                     <Grid container justifyContent="space-between">
-                      <Grid item xs={12} md={4}>
+                      <Grid item xs={12} md={4} display="flex">
                         <SuiTypography variant="h6" color="secondary" fontWeight="medium">
                           Prescription No
                         </SuiTypography>
-                        <SuiTypography variant="h6" fontWeight="medium">
+                        <SuiTypography variant="h6" ml={1} fontWeight="medium">
                           #{prescriptionData[0].id}
                         </SuiTypography>
                       </Grid>
-                      <Grid item xs={12} md={7} lg={5}>
+                      <Grid item xs={12} md={7} lg={7}>
                         <SuiBox
                           width="100%"
                           display="flex"
@@ -148,6 +164,20 @@ function PatientPrescription() {
                           <SuiBox width="50%">
                             <SuiTypography variant="h6" fontWeight="medium">
                               {prescriptionData[0].created_at}
+                            </SuiTypography>
+                          </SuiBox>
+                        </SuiBox>
+                      </Grid>
+                      <Grid item xs={12} md={7} lg={7}>
+                        <SuiBox mt={2}>
+                          <SuiBox mt={0}>
+                            <SuiTypography variant="h6" fontWeight="medium">
+                              Prescription to: {prescriptionData[0].name}
+                            </SuiTypography>
+                          </SuiBox>
+                          <SuiBox mb={1}>
+                            <SuiTypography variant="body2" color="secondary">
+                              Phone: {prescriptionData[0].phone}
                             </SuiTypography>
                           </SuiBox>
                         </SuiBox>
@@ -345,11 +375,7 @@ function PatientPrescription() {
                         alignItems="flex-end"
                         mt={{ xs: 2, md: 0 }}
                       >
-                        <SuiButton
-                          variant="gradient"
-                          color="info"
-                          onClick={() => window.print(this)}
-                        >
+                        <SuiButton variant="gradient" color="info" onClick={printHandler}>
                           print
                         </SuiButton>
                       </SuiBox>
