@@ -19,13 +19,16 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import SuiSnackbar from "components/SuiSnackbar";
 import { useHistory } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
+import { Switch } from "@mui/material";
 
 function EditMedicine() {
   const [name, setName] = useState("");
   const [type, setType] = useState("Shelf");
   const [price, setPrice] = useState("");
+  const [purchasePrice, setPurchasePrice] = useState("");
   const [expiry, setExpiry] = useState("");
   const [count, setCount] = useState("");
+  const [estimationCheck, setEstimationCheck] = useState(false);
 
   const history = useHistory();
   // console.log(history.location.state.id);
@@ -64,6 +67,7 @@ function EditMedicine() {
         setName(result.data.name);
         setType(result.data.type);
         setPrice(result.data.price);
+        setPurchasePrice(result.data.purchase_price);
         setExpiry(result.data.expiry_date);
         setCount(result.data.stock);
       })
@@ -116,8 +120,10 @@ function EditMedicine() {
     formData.append("name", name);
     formData.append("type", type);
     formData.append("price", price);
+    formData.append("purchase_price", purchasePrice);
     formData.append("expiry_date", expiry);
     formData.append("stock", count);
+    formData.append("estimation_check", estimationCheck);
 
     fetch(`http://localhost/zhhs_soft_server/api/medicines/edit-medicine?${sendId}`, {
       method: "POST",
@@ -199,9 +205,20 @@ function EditMedicine() {
                         {moreOption && (
                           <Grid item xs={12} sm={6}>
                             <FormField
+                              defaultValue={medicineData.purchase_price}
+                              type="number"
+                              label="purchase price"
+                              onChange={(e) => setPurchasePrice(e.target.value)}
+                              placeholder="eg. 1500"
+                            />
+                          </Grid>
+                        )}
+                        {moreOption && (
+                          <Grid item xs={12} sm={6}>
+                            <FormField
                               defaultValue={medicineData.price}
                               type="number"
-                              label="price"
+                              label="sale price"
                               onChange={(e) => setPrice(e.target.value)}
                               placeholder="eg. 1500"
                             />
@@ -218,6 +235,7 @@ function EditMedicine() {
                             />
                           </Grid>
                         )}
+
                         {moreOption && (
                           <Grid item xs={12} sm={6}>
                             <FormField
@@ -226,6 +244,24 @@ function EditMedicine() {
                               label="count"
                               onChange={(e) => setCount(e.target.value)}
                               placeholder="eg. 300"
+                            />
+                          </Grid>
+                        )}
+                        {moreOption && (
+                          <Grid item xs={12} sm={6} justifyContent="space-between" display="flex">
+                            <SuiBox mb={1} ml={0.5} lineHeight={0} display="inline-block" mt={1}>
+                              <SuiTypography
+                                component="label"
+                                variant="caption"
+                                fontWeight="bold"
+                                textTransform="capitalize"
+                              >
+                                Turn On to add this to Spendings
+                              </SuiTypography>
+                            </SuiBox>
+                            <Switch
+                              checked={estimationCheck}
+                              onChange={() => setEstimationCheck(!estimationCheck)}
                             />
                           </Grid>
                         )}

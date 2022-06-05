@@ -129,6 +129,7 @@ function Medicines() {
         element.price = "-";
         element.stock = "-";
         element.expiry_date = "-";
+        element.purchase_price = "-";
       }
       if (element.type === "Shelf") {
         if (element.expiry_date === "2010-10-10") {
@@ -171,11 +172,12 @@ function Medicines() {
     medData = {
       columns: [
         { Header: "ID", accessor: "id" },
-        { Header: "MEDICINE NAME", accessor: "name", width: "25%" },
-        { Header: "MEDICINE TYPE", accessor: "type", width: "20%" },
-        { Header: "MEDICINE EXPIRY", accessor: "expiry_date" },
-        { Header: "MEDICINE COUNT", accessor: "stock" },
-        { Header: "MEDICINE PRICE (Rs)", accessor: "price" },
+        { Header: "NAME", accessor: "name", width: "20%" },
+        { Header: "TYPE", accessor: "type", width: "5%" },
+        { Header: "EXPIRY", accessor: "expiry_date" },
+        { Header: "COUNT", accessor: "stock" },
+        { Header: "PURCHASE PRICE (Rs)", accessor: "purchase_price" },
+        { Header: "SALE PRICE (Rs)", accessor: "price" },
         { Header: "ACTION", accessor: "action", width: "9%" },
       ],
 

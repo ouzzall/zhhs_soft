@@ -28,6 +28,10 @@
   text-align: center;
 }
 
+.rit_align {
+  text-align: right;
+}
+
 .spc_evenly {
   justify-content: space-evenly;
 }
@@ -49,6 +53,11 @@
 
 .inside_width {
   width: 977px;
+}
+
+.inside_width_two {
+  width: 780px;
+  margin-left: -25px;
 }
 
 .font_clr_3 {

@@ -18,6 +18,7 @@ import Footer from "examples/Footer";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import SuiSnackbar from "components/SuiSnackbar";
 import { useHistory } from "react-router-dom";
+import { Switch } from "@mui/material";
 
 function NewMedicine() {
   const history = useHistory();
@@ -41,9 +42,11 @@ function NewMedicine() {
 
   const [name, setName] = useState("");
   const [type, setType] = useState("Shelf");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(""); // sale_price
+  const [purchasePrice, setPurchasePrice] = useState(""); // purchase_price
   const [expiry, setExpiry] = useState("");
   const [count, setCount] = useState("");
+  const [estimationCheck, setEstimationCheck] = useState(false);
 
   function handleChange(e) {
     // console.log(e.value);
@@ -64,8 +67,10 @@ function NewMedicine() {
     formData.append("name", name);
     formData.append("type", type);
     formData.append("price", price);
+    formData.append("purchase_price", purchasePrice);
     formData.append("expiry_date", expiry);
     formData.append("stock", count);
+    formData.append("estimation_check", estimationCheck);
 
     fetch("http://localhost/zhhs_soft_server/api/medicines/add-medicine", {
       method: "POST",
@@ -74,6 +79,7 @@ function NewMedicine() {
     })
       .then((response) => response.json())
       .then((data) => {
+        // console.log(data);
         if (data.status === true) {
           history.replace("/medicines");
           // console.log(data);
@@ -130,7 +136,17 @@ function NewMedicine() {
                         <Grid item xs={12} sm={6}>
                           <FormField
                             type="number"
-                            label="price"
+                            label="purchase price"
+                            onChange={(e) => setPurchasePrice(e.target.value)}
+                            placeholder="eg. 1500"
+                          />
+                        </Grid>
+                      )}
+                      {moreOption && (
+                        <Grid item xs={12} sm={6}>
+                          <FormField
+                            type="number"
+                            label="sale price"
                             onChange={(e) => setPrice(e.target.value)}
                             placeholder="eg. 1500"
                           />
@@ -153,6 +169,24 @@ function NewMedicine() {
                             label="count"
                             onChange={(e) => setCount(e.target.value)}
                             placeholder="eg. 300"
+                          />
+                        </Grid>
+                      )}
+                      {moreOption && (
+                        <Grid item xs={12} sm={6} justifyContent="space-between" display="flex">
+                          <SuiBox mb={1} ml={0.5} lineHeight={0} display="inline-block" mt={1}>
+                            <SuiTypography
+                              component="label"
+                              variant="caption"
+                              fontWeight="bold"
+                              textTransform="capitalize"
+                            >
+                              Turn On to add this to Spendings
+                            </SuiTypography>
+                          </SuiBox>
+                          <Switch
+                            checked={estimationCheck}
+                            onChange={() => setEstimationCheck(!estimationCheck)}
                           />
                         </Grid>
                       )}
