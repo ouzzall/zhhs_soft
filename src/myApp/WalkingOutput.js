@@ -73,7 +73,7 @@ function WalkingOutput() {
     bilData = {
       columns: [
         { Header: "BILL ID", accessor: "id" },
-        { Header: "BILL DATE", accessor: "created_at" },
+        { Header: "BILL DATE", accessor: "created_at_2" },
         { Header: "BILL COST", accessor: "bill_price" },
       ],
 

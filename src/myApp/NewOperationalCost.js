@@ -332,7 +332,7 @@ function NewOperationalCost() {
                       <Grid item xs={12} sm={6}>
                         <FormField
                           type="text"
-                          label="item quantity (Mix)"
+                          label="item note"
                           placeholder="eg. 1 Pao"
                           onChange={(e) => setQuantity(e.target.value)}
                         />

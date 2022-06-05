@@ -131,7 +131,7 @@ function OnlyBill() {
                         </SuiTypography>
                         <SuiBox mt={1} mb={2}>
                           <SuiTypography display="block" variant="body2" color="secondary">
-                            Phone: 0321-3487892
+                            Phone: {localStorage.getItem("phone")}
                           </SuiTypography>
                         </SuiBox>
                       </SuiBox>

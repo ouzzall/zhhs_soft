@@ -47,7 +47,7 @@ function NewWalkingCustomer() {
   const history = useHistory();
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
-  const LastStep = activeStep === steps.length - 0;
+  // const LastStep = activeStep === steps.length - 0;
   const isLastStep = activeStep === steps.length - 1;
   const secondLastStep = activeStep === steps.length - 2;
 
@@ -74,8 +74,8 @@ function NewWalkingCustomer() {
   function endingHandler() {
     // !LastStep ? handleNext : history.push("/dashboard");
     // console.log(LastStep);
-    if (LastStep) {
-      history.push("/dashboard");
+    if (isLastStep) {
+      history.replace("/dashboard");
     } else if (secondLastStep) {
       // console.log(patientId);
       // console.log(patientDiagnosis);

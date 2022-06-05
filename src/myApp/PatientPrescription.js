@@ -22,6 +22,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import { useEffect, useState } from "react";
 import { Oval } from "react-loader-spinner";
+import SuiEditor from "components/SuiEditor";
 
 function PatientPrescription() {
   const history = useHistory();
@@ -47,7 +48,7 @@ function PatientPrescription() {
         return res.json();
       })
       .then((result) => {
-        // console.log(result);
+        // console.log(result.data[0].diagnosis);
         setPrescriptionData(result.data);
         setIsPending(false);
         setError(false);
@@ -118,18 +119,18 @@ function PatientPrescription() {
             <Grid item xs={12} sm={10} md={8}>
               <Card>
                 {/* Invoice header */}
-                <SuiBox p={3} pt={1}>
-                  <Grid container justifyContent="space-between">
+                <SuiBox p={3} pt={0} pb={0}>
+                  <Grid container justifyContent="space-between" mb={0}>
                     <Grid item xs={12} md={4}>
                       <SuiBox component="img" src={brand} alt="zhdk logo" width="8rem" />
                     </Grid>
                     <Grid item xs={12} md={7} lg={7}>
                       <SuiBox width="100%" textAlign={{ xs: "left", md: "right" }} mt={2}>
-                        <SuiTypography variant="h6" fontWeight="medium" mt={2}>
+                        <SuiTypography variant="h6" fontWeight="medium" mt={0}>
                           Zahid Herbal Dawakhana, near G. T. Road, Swami Nagar Lahore, Punjab,
                           Pakistan
                         </SuiTypography>
-                        <SuiBox mt={1} mb={2}>
+                        <SuiBox mt={1} mb={0}>
                           <SuiTypography display="block" variant="body2" color="secondary">
                             Phone: {localStorage.getItem("phone")}
                           </SuiTypography>
@@ -137,7 +138,7 @@ function PatientPrescription() {
                       </SuiBox>
                     </Grid>
                   </Grid>
-                  <SuiBox mt={{ xs: 3, md: 3 }}>
+                  <SuiBox>
                     <Grid container justifyContent="space-between">
                       <Grid item xs={12} md={4} display="flex">
                         <SuiTypography variant="h6" color="secondary" fontWeight="medium">
@@ -185,7 +186,14 @@ function PatientPrescription() {
                     </Grid>
                   </SuiBox>
                 </SuiBox>
-                <SuiBox p={3}>
+                <SuiBox p={3} pt={0} pb={0}>
+                  <SuiEditor
+                    readOnly
+                    modules={{ toolbar: false }}
+                    value={prescriptionData[0].diagnosis}
+                  />
+                </SuiBox>
+                <SuiBox p={3} pt={0}>
                   <SuiBox width="100%" overflow="auto">
                     <Table sx={{ minWidth: "32rem" }}>
                       <SuiBox component="thead">

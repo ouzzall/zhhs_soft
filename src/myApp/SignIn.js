@@ -64,7 +64,7 @@ function SignIn() {
 
     const formData = new FormData();
 
-    formData.append("phone", phone);
+    formData.append("username", phone);
     formData.append("password", password);
 
     fetch("http://localhost/zhhs_soft_server/api/login", {

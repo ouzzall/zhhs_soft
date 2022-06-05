@@ -161,7 +161,7 @@ function WalkingCustomers() {
     useData = {
       columns: [
         { Header: "BILL ID", accessor: "id" },
-        { Header: "BILL DATE", accessor: "created_at" },
+        { Header: "BILL DATE", accessor: "created_at_2" },
         { Header: "VIEW BILL", accessor: "bill" },
         { Header: "ACTION", accessor: "action" },
       ],

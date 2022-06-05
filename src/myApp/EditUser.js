@@ -22,6 +22,7 @@ import { Oval } from "react-loader-spinner";
 function EditUser() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const history = useHistory();
@@ -53,6 +54,7 @@ function EditUser() {
         setError(false);
         setName(result.data.name);
         setPhone(result.data.phone);
+        setUsername(result.data.username);
         setPassword(result.data.password);
       })
       .catch((err) => {
@@ -94,6 +96,7 @@ function EditUser() {
 
     formData.append("name", name);
     formData.append("phone", phone);
+    formData.append("username", username);
     formData.append("password", password);
 
     fetch(`http://localhost/zhhs_soft_server/api/users/edit-user?${sendId}`, {
@@ -159,6 +162,15 @@ function EditUser() {
                             label="phone"
                             placeholder="eg. 03XX-XXXXXXX"
                             onChange={(e) => setPhone(e.target.value)}
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <FormField
+                            defaultValue={usersData.username}
+                            type="text"
+                            label="username"
+                            placeholder="eg. john.doe12"
+                            onChange={(e) => setUsername(e.target.value)}
                           />
                         </Grid>
                         <Grid item xs={12} sm={6}>

@@ -116,6 +116,7 @@ function Patients() {
     // console.log(medicinesData[1]);
 
     patientsData.forEach((element) => {
+      if (element.height === "0,0") element.height = "-";
       element.action = (
         <SuiBox display="flex" alignItems="center">
           <SuiBox ml={1}>

@@ -100,13 +100,17 @@ function Users() {
             // body: formData,
           })
             .then((response) => response.json())
-            .then((resultIn) => {
-              // console.log(resultIn);
-              setUsersData(resultIn.data);
+            .then((data) => {
+              // console.log(data);
+              if (data.status === true) {
+                Swal.fire("Deleted!", "Your user has been deleted.", "success");
+              } else if (data.status === false) {
+                Swal.fire("Error!", "Only 1 user remainig in database.", "error");
+              }
+              setUsersData(data.data);
               setIsPending(false);
               setError(false);
             });
-          Swal.fire("Deleted!", "Your user has been deleted.", "success");
           // console.log(medicinesData);
         }
       });
@@ -155,6 +159,7 @@ function Users() {
         { Header: "ID", accessor: "id" },
         { Header: "NAME", accessor: "name" },
         { Header: "PHONE", accessor: "phone" },
+        { Header: "USERNAME", accessor: "username" },
         { Header: "PASSWORD", accessor: "password" },
         { Header: "ACTION", accessor: "action", width: "9%" },
       ],

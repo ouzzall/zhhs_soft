@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   patientDiagnosis:
-    "<p><strong>Symptoms:</strong><br><br><br><strong>Findings:</strong><br><br><br><strong>Care:</strong><br><br><br><strong>Suggestions:</strong><br><br><br><strong><em><u>By: Hakeem M. Ashraf</u></em></strong></p>",
+    "<p><strong>Weight: <u>___________</u> Blood Pressure: <u>__________</u> Sugar: <u>_____________</u></strong></p><p><br></p><p><strong>Symptoms:</strong></p><p><br></p><p><strong>Findings:</strong></p><p><br></p><p><strong>Care:</strong></p><p><br></p><p><strong>Suggestions:</strong></p><p><br></p><p><br></p><p><strong><em><u>By: Hakeem M. Ashraf</u></em></strong></p>",
 };
 
 export const diagnosisSlice = createSlice({

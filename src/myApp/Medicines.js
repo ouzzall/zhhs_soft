@@ -130,6 +130,11 @@ function Medicines() {
         element.stock = "-";
         element.expiry_date = "-";
       }
+      if (element.type === "Shelf") {
+        if (element.expiry_date === "2010-10-10") {
+          element.expiry_date = "-";
+        }
+      }
       element.action = (
         <SuiBox display="flex" alignItems="center">
           <SuiBox ml={1}>

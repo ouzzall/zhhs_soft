@@ -39,6 +39,7 @@ function NewUser() {
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   function addUser(e) {
@@ -50,6 +51,7 @@ function NewUser() {
 
     formData.append("name", name);
     formData.append("phone", phone);
+    formData.append("username", username);
     formData.append("password", password);
 
     fetch("http://localhost/zhhs_soft_server/api/users/add-user", {
@@ -98,6 +100,14 @@ function NewUser() {
                           label="phone"
                           placeholder="eg. 03XX-XXXXXXX"
                           onChange={(e) => setPhone(e.target.value)}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <FormField
+                          type="text"
+                          label="Username"
+                          placeholder="john.doe12"
+                          onChange={(e) => setUsername(e.target.value)}
                         />
                       </Grid>
                       <Grid item xs={12} sm={6}>
