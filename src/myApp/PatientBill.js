@@ -71,28 +71,36 @@ function PatientBill() {
   const borderBottom = `${borderWidth[1]} solid ${light.main}`;
 
   function printHandler() {
+    const sendId2 = new URLSearchParams({
+      id,
+      user: localStorage.getItem("phone"),
+      bill_type: "patient_bill",
+    }).toString();
+
+    window.open(`http://localhost/zhhs_soft_server/print?${sendId2}`, "_blank");
+
     // console.log("patient_bill", billData, localStorage.getItem("phone"));
 
-    const formData = new FormData();
+    // const formData = new FormData();
 
-    formData.append("bill_type", "patient_bill");
-    formData.append("user", localStorage.getItem("phone"));
-    formData.append("data", JSON.stringify(billData));
+    // formData.append("bill_type", "patient_bill");
+    // formData.append("user", localStorage.getItem("phone"));
+    // formData.append("data", JSON.stringify(billData));
 
-    // console.log(selfMedList[0]);
-    // console.log(shelfMedList[0]);
-    // formData.append("self_medicines", selfMedList[0]);
-    // formData.append("shelf_medicines", shelfMedList[0]);
+    // // console.log(selfMedList[0]);
+    // // console.log(shelfMedList[0]);
+    // // formData.append("self_medicines", selfMedList[0]);
+    // // formData.append("shelf_medicines", shelfMedList[0]);
 
-    fetch("http://localhost/zhhs_soft_server/api/print", {
-      method: "POST",
-      // headers: { "content-Type": "application/json" },
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });
+    // fetch("http://localhost/zhhs_soft_server/api/print", {
+    //   method: "POST",
+    //   // headers: { "content-Type": "application/json" },
+    //   body: formData,
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //   });
   }
 
   return (
