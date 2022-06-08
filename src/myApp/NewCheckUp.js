@@ -110,7 +110,7 @@ function NewCheckUp() {
       // formData.append("self_medicines", selfMedList[0]);
       // formData.append("shelf_medicines", shelfMedList[0]);
 
-      fetch("http://localhost/zhhs_soft_server/api/check-ups/new-check-up", {
+      fetch("https://zahidhd.tk/zahidhd/api/check-ups/new-check-up", {
         method: "POST",
         // headers: { "content-Type": "application/json" },
         body: formData,
