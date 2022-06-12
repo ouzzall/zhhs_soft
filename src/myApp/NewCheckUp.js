@@ -25,11 +25,12 @@ import SearchPatient from "myApp/CheckUpComponents/SearchPatient/SearchPatient";
 import PatientDiagnosis from "myApp/CheckUpComponents/PatientDiagnosis/PatientDiagnosis";
 import AssignMedicine from "myApp/CheckUpComponents/AssignMedicine/AssignMedicine";
 import GenerateBill from "myApp/CheckUpComponents/GenerateBill/GenerateBill";
+import PreFinalStepCheck from "myApp/CheckUpComponents/PreFinalStepCheck/PreFinalStepCheck";
 import { useSelector } from "react-redux";
 import SuiSnackbar from "components/SuiSnackbar";
 
 function getSteps() {
-  return [1, 2, 3, 4];
+  return [1, 2, 3, 4, 5];
 }
 
 function getStepContent(stepIndex) {
@@ -41,6 +42,8 @@ function getStepContent(stepIndex) {
     case 2:
       return <AssignMedicine />;
     case 3:
+      return <PreFinalStepCheck />;
+    case 4:
       return <GenerateBill />;
     default:
       return null;
@@ -53,6 +56,9 @@ function NewCheckUp() {
   const { patientId } = useSelector((state) => state.patId);
   const { patientDiagnosis } = useSelector((state) => state.patDiagnosis);
   const { patientReports } = useSelector((state) => state.patReports);
+  const { discountGlobal } = useSelector((state) => state.patId);
+  const { checkUpCostGlobal } = useSelector((state) => state.patId);
+  const { feeGlobal } = useSelector((state) => state.patId);
 
   const history = useHistory();
   const [activeStep, setActiveStep] = useState(0);
@@ -93,41 +99,49 @@ function NewCheckUp() {
       // console.log(shelfMedList);
       // console.log(selfMedList);
 
-      const formData = new FormData();
+      if (parseInt(feeGlobal, 10) + parseInt(checkUpCostGlobal, 10) >= discountGlobal) {
+        const formData = new FormData();
 
-      formData.append("user_id", patientId);
-      formData.append("diagnosis", patientDiagnosis);
+        formData.append("discount_amount", discountGlobal);
+        formData.append("check_up_fee", feeGlobal);
 
-      for (let i = 0; i < patientReports.length; i += 1) {
-        formData.append(`reports[${i}]`, patientReports[i]);
+        formData.append("user_id", patientId);
+        formData.append("diagnosis", patientDiagnosis);
+
+        for (let i = 0; i < patientReports.length; i += 1) {
+          formData.append(`reports[${i}]`, patientReports[i]);
+        }
+
+        formData.append("shelf_medicines", JSON.stringify(shelfMedList));
+        formData.append("self_medicines", JSON.stringify(selfMedList));
+
+        // console.log(selfMedList[0]);
+        // console.log(shelfMedList[0]);
+        // formData.append("self_medicines", selfMedList[0]);
+        // formData.append("shelf_medicines", shelfMedList[0]);
+
+        fetch("https://zahidhd.tk/zahidhd/api/check-ups/new-check-up", {
+          method: "POST",
+          // headers: { "content-Type": "application/json" },
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // console.log(data);
+            if (data.status === true) {
+              // history.replace("/patients");
+              // console.log(data);
+              handleNext();
+            } else if (data.status === false) {
+              // console.log(data);
+              setErrorText(data.message);
+              setErrorSB(true);
+            }
+          });
+      } else {
+        setErrorText("Discount cannot be greater then Total Cost");
+        setErrorSB(true);
       }
-
-      formData.append("shelf_medicines", JSON.stringify(shelfMedList));
-      formData.append("self_medicines", JSON.stringify(selfMedList));
-
-      // console.log(selfMedList[0]);
-      // console.log(shelfMedList[0]);
-      // formData.append("self_medicines", selfMedList[0]);
-      // formData.append("shelf_medicines", shelfMedList[0]);
-
-      fetch("https://zahidhd.tk/zahidhd/api/check-ups/new-check-up", {
-        method: "POST",
-        // headers: { "content-Type": "application/json" },
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          // console.log(data);
-          if (data.status === true) {
-            // history.replace("/patients");
-            // console.log(data);
-            handleNext();
-          } else if (data.status === false) {
-            // console.log(data);
-            setErrorText(data.message);
-            setErrorSB(true);
-          }
-        });
     } else {
       handleNext();
     }
@@ -160,7 +174,7 @@ function NewCheckUp() {
                 <SuiBox>
                   {getStepContent(activeStep)}
                   <SuiBox mt={3} width="100%" display="flex" justifyContent="space-between">
-                    {activeStep === 1 || activeStep === 2 ? (
+                    {activeStep === 1 || activeStep === 2 || activeStep === 3 ? (
                       <SuiButton variant="gradient" color="light" onClick={handleBack}>
                         back
                       </SuiButton>

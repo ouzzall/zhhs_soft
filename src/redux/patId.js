@@ -4,6 +4,7 @@ const initialState = {
   patientId: 0,
   discountGlobal: 0,
   checkUpCostGlobal: 0,
+  feeGlobal: 0,
 };
 
 export const idSlice = createSlice({
@@ -24,10 +25,13 @@ export const idSlice = createSlice({
     setDiscountGlobal: (state, action) => {
       state.discountGlobal = action.payload;
     },
+    setFeeGlobal: (state, action) => {
+      state.feeGlobal = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setId, setDiscountGlobal, setCheckUpCostGlobal } = idSlice.actions;
+export const { setId, setDiscountGlobal, setCheckUpCostGlobal, setFeeGlobal } = idSlice.actions;
 
 export default idSlice.reducer;
