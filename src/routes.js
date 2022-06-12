@@ -111,6 +111,7 @@ import EditPatient from "myApp/EditPatient";
 import EditUser from "myApp/EditUser";
 import EditOperationalCost from "myApp/EditOperationalCost";
 import OnlyBill from "myApp/OnlyBill";
+import ReturnMedicine from "myApp/ReturnMedicine";
 
 const routes = [
   {
@@ -131,6 +132,15 @@ const routes = [
     icon: "fa-solid fa-capsules",
     // component: ,
     component: Medicines,
+  },
+  {
+    myRoute: true,
+    name: "Return",
+    key: "return-medicine",
+    route: "/medicines/return-medicine",
+    icon: "fa-solid fa-capsules",
+    // component: ,
+    component: ReturnMedicine,
   },
   {
     myRoute: true,

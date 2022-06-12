@@ -251,10 +251,17 @@ function Medicines() {
                 displayed below.
               </SuiTypography> */}
             </SuiBox>
-            <SuiBox>
+            <SuiBox display="flex" justifyContent="center">
+              <SuiBox mr={1}>
+                <Link to="/medicines/return-medicine">
+                  <SuiButton variant="gradient" color="success">
+                    Return
+                  </SuiButton>
+                </Link>
+              </SuiBox>
               <Link to="/medicines/new-medicine">
                 <SuiButton variant="gradient" color="success">
-                  Add Medicine
+                  Add Mediscine
                 </SuiButton>
               </Link>
             </SuiBox>
