@@ -59,7 +59,7 @@ function SearchPatient() {
   function selectPatient(e) {
     // console.log(e.target.value);
     // console.log(patientId);
-    const intId = parseInt(e.target.value, 36);
+    const intId = parseInt(e.target.value, 10);
     // RADIX K BAREY MA PARHNA HA YEH AGEY ISSUE KAR SAKTA HA
     dispatch(setId(intId));
   }

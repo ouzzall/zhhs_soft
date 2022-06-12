@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   patientId: 0,
+  discountGlobal: 0,
+  checkUpCostGlobal: 0,
 };
 
 export const idSlice = createSlice({
@@ -16,10 +18,16 @@ export const idSlice = createSlice({
       state.patientId = action.payload;
       // console.log(state.patientId);
     },
+    setCheckUpCostGlobal: (state, action) => {
+      state.checkUpCostGlobal = action.payload;
+    },
+    setDiscountGlobal: (state, action) => {
+      state.discountGlobal = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setId } = idSlice.actions;
+export const { setId, setDiscountGlobal, setCheckUpCostGlobal } = idSlice.actions;
 
 export default idSlice.reducer;

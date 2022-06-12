@@ -25,9 +25,10 @@ import GenerateBill2 from "myApp/WCustomersComponents/GenerateBill2/GenerateBill
 import SelectMedicine from "myApp/WCustomersComponents/SelectMedicine/SelectMedicine";
 import { useSelector } from "react-redux";
 import SuiSnackbar from "components/SuiSnackbar";
+import PreFinalStep from "myApp/WCustomersComponents/PreFinalStep/PreFinalStep";
 
 function getSteps() {
-  return [1, 2];
+  return [1, 2, 3];
 }
 
 function getStepContent(stepIndex) {
@@ -35,6 +36,8 @@ function getStepContent(stepIndex) {
     case 0:
       return <SelectMedicine />;
     case 1:
+      return <PreFinalStep />;
+    case 2:
       return <GenerateBill2 />;
     default:
       return null;
@@ -44,6 +47,8 @@ function getStepContent(stepIndex) {
 function NewWalkingCustomer() {
   const { shelfMedList } = useSelector((state) => state.patMedicines);
   const { selfMedList } = useSelector((state) => state.patMedicines);
+  const { discountGlobal } = useSelector((state) => state.patId);
+  const { checkUpCostGlobal } = useSelector((state) => state.patId);
   const history = useHistory();
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
@@ -52,7 +57,7 @@ function NewWalkingCustomer() {
   const secondLastStep = activeStep === steps.length - 2;
 
   const handleNext = () => setActiveStep(activeStep + 1);
-  // const handleBack = () => setActiveStep(activeStep - 1);
+  const handleBack = () => setActiveStep(activeStep - 1);
 
   const [errorText, setErrorText] = useState("");
   const [errorSB, setErrorSB] = useState(false);
@@ -83,34 +88,42 @@ function NewWalkingCustomer() {
       // console.log(shelfMedList);
       // console.log(selfMedList);
 
-      const formData = new FormData();
+      // console.log(checkUpCostGlobal, discountGlobal);
 
-      formData.append("shelf_medicines", JSON.stringify(shelfMedList));
-      formData.append("self_medicines", JSON.stringify(selfMedList));
+      if (checkUpCostGlobal >= discountGlobal) {
+        const formData = new FormData();
 
-      // console.log(selfMedList[0]);
-      // console.log(shelfMedList[0]);
-      // formData.append("self_medicines", selfMedList[0]);
-      // formData.append("shelf_medicines", shelfMedList[0]);
+        formData.append("shelf_medicines", JSON.stringify(shelfMedList));
+        formData.append("self_medicines", JSON.stringify(selfMedList));
+        formData.append("discount_amount", discountGlobal);
 
-      fetch("https://zahidhd.tk/zahidhd/api/walking-customer/new-walking-customer", {
-        method: "POST",
-        // headers: { "content-Type": "application/json" },
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          // console.log(data);
-          if (data.status === true) {
-            // history.replace("/patients");
+        // console.log(selfMedList[0]);
+        // console.log(shelfMedList[0]);
+        // formData.append("self_medicines", selfMedList[0]);
+        // formData.append("shelf_medicines", shelfMedList[0]);
+
+        fetch("https://zahidhd.tk/zahidhd/api/walking-customer/new-walking-customer", {
+          method: "POST",
+          // headers: { "content-Type": "application/json" },
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
             // console.log(data);
-            handleNext();
-          } else if (data.status === false) {
-            // console.log(data);
-            setErrorText(data.message);
-            setErrorSB(true);
-          }
-        });
+            if (data.status === true) {
+              // history.replace("/patients");
+              // console.log(data);
+              handleNext();
+            } else if (data.status === false) {
+              // console.log(data);
+              setErrorText(data.message);
+              setErrorSB(true);
+            }
+          });
+      } else {
+        setErrorText("Discount cannot be greater then Total Cost");
+        setErrorSB(true);
+      }
     } else {
       handleNext();
     }
@@ -143,7 +156,13 @@ function NewWalkingCustomer() {
                 <SuiBox>
                   {getStepContent(activeStep)}
                   <SuiBox mt={3} width="100%" display="flex" justifyContent="space-between">
-                    {activeStep === 1 || activeStep === 2 ? <SuiBox /> : <SuiBox />}
+                    {activeStep === 1 ? (
+                      <SuiButton variant="gradient" color="light" onClick={handleBack}>
+                        back
+                      </SuiButton>
+                    ) : (
+                      <SuiBox />
+                    )}
 
                     <SuiButton variant="gradient" color="success" onClick={endingHandler}>
                       {secondLastStep ? "FINISH" : <>{isLastStep ? "GO HOME" : "NEXT"}</>}
