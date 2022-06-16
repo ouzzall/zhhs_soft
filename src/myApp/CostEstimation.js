@@ -82,7 +82,7 @@ function CostEstimation() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://localhost/zhhs_soft_server/api/cost-estimation`, {
+    fetch(`http://localhost/zhhs_soft_server/api/cost-estimation`, {
       // method: "GET",
       // headers: { "content-Type": "application/json" },
       signal: abortCont.signal,
@@ -111,10 +111,10 @@ function CostEstimation() {
       });
 
     return () => abortCont.abort();
-  }, [`https://localhost/zhhs_soft_server/api/cost-estimation`]);
+  }, [`http://localhost/zhhs_soft_server/api/cost-estimation`]);
 
   function dateHandler() {
-    fetch(`https://localhost/zhhs_soft_server/api/cost-estimation?${sendValues}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/cost-estimation?${sendValues}`, {
       // method: "POST",
       // headers: { "content-Type": "application/json" },
       // body: formData,

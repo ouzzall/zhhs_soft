@@ -31,7 +31,7 @@ function PatientsOutput() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://localhost/zhhs_soft_server/api/patient-output?${sendId}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/patient-output?${sendId}`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -58,7 +58,7 @@ function PatientsOutput() {
       });
 
     return () => abortCont.abort();
-  }, [`https://localhost/zhhs_soft_server/api/patient-output?${sendId}`]);
+  }, [`http://localhost/zhhs_soft_server/api/patient-output?${sendId}`]);
 
   let patData = "";
 

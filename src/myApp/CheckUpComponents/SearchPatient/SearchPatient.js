@@ -27,7 +27,7 @@ function SearchPatient() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://localhost/zhhs_soft_server/api/patients`, {
+    fetch(`http://localhost/zhhs_soft_server/api/patients`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -54,7 +54,7 @@ function SearchPatient() {
       });
 
     return () => abortCont.abort();
-  }, [`https://localhost/zhhs_soft_server/api/patients`]);
+  }, [`http://localhost/zhhs_soft_server/api/patients`]);
 
   function selectPatient(e) {
     // console.log(e.target.value);

@@ -34,7 +34,7 @@ function ReturnMedicine() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://localhost/zhhs_soft_server/api/medicines`, {
+    fetch(`http://localhost/zhhs_soft_server/api/medicines`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -61,7 +61,7 @@ function ReturnMedicine() {
       });
 
     return () => abortCont.abort();
-  }, [`https://localhost/zhhs_soft_server/api/medicines`]);
+  }, [`http://localhost/zhhs_soft_server/api/medicines`]);
 
   function handleChange(e) {
     // console.log(e);
@@ -123,7 +123,7 @@ function ReturnMedicine() {
     formData.append("price", returnPrice);
     formData.append("quantity", returnQuantity);
 
-    fetch(`https://localhost/zhhs_soft_server/api/return`, {
+    fetch(`http://localhost/zhhs_soft_server/api/return`, {
       method: "POST",
       // headers: { "content-Type": "application/json" },
       body: formData,

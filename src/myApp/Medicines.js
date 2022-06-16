@@ -35,7 +35,7 @@ function Medicines() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://localhost/zhhs_soft_server/api/medicines`, {
+    fetch(`http://localhost/zhhs_soft_server/api/medicines`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -65,7 +65,7 @@ function Medicines() {
       });
 
     return () => abortCont.abort();
-  }, [`https://localhost/zhhs_soft_server/api/medicines`]);
+  }, [`http://localhost/zhhs_soft_server/api/medicines`]);
 
   let medData = "";
 
@@ -99,7 +99,7 @@ function Medicines() {
         if (result.isConfirmed) {
           setIsPending(true);
           setMedicinesData(null);
-          fetch(`https://localhost/zhhs_soft_server/api/medicines/delete-medicine?${sendId}`, {
+          fetch(`http://localhost/zhhs_soft_server/api/medicines/delete-medicine?${sendId}`, {
             method: "POST",
             // headers: { "content-Type": "application/json" },
             // body: formData,

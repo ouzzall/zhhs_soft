@@ -37,7 +37,7 @@ function OnlyBill() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://localhost/zhhs_soft_server/api/view-walk?${sendId}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/view-walk?${sendId}`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -64,7 +64,7 @@ function OnlyBill() {
       });
 
     return () => abortCont.abort();
-  }, [`https://localhost/zhhs_soft_server/api/view-walk?${sendId}`]);
+  }, [`http://localhost/zhhs_soft_server/api/view-walk?${sendId}`]);
 
   const { borderWidth } = borders;
   const { light } = colors;
@@ -77,7 +77,7 @@ function OnlyBill() {
       bill_type: "walk_bill",
     }).toString();
 
-    window.open(`https://localhost/zhhs_soft_server/print?${sendId2}`, "_blank");
+    window.open(`http://localhost/zhhs_soft_server/print?${sendId2}`, "_blank");
 
     // console.log("walk_bill", billData, localStorage.getItem("phone"));
 
@@ -92,7 +92,7 @@ function OnlyBill() {
     // formData.append("self_medicines", selfMedList[0]);
     // formData.append("shelf_medicines", shelfMedList[0]);
 
-    // fetch("https://localhost/zhhs_soft_server/api/print", {
+    // fetch("http://localhost/zhhs_soft_server/api/print", {
     //   method: "POST",
     //   // headers: { "content-Type": "application/json" },
     //   body: formData,

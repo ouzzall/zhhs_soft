@@ -38,7 +38,7 @@ function OperationalCosts() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://localhost/zhhs_soft_server/api/costs`, {
+    fetch(`http://localhost/zhhs_soft_server/api/costs`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -65,7 +65,7 @@ function OperationalCosts() {
       });
 
     return () => abortCont.abort();
-  }, [`https://localhost/zhhs_soft_server/api/costs`]);
+  }, [`http://localhost/zhhs_soft_server/api/costs`]);
 
   let cosData = "";
 
@@ -99,7 +99,7 @@ function OperationalCosts() {
         if (result.isConfirmed) {
           setIsPending(true);
           setCostsData(null);
-          fetch(`https://localhost/zhhs_soft_server/api/costs/delete-cost?${sendId}`, {
+          fetch(`http://localhost/zhhs_soft_server/api/costs/delete-cost?${sendId}`, {
             method: "POST",
             // headers: { "content-Type": "application/json" },
             // body: formData,

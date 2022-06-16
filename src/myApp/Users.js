@@ -33,7 +33,7 @@ function Users() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://localhost/zhhs_soft_server/api/users`, {
+    fetch(`http://localhost/zhhs_soft_server/api/users`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -60,7 +60,7 @@ function Users() {
       });
 
     return () => abortCont.abort();
-  }, [`https://localhost/zhhs_soft_server/api/users`]);
+  }, [`http://localhost/zhhs_soft_server/api/users`]);
 
   let useData = "";
 
@@ -94,7 +94,7 @@ function Users() {
         if (result.isConfirmed) {
           setIsPending(true);
           setUsersData(null);
-          fetch(`https://localhost/zhhs_soft_server/api/users/delete-user?${sendId}`, {
+          fetch(`http://localhost/zhhs_soft_server/api/users/delete-user?${sendId}`, {
             method: "POST",
             // headers: { "content-Type": "application/json" },
             // body: formData,

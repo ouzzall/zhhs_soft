@@ -40,7 +40,7 @@ function EditPatient() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://localhost/zhhs_soft_server/api/patients/edit-patient?${sendId}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/patients/edit-patient?${sendId}`, {
       // method: "GET",
       // headers: { "content-Type": "application/json" },
       signal: abortCont.signal,
@@ -76,7 +76,7 @@ function EditPatient() {
       });
 
     return () => abortCont.abort();
-  }, [`https://localhost/zhhs_soft_server/api/patients/edit-patient?${sendId}`]);
+  }, [`http://localhost/zhhs_soft_server/api/patients/edit-patient?${sendId}`]);
 
   const [errorSB, setErrorSB] = useState(false);
   const [errorText, setErrorText] = useState("");
@@ -109,7 +109,7 @@ function EditPatient() {
     formData.append("height", height);
     formData.append("phone", phone);
 
-    fetch(`https://localhost/zhhs_soft_server/api/patients/edit-patient?${sendId}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/patients/edit-patient?${sendId}`, {
       method: "POST",
       // headers: { "content-Type": "application/json" },
       body: formData,
