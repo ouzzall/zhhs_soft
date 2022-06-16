@@ -49,8 +49,8 @@ function Medicines() {
         setMedicinesData(result.data);
         setIsPending(false);
         setError(false);
-        setShelfCount(result.data[0][0]);
-        setSelfCount(result.data[0][1]);
+        setShelfCount(result.data[0][1]);
+        setSelfCount(result.data[0][0]);
         setTotalCount(result.data[0][2]);
       })
       .catch((err) => {

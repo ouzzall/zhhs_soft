@@ -76,12 +76,22 @@ function NewOperationalCost() {
               .then((response) => response.json())
               .then((resultIn) => {
                 // console.log(resultIn);
-                setItemData(resultIn.data);
-                setIsPending(false);
-                setError(false);
-                setStartAction("");
+
+                if (resultIn.status === true) {
+                  setItemData(resultIn.data);
+                  setIsPending(false);
+                  setError(false);
+                  setStartAction("");
+                  Swal.fire("Deleted!", "Your item has been deleted.", "success");
+                } else {
+                  setItemData(resultIn.data);
+                  setIsPending(false);
+                  setError(false);
+                  setStartAction("");
+                  Swal.fire("Error!", resultIn.message, "error");
+                }
               });
-            Swal.fire("Deleted!", "Your item has been deleted.", "success");
+
             // console.log(medicinesData);
           }
         });
