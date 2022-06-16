@@ -265,14 +265,14 @@ function CostEstimation() {
                     <Grid item xs={12} lg={12} onClick={fourthClick}>
                       <OutlinedCounterCard
                         count={estimationData[3]}
-                        prefix="Rs."
+                        prefix="Rs. -"
                         title="Discounts"
                       />
                     </Grid>
                     <Grid item xs={12} lg={12} onClick={fiveClick}>
                       <OutlinedCounterCard
                         count={estimationData[4]}
-                        prefix="Rs."
+                        prefix="Rs. -"
                         title="Medicine Return"
                       />
                     </Grid>
