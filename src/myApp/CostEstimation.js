@@ -47,6 +47,18 @@ function CostEstimation() {
       history.push(`/cost-estimation/walking-output`, { start: startDate, end: endDate });
     else history.push(`/cost-estimation/walking-output`, { start: "", end: "" });
   }
+  function fourthClick() {
+    // console.log("hello");
+    if (startDate && endDate)
+      history.push(`/cost-estimation/discount-input`, { start: startDate, end: endDate });
+    else history.push(`/cost-estimation/discount-input`, { start: "", end: "" });
+  }
+  function fiveClick() {
+    // console.log("hello");
+    if (startDate && endDate)
+      history.push(`/cost-estimation/medicine-return`, { start: startDate, end: endDate });
+    else history.push(`/cost-estimation/medicine-return`, { start: "", end: "" });
+  }
 
   const sendValues = new URLSearchParams({ start: startDate, end: endDate }).toString();
 
@@ -60,18 +72,26 @@ function CostEstimation() {
         "Total Spendings",
         "Patients Output",
         "Walking Output",
-        "Total Output",
+        // "Total Output",
+        "Discounts",
+        "Medicine Return",
         "Total Profit",
       ],
       datasets: {
         label: "Cost Estimation",
-        backgroundColors: ["primary", "secondary", "dark", "info", "success"],
+        backgroundColors: ["primary", "secondary", "dark", "info", "success", "warning"],
         data: [
           estimationData[0],
           estimationData[1],
           estimationData[2],
-          estimationData[1] + estimationData[2],
-          estimationData[1] + estimationData[2] - estimationData[0],
+          estimationData[3],
+          estimationData[4],
+          // estimationData[1] + estimationData[2],
+          estimationData[1] +
+            estimationData[2] -
+            estimationData[0] -
+            estimationData[3] -
+            estimationData[4],
         ],
       },
     };
@@ -242,9 +262,29 @@ function CostEstimation() {
                         title="Walking Output"
                       />
                     </Grid>
+                    <Grid item xs={12} lg={12} onClick={fourthClick}>
+                      <OutlinedCounterCard
+                        count={estimationData[3]}
+                        prefix="Rs."
+                        title="Discounts"
+                      />
+                    </Grid>
+                    <Grid item xs={12} lg={12} onClick={fiveClick}>
+                      <OutlinedCounterCard
+                        count={estimationData[4]}
+                        prefix="Rs."
+                        title="Medicine Return"
+                      />
+                    </Grid>
                     <Grid item xs={12} lg={12}>
                       <OutlinedCounterCard
-                        count={estimationData[1] + estimationData[2] - estimationData[0]}
+                        count={
+                          estimationData[1] +
+                          estimationData[2] -
+                          estimationData[0] -
+                          estimationData[3] -
+                          estimationData[4]
+                        }
                         prefix="Rs."
                         title="Total Profit"
                       />

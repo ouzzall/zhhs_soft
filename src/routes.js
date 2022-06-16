@@ -112,6 +112,8 @@ import EditUser from "myApp/EditUser";
 import EditOperationalCost from "myApp/EditOperationalCost";
 import OnlyBill from "myApp/OnlyBill";
 import ReturnMedicine from "myApp/ReturnMedicine";
+import DiscountInput from "myApp/DiscountInput";
+import MedicineReturnInput from "myApp/MedicineReturnInput";
 
 const routes = [
   {
@@ -310,6 +312,22 @@ const routes = [
     route: "/cost-estimation/walking-output",
     icon: "fa-solid fa-money-bill-trend-up",
     component: WalkingOutput,
+  },
+  {
+    myRoute: true,
+    name: "Walking Output",
+    key: "walking-output",
+    route: "/cost-estimation/discount-input",
+    icon: "fa-solid fa-money-bill-trend-up",
+    component: DiscountInput,
+  },
+  {
+    myRoute: true,
+    name: "Walking Output",
+    key: "walking-output",
+    route: "/cost-estimation/medicine-return",
+    icon: "fa-solid fa-money-bill-trend-up",
+    component: MedicineReturnInput,
   },
   {
     myRoute: true,
