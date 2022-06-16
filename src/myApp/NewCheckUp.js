@@ -26,8 +26,9 @@ import PatientDiagnosis from "myApp/CheckUpComponents/PatientDiagnosis/PatientDi
 import AssignMedicine from "myApp/CheckUpComponents/AssignMedicine/AssignMedicine";
 import GenerateBill from "myApp/CheckUpComponents/GenerateBill/GenerateBill";
 import PreFinalStepCheck from "myApp/CheckUpComponents/PreFinalStepCheck/PreFinalStepCheck";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import SuiSnackbar from "components/SuiSnackbar";
+import { setPWBillId } from "redux/patId";
 
 function getSteps() {
   return [1, 2, 3, 4, 5];
@@ -59,6 +60,8 @@ function NewCheckUp() {
   const { discountGlobal } = useSelector((state) => state.patId);
   const { checkUpCostGlobal } = useSelector((state) => state.patId);
   const { feeGlobal } = useSelector((state) => state.patId);
+
+  const dispatch = useDispatch();
 
   const history = useHistory();
   const [activeStep, setActiveStep] = useState(0);
@@ -129,6 +132,7 @@ function NewCheckUp() {
           .then((data) => {
             // console.log(data);
             if (data.status === true) {
+              dispatch(setPWBillId(data.data));
               // history.replace("/patients");
               // console.log(data);
               handleNext();

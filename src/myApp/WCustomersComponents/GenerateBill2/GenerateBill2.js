@@ -10,6 +10,7 @@ import SuiButton from "components/SuiButton";
 import Swal from "sweetalert2";
 
 // Soft UI Dashboard PRO React icons
+import { useSelector } from "react-redux";
 // import Settings from "examples/Icons/Settings";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -40,7 +41,8 @@ library.add(
 );
 
 function GenerateBill2() {
-  const handleSetDevelop = () => {};
+  const { pWBillId } = useSelector((state) => state.patId);
+  // console.log(pWBillId);
 
   const customButtonStyles = ({
     functions: { pxToRem },
@@ -63,6 +65,16 @@ function GenerateBill2() {
     Swal.fire("Medicine Entry Done", "Generate Bill", "success");
   }, []);
 
+  function printHandler() {
+    const sendId2 = new URLSearchParams({
+      id: pWBillId,
+      user: localStorage.getItem("phone"),
+      bill_type: "walk_bill",
+    }).toString();
+
+    window.open(`http://localhost/zhhs_soft_server/print?${sendId2}`, "_blank");
+  }
+
   return (
     <SuiBox>
       <SuiBox width="80%" textAlign="center" mx="auto" mb={4}>
@@ -82,7 +94,7 @@ function GenerateBill2() {
               <SuiButton
                 color="info"
                 variant="gradient"
-                onClick={handleSetDevelop}
+                onClick={printHandler}
                 sx={customButtonStyles}
               >
                 <FontAwesomeIcon icon="fa-solid fa-file-invoice" size="xl" className="font_clr_2" />

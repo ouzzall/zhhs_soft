@@ -23,7 +23,8 @@ import Footer from "examples/Footer";
 // Wizard page components
 import GenerateBill2 from "myApp/WCustomersComponents/GenerateBill2/GenerateBill2";
 import SelectMedicine from "myApp/WCustomersComponents/SelectMedicine/SelectMedicine";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setPWBillId } from "redux/patId";
 import SuiSnackbar from "components/SuiSnackbar";
 import PreFinalStep from "myApp/WCustomersComponents/PreFinalStep/PreFinalStep";
 
@@ -49,6 +50,9 @@ function NewWalkingCustomer() {
   const { selfMedList } = useSelector((state) => state.patMedicines);
   const { discountGlobal } = useSelector((state) => state.patId);
   const { checkUpCostGlobal } = useSelector((state) => state.patId);
+
+  const dispatch = useDispatch();
+
   const history = useHistory();
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
@@ -111,6 +115,7 @@ function NewWalkingCustomer() {
           .then((data) => {
             // console.log(data);
             if (data.status === true) {
+              dispatch(setPWBillId(data.data));
               // history.replace("/patients");
               // console.log(data);
               handleNext();

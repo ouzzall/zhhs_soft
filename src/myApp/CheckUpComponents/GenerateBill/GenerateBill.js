@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Grid from "@mui/material/Grid";
 
 // Soft UI Dashboard PRO React components
+import { useSelector } from "react-redux";
 import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
 import SuiButton from "components/SuiButton";
@@ -40,11 +41,11 @@ library.add(
 );
 
 function GenerateBill() {
+  const { pWBillId } = useSelector((state) => state.patId);
+  // console.log(pWBillId);
   // const [design, setDesign] = useState(false);
 
   // const handleSetDesign = () => setDesign(!design);
-  const handleSetCode = () => {};
-  const handleSetDevelop = () => {};
 
   const customButtonStyles = ({
     functions: { pxToRem },
@@ -67,6 +68,26 @@ function GenerateBill() {
     Swal.fire("Check Up Finished", "Generate Prescription and Bill", "success");
   }, []);
 
+  function printHandler1() {
+    const sendId2 = new URLSearchParams({
+      id: pWBillId,
+      user: localStorage.getItem("phone"),
+      bill_type: "patient_bill",
+    }).toString();
+
+    window.open(`http://localhost/zhhs_soft_server/print?${sendId2}`, "_blank");
+  }
+
+  function printHandler2() {
+    const sendId2 = new URLSearchParams({
+      id: pWBillId,
+      user: localStorage.getItem("phone"),
+      bill_type: "patient_prescription",
+    }).toString();
+
+    window.open(`http://localhost/zhhs_soft_server/print?${sendId2}`, "_blank");
+  }
+
   return (
     <SuiBox>
       <SuiBox width="80%" textAlign="center" mx="auto" mb={4}>
@@ -86,7 +107,7 @@ function GenerateBill() {
               <SuiButton
                 color="info"
                 variant="gradient"
-                onClick={handleSetCode}
+                onClick={printHandler2}
                 sx={customButtonStyles}
               >
                 <FontAwesomeIcon
@@ -105,7 +126,7 @@ function GenerateBill() {
               <SuiButton
                 color="info"
                 variant="gradient"
-                onClick={handleSetDevelop}
+                onClick={printHandler1}
                 sx={customButtonStyles}
               >
                 <FontAwesomeIcon icon="fa-solid fa-file-invoice" size="xl" className="font_clr_2" />
