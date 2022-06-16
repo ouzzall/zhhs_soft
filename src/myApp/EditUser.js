@@ -36,7 +36,7 @@ function EditUser() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/users/edit-user?${sendId}`, {
+    fetch(`https://localhost/zhhs_soft_server/api/users/edit-user?${sendId}`, {
       // method: "GET",
       // headers: { "content-Type": "application/json" },
       signal: abortCont.signal,
@@ -69,7 +69,7 @@ function EditUser() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/users/edit-user?${sendId}`]);
+  }, [`https://localhost/zhhs_soft_server/api/users/edit-user?${sendId}`]);
 
   const [errorSB, setErrorSB] = useState(false);
   const [errorText, setErrorText] = useState("");
@@ -99,7 +99,7 @@ function EditUser() {
     formData.append("username", username);
     formData.append("password", password);
 
-    fetch(`https://zahidhd.tk/zahidhd/api/users/edit-user?${sendId}`, {
+    fetch(`https://localhost/zhhs_soft_server/api/users/edit-user?${sendId}`, {
       method: "POST",
       // headers: { "content-Type": "application/json" },
       body: formData,

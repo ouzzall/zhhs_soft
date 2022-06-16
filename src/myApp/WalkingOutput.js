@@ -35,7 +35,7 @@ function WalkingOutput() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/walking-output?${sendId}`, {
+    fetch(`https://localhost/zhhs_soft_server/api/walking-output?${sendId}`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -62,7 +62,7 @@ function WalkingOutput() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/walking-output?${sendId}`]);
+  }, [`https://localhost/zhhs_soft_server/api/walking-output?${sendId}`]);
 
   let bilData = "";
 

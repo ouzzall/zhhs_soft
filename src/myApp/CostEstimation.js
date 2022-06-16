@@ -82,7 +82,7 @@ function CostEstimation() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/cost-estimation`, {
+    fetch(`https://localhost/zhhs_soft_server/api/cost-estimation`, {
       // method: "GET",
       // headers: { "content-Type": "application/json" },
       signal: abortCont.signal,
@@ -111,10 +111,10 @@ function CostEstimation() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/cost-estimation`]);
+  }, [`https://localhost/zhhs_soft_server/api/cost-estimation`]);
 
   function dateHandler() {
-    fetch(`https://zahidhd.tk/zahidhd/api/cost-estimation?${sendValues}`, {
+    fetch(`https://localhost/zhhs_soft_server/api/cost-estimation?${sendValues}`, {
       // method: "POST",
       // headers: { "content-Type": "application/json" },
       // body: formData,

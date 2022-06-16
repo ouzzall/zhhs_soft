@@ -102,7 +102,7 @@ function NewWalkingCustomer() {
         // formData.append("self_medicines", selfMedList[0]);
         // formData.append("shelf_medicines", shelfMedList[0]);
 
-        fetch("https://zahidhd.tk/zahidhd/api/walking-customer/new-walking-customer", {
+        fetch("https://localhost/zhhs_soft_server/api/walking-customer/new-walking-customer", {
           method: "POST",
           // headers: { "content-Type": "application/json" },
           body: formData,

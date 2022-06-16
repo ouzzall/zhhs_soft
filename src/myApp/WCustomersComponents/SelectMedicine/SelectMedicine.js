@@ -202,7 +202,7 @@ function SelectMedicine() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/medicines/separated`, {
+    fetch(`https://localhost/zhhs_soft_server/api/medicines/separated`, {
       // method: "GET",
       // headers: { "content-Type": "application/json" },
       signal: abortCont.signal,
@@ -232,7 +232,7 @@ function SelectMedicine() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/medicines/separated`]);
+  }, [`https://localhost/zhhs_soft_server/api/medicines/separated`]);
 
   const newData1 = [];
   const newData2 = [];

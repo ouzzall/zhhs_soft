@@ -37,7 +37,7 @@ function SuiDropzone({ options }) {
   return (
     <SuiDropzoneRoot
       component="form"
-      action="https://zahidhd.tk/zahidhd/api/files/upload-file"
+      action="https://localhost/zhhs_soft_server/api/files/upload-file"
       ref={dropzoneRef}
       className="form-control dropzone"
     >

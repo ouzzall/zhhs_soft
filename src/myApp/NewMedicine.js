@@ -72,7 +72,7 @@ function NewMedicine() {
     formData.append("stock", count);
     formData.append("estimation_check", estimationCheck);
 
-    fetch("https://zahidhd.tk/zahidhd/api/medicines/add-medicine", {
+    fetch("https://localhost/zhhs_soft_server/api/medicines/add-medicine", {
       method: "POST",
       // headers: { "content-Type": "application/json" },
       body: formData,

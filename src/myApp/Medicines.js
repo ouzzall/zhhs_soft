@@ -35,7 +35,7 @@ function Medicines() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/medicines`, {
+    fetch(`https://localhost/zhhs_soft_server/api/medicines`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -65,7 +65,7 @@ function Medicines() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/medicines`]);
+  }, [`https://localhost/zhhs_soft_server/api/medicines`]);
 
   let medData = "";
 
@@ -99,7 +99,7 @@ function Medicines() {
         if (result.isConfirmed) {
           setIsPending(true);
           setMedicinesData(null);
-          fetch(`https://zahidhd.tk/zahidhd/api/medicines/delete-medicine?${sendId}`, {
+          fetch(`https://localhost/zhhs_soft_server/api/medicines/delete-medicine?${sendId}`, {
             method: "POST",
             // headers: { "content-Type": "application/json" },
             // body: formData,

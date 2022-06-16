@@ -68,7 +68,7 @@ function NewOperationalCost() {
           if (result.isConfirmed) {
             setIsPending(true);
             setItemData(null);
-            fetch(`https://zahidhd.tk/zahidhd/api/items/delete-item?${sendId}`, {
+            fetch(`https://localhost/zhhs_soft_server/api/items/delete-item?${sendId}`, {
               method: "POST",
               // headers: { "content-Type": "application/json" },
               // body: formData,
@@ -91,7 +91,7 @@ function NewOperationalCost() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/items`, {
+    fetch(`https://localhost/zhhs_soft_server/api/items`, {
       // method: "GET",
       // headers: { "content-Type": "application/json" },
       signal: abortCont.signal,
@@ -121,7 +121,7 @@ function NewOperationalCost() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/items`]);
+  }, [`https://localhost/zhhs_soft_server/api/items`]);
 
   function addItemCost(e) {
     e.preventDefault();
@@ -133,7 +133,7 @@ function NewOperationalCost() {
     formData.append("cost", cost);
     formData.append("quantity", quantity);
 
-    fetch("https://zahidhd.tk/zahidhd/api/costs/add-cost", {
+    fetch("https://localhost/zhhs_soft_server/api/costs/add-cost", {
       method: "POST",
       // headers: { "content-Type": "application/json" },
       body: formData,
@@ -189,7 +189,7 @@ function NewOperationalCost() {
 
     formData.append("name", newItem);
 
-    fetch("https://zahidhd.tk/zahidhd/api/items/add-item", {
+    fetch("https://localhost/zhhs_soft_server/api/items/add-item", {
       method: "POST",
       // headers: { "content-Type": "application/json" },
       body: formData,
@@ -223,7 +223,7 @@ function NewOperationalCost() {
 
     formData.append("name", newItem);
 
-    fetch(`https://zahidhd.tk/zahidhd/api/items/edit-item?${sendId}`, {
+    fetch(`https://localhost/zhhs_soft_server/api/items/edit-item?${sendId}`, {
       method: "POST",
       // headers: { "content-Type": "application/json" },
       body: formData,

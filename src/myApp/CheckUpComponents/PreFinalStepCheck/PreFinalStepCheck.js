@@ -38,7 +38,7 @@ function PreFinalStepCheck() {
     // console.log(shelfIdList.toString());
     const sendId = new URLSearchParams({ ids: shelfIdList.toString() }).toString();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/medicines_total?${sendId}`)
+    fetch(`https://localhost/zhhs_soft_server/api/medicines_total?${sendId}`)
       .then((res) => {
         if (!res.ok) {
           throw Error("Not Fetching data from server.");
