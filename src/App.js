@@ -31,8 +31,8 @@ export default function App() {
   // console.log("HELLO FROM APP");
 
   if (localStorage.getItem("phone")) {
-    if (window.location.href === "http://localhost:3000/sign-in") history.push("/dashboard");
-  } else if (window.location.href === "http://localhost:3000/sign-in") {
+    if (window.location.href === "https://zahidhd.tk/sign-in") history.push("/dashboard");
+  } else if (window.location.href === "https://zahidhd.tk/sign-in") {
     //
   } else {
     history.push("/sign-in");

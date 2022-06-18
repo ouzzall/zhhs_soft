@@ -75,7 +75,7 @@ function GenerateBill() {
       bill_type: "patient_bill",
     }).toString();
 
-    window.open(`http://localhost/zhhs_soft_server/print?${sendId2}`, "_blank");
+    window.open(`https://zahidhd.tk/zahidhd/print?${sendId2}`, "_blank");
   }
 
   function printHandler2() {
@@ -85,7 +85,7 @@ function GenerateBill() {
       bill_type: "patient_prescription",
     }).toString();
 
-    window.open(`http://localhost/zhhs_soft_server/print?${sendId2}`, "_blank");
+    window.open(`https://zahidhd.tk/zahidhd/print?${sendId2}`, "_blank");
   }
 
   return (

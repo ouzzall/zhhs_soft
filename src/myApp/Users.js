@@ -33,7 +33,7 @@ function Users() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`http://localhost/zhhs_soft_server/api/users`, {
+    fetch(`https://zahidhd.tk/zahidhd/api/users`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -60,7 +60,7 @@ function Users() {
       });
 
     return () => abortCont.abort();
-  }, [`http://localhost/zhhs_soft_server/api/users`]);
+  }, [`https://zahidhd.tk/zahidhd/api/users`]);
 
   let useData = "";
 
@@ -94,7 +94,7 @@ function Users() {
         if (result.isConfirmed) {
           setIsPending(true);
           setUsersData(null);
-          fetch(`http://localhost/zhhs_soft_server/api/users/delete-user?${sendId}`, {
+          fetch(`https://zahidhd.tk/zahidhd/api/users/delete-user?${sendId}`, {
             method: "POST",
             // headers: { "content-Type": "application/json" },
             // body: formData,

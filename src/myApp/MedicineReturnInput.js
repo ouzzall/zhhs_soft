@@ -31,7 +31,7 @@ function MedicineReturnInput() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`http://localhost/zhhs_soft_server/api/medicine-return-input?${sendId}`, {
+    fetch(`https://zahidhd.tk/zahidhd/api/medicine-return-input?${sendId}`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -58,7 +58,7 @@ function MedicineReturnInput() {
       });
 
     return () => abortCont.abort();
-  }, [`http://localhost/zhhs_soft_server/api/patient-output?${sendId}`]);
+  }, [`https://zahidhd.tk/zahidhd/api/patient-output?${sendId}`]);
 
   let patData = "";
 
