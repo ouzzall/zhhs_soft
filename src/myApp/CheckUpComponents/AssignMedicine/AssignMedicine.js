@@ -67,6 +67,9 @@ function AssignMedicine() {
   const [medTak, setMedTak] = useState("Tablet");
   const [medPri, setMedPri] = useState(0);
 
+  const [selectValue, setSelectValue] = useState({ value: "", label: "Search Here..." });
+  const [selectValue2, setSelectValue2] = useState({ value: "", label: "Search Here..." });
+
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
@@ -171,22 +174,23 @@ function AssignMedicine() {
     setMedTak("Half Cup");
     // console.log(shelfMedList);
 
-    let check3 = false;
-    for (let i = 0; i < shelfMedList.length; i += 1) {
-      if (shelfMedList[i].key === medSelfKey) {
-        check3 = true;
-        break;
-      }
-    }
+    // let check3 = false;
+    // for (let i = 0; i < selfMedList.length; i += 1) {
+    //   if (selfMedList[i].key === medSelfKey) {
+    //     check3 = true;
+    //     break;
+    //   }
+    // }
 
     // console.log(check3);
 
-    if (check3 === true) {
-      // console.log("error3");
-      // setOpen(false);
-      setInfoText("Medicine Already Added");
-      setInfoSB(true);
-    } else if (medSelfName !== "") {
+    // if (check3 === true) {
+    //   // console.log("error3");
+    //   // setOpen(false);
+    //   setInfoText("Medicine Already Added");
+    //   setInfoSB(true);
+    // } else
+    if (medSelfName !== "") {
       setOpen3(true);
     } else {
       // console.log("error2");
@@ -198,7 +202,7 @@ function AssignMedicine() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/medicines/separated`, {
+    fetch(`http://localhost/zhhs_soft_server/api/medicines/separated`, {
       // method: "GET",
       // headers: { "content-Type": "application/json" },
       signal: abortCont.signal,
@@ -228,7 +232,7 @@ function AssignMedicine() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/medicines/separated`]);
+  }, [`http://localhost/zhhs_soft_server/api/medicines/separated`]);
 
   const newData1 = [];
   const newData2 = [];
@@ -285,6 +289,8 @@ function AssignMedicine() {
       setOpen(false);
       setSuccessText("New Medicine Queued");
       setSuccessSB(true);
+
+      setSelectValue({ value: "", label: "Search Here..." });
     }
   }
 
@@ -330,6 +336,8 @@ function AssignMedicine() {
       setOpen3(false);
       setSuccessText("New Medicine Queued");
       setSuccessSB(true);
+
+      setSelectValue2({ value: "", label: "Search Here..." });
     }
   }
 
@@ -434,6 +442,8 @@ function AssignMedicine() {
     // setNewShelfMedKey(e.value);
     setMedShelfName(e.label);
     setMedShelfKey(e.value);
+
+    setSelectValue({ value: e.value, label: e.label });
   }
 
   function selectSelfHandler(e) {
@@ -442,6 +452,8 @@ function AssignMedicine() {
     // setNewShelfMedKey(e.value);
     setMedSelfName(e.label);
     setMedSelfKey(e.value);
+
+    setSelectValue2({ value: e.value, label: e.label });
   }
 
   return (
@@ -488,6 +500,7 @@ function AssignMedicine() {
                     {medicinesData && (
                       <SuiSelect
                         defaultValue={{ value: "", label: "Search Here..." }}
+                        value={selectValue}
                         options={newData1}
                         onChange={selectShelfHandler}
                       />
@@ -675,6 +688,7 @@ function AssignMedicine() {
                       <SuiSelect
                         defaultValue={{ value: "", label: "Search Here..." }}
                         options={newData2}
+                        value={selectValue2}
                         onChange={selectSelfHandler}
                       />
                     )}

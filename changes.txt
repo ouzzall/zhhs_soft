@@ -1,0 +1,5 @@
+https://zahidhd.tk/sign-in
+http://localhost:3000/sign-in
+
+https://zahidhd.tk/zahidhd
+http://localhost/zhhs_soft_server

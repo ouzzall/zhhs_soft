@@ -67,7 +67,7 @@ function SignIn() {
     formData.append("username", phone);
     formData.append("password", password);
 
-    fetch("https://zahidhd.tk/zahidhd/api/login", {
+    fetch("http://localhost/zhhs_soft_server/api/login", {
       method: "POST",
       // headers: { "content-Type": "application/json" },
       body: formData,
@@ -106,7 +106,7 @@ function SignIn() {
             <SuiBox mb={2}>
               <SuiInput
                 type="text"
-                placeholder="Phone"
+                placeholder="username"
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}

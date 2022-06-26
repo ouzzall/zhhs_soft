@@ -18,7 +18,7 @@ import SuiButton from "components/SuiButton";
 import { useDispatch } from "react-redux";
 import { setShelfList, setSelfList } from "redux/patMedicines";
 import { setReports } from "redux/patReports";
-import { setId } from "redux/patId";
+import { setId, setFeeGlobal, setCheckUpCostGlobal, setDiscountGlobal } from "redux/patId";
 import { setDiagnosis } from "redux/patDiagnosis";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -39,6 +39,9 @@ function Profile() {
     dispatch(setShelfList([]));
     dispatch(setSelfList([]));
     dispatch(setId(0));
+    dispatch(setFeeGlobal(0));
+    dispatch(setCheckUpCostGlobal(0));
+    dispatch(setDiscountGlobal(0));
     dispatch(
       setDiagnosis(
         "<p><strong>Weight: <u>___________</u> Blood Pressure: <u>__________</u> Sugar: <u>_____________</u></strong></p><p><br></p><p><strong>Symptoms:</strong></p><p><br></p><p><strong>Findings:</strong></p><p><br></p><p><strong>Care:</strong></p><p><br></p><p><strong>Suggestions:</strong></p><p><br></p><p><br></p><p><strong><em><u>By: Hakeem M. Ashraf</u></em></strong></p>"
@@ -55,7 +58,7 @@ function Profile() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/patients/profile?${sendId}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/patients/profile?${sendId}`, {
       // method: "GET",
       // headers: { "content-Type": "application/json" },
       signal: abortCont.signal,
@@ -84,7 +87,7 @@ function Profile() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/patients/profile?${sendId}`]);
+  }, [`http://localhost/zhhs_soft_server/api/patients/profile?${sendId}`]);
 
   let useData = "";
 
@@ -113,7 +116,7 @@ function Profile() {
         if (result.isConfirmed) {
           setIsPending(true);
           setGetData(null);
-          fetch(`https://zahidhd.tk/zahidhd/api/check-ups/profile/delete?${sendId2}`, {
+          fetch(`http://localhost/zhhs_soft_server/api/check-ups/profile/delete?${sendId2}`, {
             method: "POST",
             // headers: { "content-Type": "application/json" },
             // body: formData,

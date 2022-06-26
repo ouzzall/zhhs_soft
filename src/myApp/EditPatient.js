@@ -40,7 +40,7 @@ function EditPatient() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/patients/edit-patient?${sendId}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/patients/edit-patient?${sendId}`, {
       // method: "GET",
       // headers: { "content-Type": "application/json" },
       signal: abortCont.signal,
@@ -76,7 +76,7 @@ function EditPatient() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/patients/edit-patient?${sendId}`]);
+  }, [`http://localhost/zhhs_soft_server/api/patients/edit-patient?${sendId}`]);
 
   const [errorSB, setErrorSB] = useState(false);
   const [errorText, setErrorText] = useState("");
@@ -109,7 +109,7 @@ function EditPatient() {
     formData.append("height", height);
     formData.append("phone", phone);
 
-    fetch(`https://zahidhd.tk/zahidhd/api/patients/edit-patient?${sendId}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/patients/edit-patient?${sendId}`, {
       method: "POST",
       // headers: { "content-Type": "application/json" },
       body: formData,
@@ -159,8 +159,8 @@ function EditPatient() {
                         <Grid item xs={12} sm={6}>
                           <FormField
                             type="text"
-                            label="name"
-                            placeholder="eg. John Doe"
+                            label="fisrt name"
+                            placeholder="eg. John"
                             onChange={(e) => setName(e.target.value)}
                             defaultValue={patientsData.name}
                           />
@@ -168,8 +168,8 @@ function EditPatient() {
                         <Grid item xs={12} sm={6}>
                           <FormField
                             type="text"
-                            label="father name"
-                            placeholder="eg. Patrick Doe"
+                            label="last name"
+                            placeholder="eg. Doe"
                             onChange={(e) => setFatherName(e.target.value)}
                             defaultValue={patientsData.father_name}
                           />
@@ -209,7 +209,7 @@ function EditPatient() {
                         </Grid>
                         <Grid item xs={12} sm={6}>
                           <FormField
-                            type="number"
+                            type="text"
                             label="weight (Kg)"
                             placeholder="eg. 75"
                             onChange={(e) => setWeight(e.target.value)}

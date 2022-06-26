@@ -36,7 +36,7 @@ function EditOperationalCost() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/costs/edit-cost?${sendId}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/costs/edit-cost?${sendId}`, {
       // method: "GET",
       // headers: { "content-Type": "application/json" },
       signal: abortCont.signal,
@@ -68,7 +68,7 @@ function EditOperationalCost() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/users/edit-user?${sendId}`]);
+  }, [`http://localhost/zhhs_soft_server/api/users/edit-user?${sendId}`]);
 
   const [errorSB, setErrorSB] = useState(false);
   const [errorText, setErrorText] = useState("");
@@ -97,7 +97,7 @@ function EditOperationalCost() {
     formData.append("cost", cost);
     formData.append("quantity", quantity);
 
-    fetch(`https://zahidhd.tk/zahidhd/api/costs/edit-cost?${sendId}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/costs/edit-cost?${sendId}`, {
       method: "POST",
       // headers: { "content-Type": "application/json" },
       body: formData,

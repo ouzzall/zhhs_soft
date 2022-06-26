@@ -31,7 +31,7 @@ function PatientsOutput() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/patient-output?${sendId}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/patient-output?${sendId}`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -58,7 +58,7 @@ function PatientsOutput() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/patient-output?${sendId}`]);
+  }, [`http://localhost/zhhs_soft_server/api/patient-output?${sendId}`]);
 
   let patData = "";
 
@@ -66,12 +66,21 @@ function PatientsOutput() {
     // console.log(medicinesData[1], isPending, errorL);
     // console.log(medicinesData[1]);
 
+    patientsData.forEach((element) => {
+      if (element.discount_amount == null) {
+        element.discount_amount = "-";
+        element.after_discount = element.check_up_price;
+      }
+    });
+
     patData = {
       columns: [
         { Header: "CHECK-UP ID", accessor: "id" },
         { Header: "PATIENT NAME", accessor: "name" },
         { Header: "CHECK-UP DATE", accessor: "created_at" },
-        { Header: "CEHCK-UP COST", accessor: "check_up_price" },
+        { Header: "CHECK-UP COST", accessor: "check_up_price" },
+        { Header: "DISCOUNT", accessor: "discount_amount" },
+        { Header: "FINAL COST", accessor: "after_discount" },
       ],
 
       rows: patientsData,

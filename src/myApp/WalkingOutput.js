@@ -35,7 +35,7 @@ function WalkingOutput() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/walking-output?${sendId}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/walking-output?${sendId}`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -62,7 +62,7 @@ function WalkingOutput() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/walking-output?${sendId}`]);
+  }, [`http://localhost/zhhs_soft_server/api/walking-output?${sendId}`]);
 
   let bilData = "";
 
@@ -70,11 +70,20 @@ function WalkingOutput() {
     // console.log(medicinesData[1], isPending, errorL);
     // console.log(medicinesData[1]);
 
+    billsData.forEach((element) => {
+      if (element.discount_amount == null) {
+        element.discount_amount = "-";
+        element.after_discount = element.bill_price;
+      }
+    });
+
     bilData = {
       columns: [
         { Header: "BILL ID", accessor: "id" },
         { Header: "BILL DATE", accessor: "created_at_2" },
         { Header: "BILL COST", accessor: "bill_price" },
+        { Header: "DISCOUNT", accessor: "discount_amount" },
+        { Header: "FINAL COST", accessor: "after_discount" },
       ],
 
       rows: billsData,

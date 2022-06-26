@@ -32,7 +32,7 @@ function Patients() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/patients`, {
+    fetch(`http://localhost/zhhs_soft_server/api/patients`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -59,7 +59,7 @@ function Patients() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/patients`]);
+  }, [`http://localhost/zhhs_soft_server/api/patients`]);
 
   let patData = "";
 
@@ -93,7 +93,7 @@ function Patients() {
         if (result.isConfirmed) {
           setIsPending(true);
           setPatientsData(null);
-          fetch(`https://zahidhd.tk/zahidhd/api/patients/delete-patient?${sendId}`, {
+          fetch(`http://localhost/zhhs_soft_server/api/patients/delete-patient?${sendId}`, {
             method: "POST",
             // headers: { "content-Type": "application/json" },
             // body: formData,
@@ -117,6 +117,8 @@ function Patients() {
 
     patientsData.forEach((element) => {
       if (element.height === "0,0") element.height = "-";
+      if (element.phone === "00000000000") element.phone = "-";
+      if (element.weight === "0") element.weight = "-";
       element.action = (
         <SuiBox display="flex" alignItems="center">
           <SuiBox ml={1}>
@@ -170,8 +172,8 @@ function Patients() {
     patData = {
       columns: [
         { Header: "ID", accessor: "id" },
-        { Header: "NAME", accessor: "name", width: "18%" },
-        { Header: "FATHER NAME", accessor: "father_name", width: "18%" },
+        { Header: "FIRST NAME", accessor: "name", width: "18%" },
+        { Header: "LAST NAME", accessor: "father_name", width: "18%" },
         { Header: "AGE", accessor: "age" },
         { Header: "GENDER", accessor: "gender" },
         { Header: "WEIGHT (Kg)", accessor: "weight" },

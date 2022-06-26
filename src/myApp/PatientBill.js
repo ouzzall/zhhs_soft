@@ -37,7 +37,7 @@ function PatientBill() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/view-bill?${sendId}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/view-bill?${sendId}`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -64,7 +64,7 @@ function PatientBill() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/view-bill?${sendId}`]);
+  }, [`http://localhost/zhhs_soft_server/api/view-bill?${sendId}`]);
 
   const { borderWidth } = borders;
   const { light } = colors;
@@ -77,7 +77,7 @@ function PatientBill() {
       bill_type: "patient_bill",
     }).toString();
 
-    window.open(`https://zahidhd.tk/zahidhd/print?${sendId2}`, "_blank");
+    window.open(`http://localhost/zhhs_soft_server/print?${sendId2}`, "_blank");
 
     // console.log("patient_bill", billData, localStorage.getItem("phone"));
 
@@ -92,7 +92,7 @@ function PatientBill() {
     // // formData.append("self_medicines", selfMedList[0]);
     // // formData.append("shelf_medicines", shelfMedList[0]);
 
-    // fetch("https://zahidhd.tk/zahidhd/api/print", {
+    // fetch("http://localhost/zhhs_soft_server/api/print", {
     //   method: "POST",
     //   // headers: { "content-Type": "application/json" },
     //   body: formData,
@@ -251,6 +251,54 @@ function PatientBill() {
                             </SuiTypography>
                           </SuiBox>
                         </TableRow>
+                        <TableRow>
+                          <SuiBox
+                            component="th"
+                            width={{ xs: "45%", md: "50%" }}
+                            py={1.5}
+                            px={1}
+                            textAlign="left"
+                            borderBottom={borderBottom}
+                          >
+                            <SuiTypography variant="body2" color="text">
+                              Check Up Fee
+                            </SuiTypography>
+                          </SuiBox>
+                          <SuiBox
+                            component="th"
+                            pl={1}
+                            pr={3}
+                            textAlign="center"
+                            borderBottom={borderBottom}
+                          >
+                            <SuiTypography variant="body2" color="text">
+                              -
+                            </SuiTypography>
+                          </SuiBox>
+                          <SuiBox
+                            component="th"
+                            pl={1}
+                            pr={3}
+                            textAlign="center"
+                            borderBottom={borderBottom}
+                          >
+                            <SuiTypography variant="body2" color="text">
+                              -
+                            </SuiTypography>
+                          </SuiBox>
+                          <SuiBox
+                            component="th"
+                            py={1.5}
+                            pl={3}
+                            pr={1}
+                            textAlign="left"
+                            borderBottom={borderBottom}
+                          >
+                            <SuiTypography variant="body2" color="text">
+                              {billData[0].check_up_fee}
+                            </SuiTypography>
+                          </SuiBox>
+                        </TableRow>
                       </SuiBox>
                       <TableBody>
                         {billData[1].map((value) => {
@@ -339,6 +387,47 @@ function PatientBill() {
                             pl={3}
                             borderBottom={borderBottom}
                           >
+                            <SuiTypography variant="h5">Disc</SuiTypography>
+                          </SuiBox>
+                          <SuiBox
+                            component="td"
+                            textAlign="left"
+                            py={1}
+                            pr={1}
+                            pl={3}
+                            borderBottom={borderBottom}
+                          >
+                            <SuiTypography variant="h5">
+                              Rs.{" "}
+                              {billData[0].discount_amount == null
+                                ? 0
+                                : billData[0].discount_amount}
+                            </SuiTypography>
+                          </SuiBox>
+                        </TableRow>
+                        <TableRow>
+                          <SuiBox
+                            component="td"
+                            textAlign="left"
+                            p={1}
+                            borderBottom={borderBottom}
+                          />
+                          <SuiBox
+                            component="td"
+                            textAlign="left"
+                            py={1}
+                            pr={1}
+                            pl={3}
+                            borderBottom={borderBottom}
+                          />
+                          <SuiBox
+                            component="td"
+                            textAlign="left"
+                            py={1}
+                            pr={1}
+                            pl={3}
+                            borderBottom={borderBottom}
+                          >
                             <SuiTypography variant="h5">Total</SuiTypography>
                           </SuiBox>
                           <SuiBox
@@ -350,7 +439,10 @@ function PatientBill() {
                             borderBottom={borderBottom}
                           >
                             <SuiTypography variant="h5">
-                              Rs. {billData[0].check_up_price}
+                              Rs.{" "}
+                              {billData[0].after_discount == null
+                                ? billData[0].check_up_price
+                                : billData[0].after_discount}
                             </SuiTypography>
                           </SuiBox>
                         </TableRow>
@@ -377,7 +469,7 @@ function PatientBill() {
                         fontWeight="medium"
                         color="secondary"
                       >
-                        email:{" "}
+                        email:
                         <SuiTypography component="span" variant="h6" fontWeight="medium">
                           zhhs@gmail.com
                         </SuiTypography>

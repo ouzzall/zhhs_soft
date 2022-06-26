@@ -18,7 +18,7 @@ import SuiButton from "components/SuiButton";
 import { useDispatch } from "react-redux";
 import { setShelfList, setSelfList } from "redux/patMedicines";
 import { setReports } from "redux/patReports";
-import { setId } from "redux/patId";
+import { setId, setFeeGlobal, setCheckUpCostGlobal, setDiscountGlobal } from "redux/patId";
 import { setDiagnosis } from "redux/patDiagnosis";
 import { useHistory } from "react-router-dom";
 
@@ -40,6 +40,9 @@ function CheckUps() {
   function actionHandle() {
     dispatch(setShelfList([]));
     dispatch(setSelfList([]));
+    dispatch(setFeeGlobal(0));
+    dispatch(setCheckUpCostGlobal(0));
+    dispatch(setDiscountGlobal(0));
     dispatch(setId(0));
     dispatch(
       setDiagnosis(
@@ -53,7 +56,7 @@ function CheckUps() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/patient-output`, {
+    fetch(`http://localhost/zhhs_soft_server/api/patient-output`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -80,7 +83,7 @@ function CheckUps() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/patient-output`]);
+  }, [`http://localhost/zhhs_soft_server/api/patient-output`]);
 
   let useData = "";
 
@@ -109,7 +112,7 @@ function CheckUps() {
         if (result.isConfirmed) {
           setIsPending(true);
           setCheckData(null);
-          fetch(`https://zahidhd.tk/zahidhd/api/check-ups/delete?${sendId}`, {
+          fetch(`http://localhost/zhhs_soft_server/api/check-ups/delete?${sendId}`, {
             method: "POST",
             // headers: { "content-Type": "application/json" },
             // body: formData,
@@ -142,6 +145,10 @@ function CheckUps() {
     // console.log(medicinesData[1]);
 
     checkData.forEach((element) => {
+      if (element.discount_amount == null) {
+        element.discount_amount = "-";
+        element.after_discount = element.check_up_price;
+      }
       element.action = (
         <SuiBox ml={1}>
           <SuiTypography
@@ -191,6 +198,8 @@ function CheckUps() {
         { Header: "PATIENT PHONE", accessor: "phone" },
         { Header: "CHECK-UP DATE", accessor: "created_at" },
         { Header: "CHECK-UP COST", accessor: "check_up_price" },
+        { Header: "DISCOUNT", accessor: "discount_amount" },
+        { Header: "FINAL COST", accessor: "after_discount" },
         { Header: "BILL", accessor: "bill" },
         { Header: "PRESCRIPTION", accessor: "prescription" },
         { Header: "ACTION", accessor: "action" },

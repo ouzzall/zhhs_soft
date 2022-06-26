@@ -28,7 +28,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setShelfList, setSelfList } from "redux/patMedicines";
 import { setReports } from "redux/patReports";
-import { setId } from "redux/patId";
+import { setId, setFeeGlobal, setCheckUpCostGlobal, setDiscountGlobal } from "redux/patId";
 import { setDiagnosis } from "redux/patDiagnosis";
 import { useHistory } from "react-router-dom";
 
@@ -41,6 +41,9 @@ function MyHomeDashboard() {
   function actionHandle() {
     dispatch(setShelfList([]));
     dispatch(setSelfList([]));
+    dispatch(setFeeGlobal(0));
+    dispatch(setCheckUpCostGlobal(0));
+    dispatch(setDiscountGlobal(0));
     dispatch(setId(0));
     dispatch(
       setDiagnosis(
@@ -58,7 +61,7 @@ function MyHomeDashboard() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/my-dashboard`, {
+    fetch(`http://localhost/zhhs_soft_server/api/my-dashboard`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -85,7 +88,7 @@ function MyHomeDashboard() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/my-dashboard`]);
+  }, [`http://localhost/zhhs_soft_server/api/my-dashboard`]);
 
   let useData = "";
   let chartData = "";
@@ -115,7 +118,7 @@ function MyHomeDashboard() {
         if (result.isConfirmed) {
           setIsPending(true);
           setCheckData(null);
-          fetch(`https://zahidhd.tk/zahidhd/api/check-ups/delete?${sendId}`, {
+          fetch(`http://localhost/zhhs_soft_server/api/check-ups/delete?${sendId}`, {
             method: "POST",
             // headers: { "content-Type": "application/json" },
             // body: formData,

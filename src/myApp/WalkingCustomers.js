@@ -16,7 +16,7 @@ import DataTable from "examples/Tables/DataTable";
 import { useDispatch } from "react-redux";
 import { setShelfList, setSelfList } from "redux/patMedicines";
 import { useHistory } from "react-router-dom";
-
+import { setCheckUpCostGlobal, setDiscountGlobal } from "redux/patId";
 import SuiButton from "components/SuiButton";
 
 import { Oval } from "react-loader-spinner";
@@ -37,13 +37,15 @@ function WalkingCustomers() {
   function actionHandle() {
     dispatch(setShelfList([]));
     dispatch(setSelfList([]));
+    dispatch(setCheckUpCostGlobal(0));
+    dispatch(setDiscountGlobal(0));
     history.push("/walking-customers/new-walking-customer");
   }
 
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/walking-output`, {
+    fetch(`http://localhost/zhhs_soft_server/api/walking-output`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -70,7 +72,7 @@ function WalkingCustomers() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/walking-output`]);
+  }, [`http://localhost/zhhs_soft_server/api/walking-output`]);
 
   let useData = "";
 
@@ -99,7 +101,7 @@ function WalkingCustomers() {
         if (result.isConfirmed) {
           setIsPending(true);
           setWalkData(null);
-          fetch(`https://zahidhd.tk/zahidhd/api/walk/delete?${sendId}`, {
+          fetch(`http://localhost/zhhs_soft_server/api/walk/delete?${sendId}`, {
             method: "POST",
             // headers: { "content-Type": "application/json" },
             // body: formData,
@@ -127,6 +129,10 @@ function WalkingCustomers() {
     // console.log(medicinesData[1]);
 
     walkData.forEach((element) => {
+      if (element.discount_amount == null) {
+        element.discount_amount = "-";
+        element.after_discount = element.bill_price;
+      }
       element.action = (
         <SuiBox ml={1}>
           <SuiTypography
@@ -162,6 +168,9 @@ function WalkingCustomers() {
       columns: [
         { Header: "BILL ID", accessor: "id" },
         { Header: "BILL DATE", accessor: "created_at_2" },
+        { Header: "BILL COST", accessor: "bill_price" },
+        { Header: "DISCOUNT", accessor: "discount_amount" },
+        { Header: "FINAL COST", accessor: "after_discount" },
         { Header: "VIEW BILL", accessor: "bill" },
         { Header: "ACTION", accessor: "action" },
       ],

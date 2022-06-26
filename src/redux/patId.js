@@ -30,6 +30,7 @@ export const idSlice = createSlice({
       state.feeGlobal = action.payload;
     },
     setPWBillId: (state, action) => {
+      // print PATIENT,WALKING bill id
       state.pWBillId = action.payload;
     },
   },

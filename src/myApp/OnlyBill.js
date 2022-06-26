@@ -37,7 +37,7 @@ function OnlyBill() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/view-walk?${sendId}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/view-walk?${sendId}`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -64,7 +64,7 @@ function OnlyBill() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/view-walk?${sendId}`]);
+  }, [`http://localhost/zhhs_soft_server/api/view-walk?${sendId}`]);
 
   const { borderWidth } = borders;
   const { light } = colors;
@@ -77,7 +77,7 @@ function OnlyBill() {
       bill_type: "walk_bill",
     }).toString();
 
-    window.open(`https://zahidhd.tk/zahidhd/print?${sendId2}`, "_blank");
+    window.open(`http://localhost/zhhs_soft_server/print?${sendId2}`, "_blank");
 
     // console.log("walk_bill", billData, localStorage.getItem("phone"));
 
@@ -92,7 +92,7 @@ function OnlyBill() {
     // formData.append("self_medicines", selfMedList[0]);
     // formData.append("shelf_medicines", shelfMedList[0]);
 
-    // fetch("https://zahidhd.tk/zahidhd/api/print", {
+    // fetch("http://localhost/zhhs_soft_server/api/print", {
     //   method: "POST",
     //   // headers: { "content-Type": "application/json" },
     //   body: formData,
@@ -317,6 +317,47 @@ function OnlyBill() {
                             pl={3}
                             borderBottom={borderBottom}
                           >
+                            <SuiTypography variant="h5">Disc</SuiTypography>
+                          </SuiBox>
+                          <SuiBox
+                            component="td"
+                            textAlign="left"
+                            py={1}
+                            pr={1}
+                            pl={3}
+                            borderBottom={borderBottom}
+                          >
+                            <SuiTypography variant="h5">
+                              Rs.{" "}
+                              {billData[0].discount_amount == null
+                                ? 0
+                                : billData[0].discount_amount}
+                            </SuiTypography>
+                          </SuiBox>
+                        </TableRow>
+                        <TableRow>
+                          <SuiBox
+                            component="td"
+                            textAlign="left"
+                            p={1}
+                            borderBottom={borderBottom}
+                          />
+                          <SuiBox
+                            component="td"
+                            textAlign="left"
+                            py={1}
+                            pr={1}
+                            pl={3}
+                            borderBottom={borderBottom}
+                          />
+                          <SuiBox
+                            component="td"
+                            textAlign="left"
+                            py={1}
+                            pr={1}
+                            pl={3}
+                            borderBottom={borderBottom}
+                          >
                             <SuiTypography variant="h5">Total</SuiTypography>
                           </SuiBox>
                           <SuiBox
@@ -327,7 +368,12 @@ function OnlyBill() {
                             pl={3}
                             borderBottom={borderBottom}
                           >
-                            <SuiTypography variant="h5">Rs. {billData[0].bill_price}</SuiTypography>
+                            <SuiTypography variant="h5">
+                              Rs.{" "}
+                              {billData[0].after_discount == null
+                                ? billData[0].bill_price
+                                : billData[0].after_discount}
+                            </SuiTypography>
                           </SuiBox>
                         </TableRow>
                       </TableBody>
