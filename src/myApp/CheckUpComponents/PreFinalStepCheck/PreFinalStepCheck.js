@@ -52,14 +52,14 @@ function PreFinalStepCheck() {
         if (result.status === true) {
           result.data.forEach((element, index) => {
             // console.log(element, index);
-            // shelfPrice += parseInt(element, 10) * shelfMedList[index].quantity;
+            shelfPrice += parseInt(element, 10) * shelfMedList[index].quantity;
 
-            shelfPrice +=
-              parseInt(element, 10) *
-              (parseInt(shelfMedList[index].days, 10) *
-                (parseInt(shelfMedList[index].morning, 10) +
-                  parseInt(shelfMedList[index].noon, 10) +
-                  parseInt(shelfMedList[index].night, 10)));
+            // shelfPrice +=
+            //   parseInt(element, 10) *
+            //   (parseInt(shelfMedList[index].days, 10) *
+            //     (parseInt(shelfMedList[index].morning, 10) +
+            //       parseInt(shelfMedList[index].noon, 10) +
+            //       parseInt(shelfMedList[index].night, 10)));
           });
           setMedicineTotal(selfPrice + shelfPrice);
           dispatch(setCheckUpCostGlobal(selfPrice + shelfPrice));

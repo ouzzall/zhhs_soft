@@ -66,6 +66,8 @@ function AssignMedicine() {
   const [medDaz, setMedDaz] = useState(0);
   const [medTak, setMedTak] = useState("Tablet");
   const [medPri, setMedPri] = useState(0);
+  const [medQty, setMedQty] = useState(0);
+  const [medSpcName, setMedSpcName] = useState("");
 
   const [selectValue, setSelectValue] = useState({ value: "", label: "Search Here..." });
   const [selectValue2, setSelectValue2] = useState({ value: "", label: "Search Here..." });
@@ -269,8 +271,12 @@ function AssignMedicine() {
     } else if (medDaz < 1) {
       setErrorText("Medicine days not defined");
       setErrorSB(true);
-    } else if (medMor === 0 && medNun === 0 && medNit === 0) {
-      setErrorText("Medicine not assigned to any time");
+      // } else if (medMor === 0 && medNun === 0 && medNit === 0) {
+      //   setErrorText("Medicine not assigned to any time");
+      //   setErrorSB(true);
+      // }
+    } else if (medQty <= 0) {
+      setErrorText("Medicine Quanity cannot be null or negative.");
       setErrorSB(true);
     } else {
       const finalObj = {
@@ -281,6 +287,7 @@ function AssignMedicine() {
         night: medNit,
         days: medDaz,
         taking: medTak,
+        quantity: medQty,
       };
 
       // console.log(shelfMedList);
@@ -309,6 +316,9 @@ function AssignMedicine() {
       // console.log("error");
       setErrorText("Medicine or taking not selected");
       setErrorSB(true);
+    } else if (medSpcName === "" || medSpcName === null) {
+      setErrorText("Medicine New Name not defined");
+      setErrorSB(true);
     } else if (medPri < 1) {
       setErrorText("Medicine Price not defined");
       setErrorSB(true);
@@ -328,6 +338,7 @@ function AssignMedicine() {
         days: medDaz,
         taking: medTak,
         price: medPri,
+        new_name: medSpcName,
       };
 
       // console.log(shelfMedList);
@@ -377,6 +388,7 @@ function AssignMedicine() {
       night: medNit,
       days: medDaz,
       taking: medTak,
+      quantity: medQty,
     };
 
     // console.log(finalObj);
@@ -425,6 +437,7 @@ function AssignMedicine() {
       days: medDaz,
       taking: medTak,
       price: medPri,
+      new_name: medSpcName,
     };
 
     // console.log(finalObj);
@@ -522,7 +535,7 @@ function AssignMedicine() {
             <SuiBox className="add_border ovr_flow" p={1} pb={4}>
               <SuiBox className="inside_width">
                 <Grid container spacing={3} p={1}>
-                  <Grid item xs={3} md={3}>
+                  <Grid item xs={2} md={2}>
                     <SuiTypography variant="overline" fontWeight="regular" color="dark" pl={1.5}>
                       MEDICINE NAME
                     </SuiTypography>
@@ -544,6 +557,11 @@ function AssignMedicine() {
                   </Grid>
                   <Grid item xs={1} md={1} className="cnt_align">
                     <SuiTypography variant="overline" fontWeight="regular" color="dark">
+                      QNTY
+                    </SuiTypography>
+                  </Grid>
+                  <Grid item xs={1} md={1} className="cnt_align">
+                    <SuiTypography variant="overline" fontWeight="regular" color="dark">
                       DAYS
                     </SuiTypography>
                   </Grid>
@@ -561,7 +579,7 @@ function AssignMedicine() {
                 {shelfMedList &&
                   shelfMedList.map((value, index) => (
                     <Grid key={value.key} container spacing={3} p={1}>
-                      <Grid item xs={3} md={3}>
+                      <Grid item xs={2} md={2}>
                         <SuiTypography
                           variant="body2"
                           fontWeight="regular"
@@ -585,6 +603,11 @@ function AssignMedicine() {
                       <Grid item xs={1} md={1} className="cnt_align">
                         <SuiTypography variant="body2" mt={1} fontWeight="regular" color="dark">
                           {value.night}
+                        </SuiTypography>
+                      </Grid>
+                      <Grid item xs={1} md={1} className="cnt_align">
+                        <SuiTypography variant="body2" mt={1} fontWeight="regular" color="dark">
+                          {value.quantity}
                         </SuiTypography>
                       </Grid>
                       <Grid item xs={1} md={1} className="cnt_align">
@@ -614,6 +637,7 @@ function AssignMedicine() {
                               setMedNun(medicines[index].noon);
                               setMedNit(medicines[index].night);
                               setMedDaz(medicines[index].days);
+                              setMedQty(medicines[index].quantity);
                               setMedTak(medicines[index].taking);
                               // console.log(medicines[index].taking);
                               setOpen2(true);
@@ -762,7 +786,7 @@ function AssignMedicine() {
                           mt={1}
                           pl={1.5}
                         >
-                          {value.name}
+                          {`${value.name} (${value.new_name})`}
                         </SuiTypography>
                       </Grid>
                       <Grid item xs={1} md={1} className="cnt_align">
@@ -813,6 +837,8 @@ function AssignMedicine() {
                               setMedNit(medicines[index].night);
                               setMedDaz(medicines[index].days);
                               setMedTak(medicines[index].taking);
+                              setMedSpcName(medicines[index].new_name);
+                              setMedPri(medicines[index].price);
                               // console.log(medicines[index].taking);
                               setOpen4(true);
                               // medicines.splice(index, 1);
@@ -902,7 +928,7 @@ function AssignMedicine() {
                               />
                             </SuiTypography>
                           </Grid>
-                          <Grid item xs={4} md={4}>
+                          <Grid item xs={3} md={3}>
                             <SuiTypography variant="caption" fontWeight="bold" color="dark">
                               Morning
                             </SuiTypography>
@@ -914,7 +940,7 @@ function AssignMedicine() {
                               />
                             </SuiTypography>
                           </Grid>
-                          <Grid item xs={4} md={4}>
+                          <Grid item xs={3} md={3}>
                             <SuiTypography variant="caption" fontWeight="bold" color="dark">
                               Mid Day
                             </SuiTypography>
@@ -926,13 +952,25 @@ function AssignMedicine() {
                               />
                             </SuiTypography>
                           </Grid>
-                          <Grid item xs={4} md={4}>
+                          <Grid item xs={3} md={3}>
                             <SuiTypography variant="caption" fontWeight="bold" color="dark">
                               Night
                             </SuiTypography>
                             <SuiTypography variant="overline" fontWeight="regular" color="dark">
                               <SuiInput
                                 onChange={(e) => setMedNit(e.target.value)}
+                                inputProps={{ type: "number" }}
+                                defaultValue={0}
+                              />
+                            </SuiTypography>
+                          </Grid>
+                          <Grid item xs={3} md={3}>
+                            <SuiTypography variant="caption" fontWeight="bold" color="dark">
+                              Quantity
+                            </SuiTypography>
+                            <SuiTypography variant="overline" fontWeight="regular" color="dark">
+                              <SuiInput
+                                onChange={(e) => setMedQty(e.target.value)}
                                 inputProps={{ type: "number" }}
                                 defaultValue={0}
                               />
@@ -1016,7 +1054,7 @@ function AssignMedicine() {
                               />
                             </SuiTypography>
                           </Grid>
-                          <Grid item xs={4} md={4}>
+                          <Grid item xs={3} md={3}>
                             <SuiTypography variant="caption" fontWeight="bold" color="dark">
                               Morning
                             </SuiTypography>
@@ -1028,7 +1066,7 @@ function AssignMedicine() {
                               />
                             </SuiTypography>
                           </Grid>
-                          <Grid item xs={4} md={4}>
+                          <Grid item xs={3} md={3}>
                             <SuiTypography variant="caption" fontWeight="bold" color="dark">
                               Mid Day
                             </SuiTypography>
@@ -1040,7 +1078,7 @@ function AssignMedicine() {
                               />
                             </SuiTypography>
                           </Grid>
-                          <Grid item xs={4} md={4}>
+                          <Grid item xs={3} md={3}>
                             <SuiTypography variant="caption" fontWeight="bold" color="dark">
                               Night
                             </SuiTypography>
@@ -1049,6 +1087,18 @@ function AssignMedicine() {
                                 onChange={(e) => setMedNit(e.target.value)}
                                 inputProps={{ type: "number" }}
                                 defaultValue={medNit}
+                              />
+                            </SuiTypography>
+                          </Grid>
+                          <Grid item xs={3} md={3}>
+                            <SuiTypography variant="caption" fontWeight="bold" color="dark">
+                              Quantity
+                            </SuiTypography>
+                            <SuiTypography variant="overline" fontWeight="regular" color="dark">
+                              <SuiInput
+                                onChange={(e) => setMedQty(e.target.value)}
+                                inputProps={{ type: "number" }}
+                                defaultValue={medQty}
                               />
                             </SuiTypography>
                           </Grid>
@@ -1142,6 +1192,35 @@ function AssignMedicine() {
                               />
                             </SuiTypography>
                           </Grid>
+                          <Grid item xs={6} md={6}>
+                            <SuiTypography variant="caption" fontWeight="bold" color="dark">
+                              Specify Medicine Name
+                            </SuiTypography>
+                            <SuiTypography variant="overline" fontWeight="regular" color="dark">
+                              <SuiInput
+                                onChange={(e) => setMedSpcName(e.target.value)}
+                                inputProps={{ type: "text" }}
+                                placeholder="eg. Shahi"
+                              />
+                            </SuiTypography>
+                          </Grid>
+                          <Grid item xs={6} md={6}>
+                            <SuiTypography variant="caption" fontWeight="bold" color="dark">
+                              Way of Taking
+                            </SuiTypography>
+                            <SuiSelect
+                              defaultValue={{ value: "Tablet", label: "Tablet" }}
+                              options={[
+                                { value: "Table Spoon", label: "Table Spoon" },
+                                { value: "Tea Spoon", label: "Tea Spoon" },
+                                { value: "Tablet", label: "Tablet" },
+                                { value: "Capsule", label: "Capsule" },
+                                { value: "Half Cup", label: "Half Cup" },
+                                { value: "Full Cup", label: "Full Cup" },
+                              ]}
+                              onChange={(e) => setMedTak(e.value)}
+                            />
+                          </Grid>
                           <Grid item xs={4} md={4}>
                             <SuiTypography variant="caption" fontWeight="bold" color="dark">
                               Morning
@@ -1177,23 +1256,6 @@ function AssignMedicine() {
                                 defaultValue={0}
                               />
                             </SuiTypography>
-                          </Grid>
-                          <Grid item xs={12} md={12}>
-                            <SuiTypography variant="caption" fontWeight="bold" color="dark">
-                              Way of Taking
-                            </SuiTypography>
-                            <SuiSelect
-                              defaultValue={{ value: "Tablet", label: "Tablet" }}
-                              options={[
-                                { value: "Table Spoon", label: "Table Spoon" },
-                                { value: "Tea Spoon", label: "Tea Spoon" },
-                                { value: "Tablet", label: "Tablet" },
-                                { value: "Capsule", label: "Capsule" },
-                                { value: "Half Cup", label: "Half Cup" },
-                                { value: "Full Cup", label: "Full Cup" },
-                              ]}
-                              onChange={(e) => setMedTak(e.value)}
-                            />
                           </Grid>
                         </Grid>
                       </SuiBox>
@@ -1268,6 +1330,35 @@ function AssignMedicine() {
                               />
                             </SuiTypography>
                           </Grid>
+                          <Grid item xs={6} md={6}>
+                            <SuiTypography variant="caption" fontWeight="bold" color="dark">
+                              Specify Medicine Name
+                            </SuiTypography>
+                            <SuiTypography variant="overline" fontWeight="regular" color="dark">
+                              <SuiInput
+                                onChange={(e) => setMedSpcName(e.target.value)}
+                                inputProps={{ type: "text" }}
+                                defaultValue={medSpcName}
+                              />
+                            </SuiTypography>
+                          </Grid>
+                          <Grid item xs={6} md={6}>
+                            <SuiTypography variant="caption" fontWeight="bold" color="dark">
+                              Way of Taking
+                            </SuiTypography>
+                            <SuiSelect
+                              defaultValue={{ value: medTak, label: medTak }}
+                              options={[
+                                { value: "Table Spoon", label: "Table Spoon" },
+                                { value: "Tea Spoon", label: "Tea Spoon" },
+                                { value: "Tablet", label: "Tablet" },
+                                { value: "Capsule", label: "Capsule" },
+                                { value: "Half Cup", label: "Half Cup" },
+                                { value: "Full Cup", label: "Full Cup" },
+                              ]}
+                              onChange={(e) => setMedTak(e.value)}
+                            />
+                          </Grid>
                           <Grid item xs={4} md={4}>
                             <SuiTypography variant="caption" fontWeight="bold" color="dark">
                               Morning
@@ -1303,23 +1394,6 @@ function AssignMedicine() {
                                 defaultValue={medNit}
                               />
                             </SuiTypography>
-                          </Grid>
-                          <Grid item xs={12} md={12}>
-                            <SuiTypography variant="caption" fontWeight="bold" color="dark">
-                              Way of Taking
-                            </SuiTypography>
-                            <SuiSelect
-                              defaultValue={{ value: medTak, label: medTak }}
-                              options={[
-                                { value: "Table Spoon", label: "Table Spoon" },
-                                { value: "Tea Spoon", label: "Tea Spoon" },
-                                { value: "Tablet", label: "Tablet" },
-                                { value: "Capsule", label: "Capsule" },
-                                { value: "Half Cup", label: "Half Cup" },
-                                { value: "Full Cup", label: "Full Cup" },
-                              ]}
-                              onChange={(e) => setMedTak(e.value)}
-                            />
                           </Grid>
                         </Grid>
                       </SuiBox>

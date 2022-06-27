@@ -253,7 +253,9 @@ function OnlyBill() {
                               borderBottom={borderBottom}
                             >
                               <SuiTypography variant="body2" color="text">
-                                {value.name}
+                                {value.self_new_name === "NOT_SELF_MED"
+                                  ? value.name
+                                  : `${value.name} (${value.self_new_name})`}
                               </SuiTypography>
                             </SuiBox>
                             <SuiBox

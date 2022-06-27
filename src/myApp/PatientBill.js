@@ -301,69 +301,58 @@ function PatientBill() {
                         </TableRow>
                       </SuiBox>
                       <TableBody>
-                        {billData[1].map((value) => {
-                          let medicineCount = 0;
-                          if (value.type === "Shelf") {
-                            medicineCount = value.morning + value.noon + value.night;
-                            medicineCount *= value.days;
-                            // console.log(medicineCount);
-                          } else if (value.type === "Self") {
-                            medicineCount = 1;
-                            // console.log(medicineCount);
-                          }
-
-                          return (
-                            <TableRow key={value.id}>
-                              <SuiBox
-                                component="td"
-                                textAlign="left"
-                                p={1}
-                                borderBottom={borderBottom}
-                              >
-                                <SuiTypography variant="body2" color="text">
-                                  {value.name}
-                                </SuiTypography>
-                              </SuiBox>
-                              <SuiBox
-                                component="td"
-                                textAlign="left"
-                                py={1}
-                                pr={1}
-                                pl={3}
-                                borderBottom={borderBottom}
-                              >
-                                <SuiTypography variant="body2" color="text">
-                                  {medicineCount}
-                                </SuiTypography>
-                              </SuiBox>
-                              <SuiBox
-                                component="td"
-                                textAlign="left"
-                                py={1}
-                                pr={1}
-                                pl={3}
-                                borderBottom={borderBottom}
-                              >
-                                <SuiTypography variant="body2" color="text">
-                                  {value.price_specific}
-                                </SuiTypography>
-                              </SuiBox>
-                              <SuiBox
-                                component="td"
-                                textAlign="left"
-                                py={1}
-                                pr={1}
-                                pl={3}
-                                borderBottom={borderBottom}
-                              >
-                                <SuiTypography variant="body2" color="text">
-                                  {value.price_total}
-                                </SuiTypography>
-                              </SuiBox>
-                            </TableRow>
-                          );
-                        })}
-
+                        {billData[1].map((value) => (
+                          <TableRow key={value.id}>
+                            <SuiBox
+                              component="td"
+                              textAlign="left"
+                              p={1}
+                              borderBottom={borderBottom}
+                            >
+                              <SuiTypography variant="body2" color="text">
+                                {value.self_new_name === "NOT_SELF_MED"
+                                  ? value.name
+                                  : `${value.name} (${value.self_new_name})`}
+                              </SuiTypography>
+                            </SuiBox>
+                            <SuiBox
+                              component="td"
+                              textAlign="left"
+                              py={1}
+                              pr={1}
+                              pl={3}
+                              borderBottom={borderBottom}
+                            >
+                              <SuiTypography variant="body2" color="text">
+                                {value.quantity}
+                              </SuiTypography>
+                            </SuiBox>
+                            <SuiBox
+                              component="td"
+                              textAlign="left"
+                              py={1}
+                              pr={1}
+                              pl={3}
+                              borderBottom={borderBottom}
+                            >
+                              <SuiTypography variant="body2" color="text">
+                                {value.price_specific}
+                              </SuiTypography>
+                            </SuiBox>
+                            <SuiBox
+                              component="td"
+                              textAlign="left"
+                              py={1}
+                              pr={1}
+                              pl={3}
+                              borderBottom={borderBottom}
+                            >
+                              <SuiTypography variant="body2" color="text">
+                                {value.price_total}
+                              </SuiTypography>
+                            </SuiBox>
+                          </TableRow>
+                        ))}
                         <TableRow>
                           <SuiBox
                             component="td"

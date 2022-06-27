@@ -68,6 +68,7 @@ function SelectMedicine() {
   // const [medTak, setMedTak] = useState("Tablet");
   const [medPri, setMedPri] = useState(0);
   const [medQty, setMedQty] = useState(0);
+  const [medSpcName, setMedSpcName] = useState("");
 
   const [selectValue, setSelectValue] = useState({ value: "", label: "Search Here..." });
   const [selectValue2, setSelectValue2] = useState({ value: "", label: "Search Here..." });
@@ -331,6 +332,9 @@ function SelectMedicine() {
       // } else if (medMor === 0 && medNun === 0 && medNit === 0) {
       //   setErrorText("Medicine not assigned to any time");
       //   setErrorSB(true);
+    } else if (medSpcName === "" || medSpcName === null) {
+      setErrorText("Medicine New Name not defined");
+      setErrorSB(true);
     } else {
       const finalObj = {
         key: medSelfKey,
@@ -341,6 +345,7 @@ function SelectMedicine() {
         // days: medDaz,
         // taking: medTak,
         price: medPri,
+        new_name: medSpcName,
         // quantity: medQty,
       };
 
@@ -440,6 +445,7 @@ function SelectMedicine() {
       // days: medDaz,
       // taking: medTak,
       price: medPri,
+      new_name: medSpcName,
       // quantity: medQty,
     };
 
@@ -712,7 +718,7 @@ function SelectMedicine() {
                           mt={1}
                           pl={1.5}
                         >
-                          {value.name}
+                          {`${value.name} (${value.new_name})`}
                         </SuiTypography>
                       </Grid>
                       <Grid item xs={2} md={2} className="cnt_align">
@@ -738,7 +744,8 @@ function SelectMedicine() {
                               // setMedNit(medicines[index].night);
                               // setMedDaz(medicines[index].days);
                               // setMedTak(medicines[index].taking);
-                              setMedQty(medicines[index].quantity);
+                              setMedPri(medicines[index].price);
+                              setMedSpcName(medicines[index].new_name);
                               // console.log(medicines[index].taking);
                               setOpen4(true);
                               // medicines.splice(index, 1);
@@ -1056,6 +1063,18 @@ function SelectMedicine() {
                               />
                             </SuiTypography>
                           </Grid>
+                          <Grid item xs={12} md={12}>
+                            <SuiTypography variant="caption" fontWeight="bold" color="dark">
+                              Specify Medicine Name
+                            </SuiTypography>
+                            <SuiTypography variant="overline" fontWeight="regular" color="dark">
+                              <SuiInput
+                                onChange={(e) => setMedSpcName(e.target.value)}
+                                inputProps={{ type: "text" }}
+                                placeholder="eg. Shahi"
+                              />
+                            </SuiTypography>
+                          </Grid>
                           {/* <Grid item xs={4} md={4}>
                             <SuiTypography variant="caption" fontWeight="bold" color="dark">
                               Morning
@@ -1167,6 +1186,18 @@ function SelectMedicine() {
                                 onChange={(e) => setMedPri(e.target.value)}
                                 inputProps={{ type: "number" }}
                                 defaultValue={medPri}
+                              />
+                            </SuiTypography>
+                          </Grid>
+                          <Grid item xs={12} md={12}>
+                            <SuiTypography variant="caption" fontWeight="bold" color="dark">
+                              Specify Medicine Name
+                            </SuiTypography>
+                            <SuiTypography variant="overline" fontWeight="regular" color="dark">
+                              <SuiInput
+                                onChange={(e) => setMedSpcName(e.target.value)}
+                                inputProps={{ type: "text" }}
+                                defaultValue={medSpcName}
                               />
                             </SuiTypography>
                           </Grid>
