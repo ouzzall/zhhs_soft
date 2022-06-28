@@ -56,6 +56,7 @@ function NewCheckUp() {
   const { selfMedList } = useSelector((state) => state.patMedicines);
   const { patientId } = useSelector((state) => state.patId);
   const { patientDiagnosis } = useSelector((state) => state.patDiagnosis);
+  const { medicineComposition } = useSelector((state) => state.patDiagnosis);
   const { patientReports } = useSelector((state) => state.patReports);
   const { discountGlobal } = useSelector((state) => state.patId);
   const { checkUpCostGlobal } = useSelector((state) => state.patId);
@@ -110,6 +111,7 @@ function NewCheckUp() {
 
         formData.append("user_id", patientId);
         formData.append("diagnosis", patientDiagnosis);
+        formData.append("composition", medicineComposition);
 
         for (let i = 0; i < patientReports.length; i += 1) {
           formData.append(`reports[${i}]`, patientReports[i]);

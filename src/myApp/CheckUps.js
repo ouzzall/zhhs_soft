@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import { setShelfList, setSelfList } from "redux/patMedicines";
 import { setReports } from "redux/patReports";
 import { setId, setFeeGlobal, setCheckUpCostGlobal, setDiscountGlobal } from "redux/patId";
-import { setDiagnosis } from "redux/patDiagnosis";
+import { setDiagnosis, setComposition } from "redux/patDiagnosis";
 import { useHistory } from "react-router-dom";
 
 import { Oval } from "react-loader-spinner";
@@ -49,6 +49,7 @@ function CheckUps() {
         "<p><strong>Weight: <u>___________</u> Blood Pressure: <u>__________</u> Sugar: <u>_____________</u></strong></p><p><br></p><p><strong>Symptoms:</strong></p><p><br></p><p><strong>Findings:</strong></p><p><br></p><p><strong>Care:</strong></p><p><br></p><p><strong>Suggestions:</strong></p><p><br></p><p><br></p><p><strong><em><u>By: Hakeem M. Ashraf</u></em></strong></p>"
       )
     );
+    dispatch(setComposition(""));
     dispatch(setReports([]));
     history.push("/check-ups/new-check-up");
   }

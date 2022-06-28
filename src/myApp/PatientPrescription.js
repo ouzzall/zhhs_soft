@@ -150,7 +150,7 @@ function PatientPrescription() {
                     <Grid container justifyContent="space-between">
                       <Grid item xs={12} md={4} display="flex">
                         <SuiTypography variant="h6" color="secondary" fontWeight="medium">
-                          Prescription No
+                          Prescription No:
                         </SuiTypography>
                         <SuiTypography variant="h6" ml={1} fontWeight="medium">
                           #{prescriptionData[0].id}
@@ -201,6 +201,23 @@ function PatientPrescription() {
                     value={prescriptionData[0].diagnosis}
                   />
                 </SuiBox>
+                {prescriptionData[0].composition === "" ||
+                prescriptionData[0].composition === "NO_DATA" ? null : (
+                  <SuiBox>
+                    <SuiBox p={3} pt={1} pb={1}>
+                      <SuiTypography variant="h6" fontWeight="medium">
+                        Medicine Composition:
+                      </SuiTypography>
+                    </SuiBox>
+                    <SuiBox p={3} pt={0} pb={0}>
+                      <SuiEditor
+                        readOnly
+                        modules={{ toolbar: false }}
+                        value={prescriptionData[0].composition}
+                      />
+                    </SuiBox>
+                  </SuiBox>
+                )}
                 <SuiBox p={3} pt={0}>
                   <SuiBox width="100%" overflow="auto">
                     <Table sx={{ minWidth: "32rem" }}>

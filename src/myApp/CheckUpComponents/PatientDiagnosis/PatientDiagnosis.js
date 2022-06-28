@@ -7,19 +7,26 @@ import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
 import SuiEditor from "components/SuiEditor";
 import { useDispatch, useSelector } from "react-redux";
-import { setDiagnosis } from "redux/patDiagnosis";
+import { setDiagnosis, setComposition } from "redux/patDiagnosis";
 // import SuiDropzone from "components/SuiDropzone";
 import MyDropzone from "myApp/DropZoneHook";
 
 function PatientDiagnosis() {
   const { patientDiagnosis } = useSelector((state) => state.patDiagnosis);
+  const { medicineComposition } = useSelector((state) => state.patDiagnosis);
   const [editorValue, setEditorValue] = useState(patientDiagnosis);
+  const [editorValue2, setEditorValue2] = useState(medicineComposition);
 
   const dispatch = useDispatch();
 
   function editorHandler(e) {
     setEditorValue(e);
     dispatch(setDiagnosis(e));
+  }
+
+  function editorHandler2(e) {
+    setEditorValue2(e);
+    dispatch(setComposition(e));
   }
 
   return (
@@ -36,10 +43,26 @@ function PatientDiagnosis() {
           <Grid item xs={12} sm={12}>
             <SuiBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
               <SuiTypography component="label" variant="caption" fontWeight="bold">
-                Diagnosis
+                Diagnosis:
               </SuiTypography>
             </SuiBox>
             <SuiEditor value={editorValue} onChange={editorHandler} />
+          </Grid>
+        </Grid>
+      </SuiBox>
+      <SuiBox>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={12}>
+            <SuiBox mb={1} ml={0.5} lineHeight={0} display="inline-block">
+              <SuiTypography component="label" variant="caption" fontWeight="bold">
+                Medicine Composition:
+              </SuiTypography>
+            </SuiBox>
+            <SuiEditor
+              value={editorValue2}
+              placeholder="Compositions Here..."
+              onChange={editorHandler2}
+            />
           </Grid>
         </Grid>
       </SuiBox>
