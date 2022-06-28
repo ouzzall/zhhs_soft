@@ -61,7 +61,7 @@ function EditOperationalCost() {
         if (err.name === "AbortError") {
           // console.log("Fetch Aborted.");
         } else {
-          setError(err.message);
+          setError("Cannot update deleted Item Cost.");
           setCostsData(null);
           setIsPending(false);
         }

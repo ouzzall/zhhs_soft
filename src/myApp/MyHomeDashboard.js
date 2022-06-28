@@ -152,6 +152,10 @@ function MyHomeDashboard() {
     // console.log(medicinesData[1]);
 
     checkData[0].forEach((element) => {
+      if (element.discount_amount == null) {
+        element.discount_amount = "-";
+        element.after_discount = element.check_up_price;
+      }
       element.action = (
         <SuiBox ml={1}>
           <SuiTypography
@@ -197,10 +201,13 @@ function MyHomeDashboard() {
     useData = {
       columns: [
         { Header: "ID", accessor: "id" },
-        { Header: "PATIENT NAME", accessor: "name" },
+        { Header: "FIRST NAME", accessor: "name" },
+        { Header: "LAST NAME", accessor: "father_name" },
         { Header: "PATIENT PHONE", accessor: "phone" },
         { Header: "CHECK-UP DATE", accessor: "created_at" },
         { Header: "CHECK-UP COST", accessor: "check_up_price" },
+        { Header: "DISCOUNT", accessor: "discount_amount" },
+        { Header: "FINAL COST", accessor: "after_discount" },
         { Header: "BILL", accessor: "bill" },
         { Header: "PRESCRIPTION", accessor: "prescription" },
         { Header: "ACTION", accessor: "action" },

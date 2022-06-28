@@ -88,8 +88,8 @@ function SearchPatient() {
       columns: [
         { Header: "PICK", accessor: "pick" },
         // { Header: "ID", accessor: "id" },
-        { Header: "NAME", accessor: "name", width: "18%" },
-        { Header: "FATHER NAME", accessor: "father_name", width: "18%" },
+        { Header: "FIRST NAME", accessor: "name", width: "18%" },
+        { Header: "LAST NAME", accessor: "father_name", width: "18%" },
         { Header: "AGE", accessor: "age" },
         { Header: "GENDER", accessor: "gender" },
         { Header: "WEIGHT (Kg)", accessor: "weight" },

@@ -76,7 +76,8 @@ function PatientsOutput() {
     patData = {
       columns: [
         { Header: "CHECK-UP ID", accessor: "id" },
-        { Header: "PATIENT NAME", accessor: "name" },
+        { Header: "FIRST NAME", accessor: "name" },
+        { Header: "LAST NAME", accessor: "father_name" },
         { Header: "CHECK-UP DATE", accessor: "created_at" },
         { Header: "CHECK-UP COST", accessor: "check_up_price" },
         { Header: "DISCOUNT", accessor: "discount_amount" },

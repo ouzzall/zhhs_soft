@@ -195,7 +195,8 @@ function CheckUps() {
     useData = {
       columns: [
         { Header: "ID", accessor: "id" },
-        { Header: "PATIENT NAME", accessor: "name" },
+        { Header: "FIRST NAME", accessor: "name" },
+        { Header: "LAST NAME", accessor: "father_name" },
         { Header: "PATIENT PHONE", accessor: "phone" },
         { Header: "CHECK-UP DATE", accessor: "created_at" },
         { Header: "CHECK-UP COST", accessor: "check_up_price" },
