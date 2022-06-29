@@ -29,6 +29,7 @@ import PreFinalStepCheck from "myApp/CheckUpComponents/PreFinalStepCheck/PreFina
 import { useSelector, useDispatch } from "react-redux";
 import SuiSnackbar from "components/SuiSnackbar";
 import { setPWBillId } from "redux/patId";
+import { Oval } from "react-loader-spinner";
 
 function getSteps() {
   return [1, 2, 3, 4, 5];
@@ -67,6 +68,7 @@ function NewCheckUp() {
   const history = useHistory();
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
+  const [loading, setLoading] = useState(false);
   // const LastStep = activeStep === steps.length - 0;
   const isLastStep = activeStep === steps.length - 1;
   const secondLastStep = activeStep === steps.length - 2;
@@ -97,6 +99,7 @@ function NewCheckUp() {
     if (isLastStep) {
       history.replace("/dashboard");
     } else if (secondLastStep) {
+      setLoading(true);
       // console.log(patientId);
       // console.log(patientDiagnosis);
       // console.log(patientReports);
@@ -135,10 +138,12 @@ function NewCheckUp() {
             // console.log(data);
             if (data.status === true) {
               dispatch(setPWBillId(data.data));
+              setLoading(false);
               // history.replace("/patients");
               // console.log(data);
               handleNext();
             } else if (data.status === false) {
+              setLoading(false);
               // console.log(data);
               setErrorText(data.message);
               setErrorSB(true);
@@ -190,7 +195,11 @@ function NewCheckUp() {
 
                     {patientId ? (
                       <SuiButton variant="gradient" color="success" onClick={endingHandler}>
-                        {secondLastStep ? (
+                        {loading && secondLastStep ? (
+                          <SuiBox justifyContent="center">
+                            <Oval color="#fff" height={20} width={20} />
+                          </SuiBox>
+                        ) : secondLastStep ? (
                           "FINISH CHECK UP"
                         ) : (
                           <>{isLastStep ? "GO HOME" : "NEXT"}</>

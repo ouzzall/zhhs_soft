@@ -126,7 +126,7 @@ function PatientPrescription() {
       )}
       {prescriptionData && (
         <SuiBox mt={{ xs: 3, md: 3 }} mb={{ xs: 3, md: 3 }}>
-          <Grid container justifyContent="left">
+          <Grid container justifyContent="center">
             <Grid item xs={12} sm={10} md={8}>
               <Card>
                 {/* Invoice header */}
