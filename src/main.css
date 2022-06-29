@@ -82,6 +82,10 @@
   cursor: pointer;
 }
 
+.only_cursor:hover {
+  cursor: pointer;
+}
+
 .custom_card:hover {
   cursor: pointer;
 }

@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import Table from "@mui/material/Table";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
-
+import "main.css";
 // Soft UI Dashboard PRO React components
 import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
@@ -20,6 +20,9 @@ import brand from "assets/logo/no-bg-logo.png";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+
+// import team2 from "assets/images/profile-pic.jpg";
+
 import { useEffect, useState } from "react";
 import { Oval } from "react-loader-spinner";
 import SuiEditor from "components/SuiEditor";
@@ -123,7 +126,7 @@ function PatientPrescription() {
       )}
       {prescriptionData && (
         <SuiBox mt={{ xs: 3, md: 3 }} mb={{ xs: 3, md: 3 }}>
-          <Grid container justifyContent="center">
+          <Grid container justifyContent="left">
             <Grid item xs={12} sm={10} md={8}>
               <Card>
                 {/* Invoice header */}
@@ -420,6 +423,43 @@ function PatientPrescription() {
               </Card>
             </Grid>
           </Grid>
+          <SuiBox p={3} pl={0}>
+            <SuiTypography variant="h5" fontWeight="bold">
+              Reports
+            </SuiTypography>
+          </SuiBox>
+          <SuiBox>
+            <Grid container spacing={3}>
+              {prescriptionData[2].map((value) => (
+                <Grid key={value.id} item xs={12} sm={6} md={3}>
+                  <Card>
+                    {/* <SuiBox p={2} pb={0}>
+                      <SuiTypography variant="h5" fontWeight="bold">
+                        CTH
+                      </SuiTypography>
+                    </SuiBox> */}
+                    <SuiBox p={3} pt={3} display="flex" justifyContent="center">
+                      <SuiBox
+                        className="only_cursor"
+                        component="img"
+                        src={`http://localhost/zhhs_soft_server/public/storage/pictures/${value.report_name}`}
+                        alt="Product Image"
+                        borderRadius="lg"
+                        shadow="lg"
+                        style={{ width: "200px" }}
+                        onClick={() => {
+                          window.open(
+                            `http://localhost/zhhs_soft_server/public/storage/pictures/${value.report_name}`,
+                            "_blank"
+                          );
+                        }}
+                      />
+                    </SuiBox>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </SuiBox>
         </SuiBox>
       )}
       <Footer />
