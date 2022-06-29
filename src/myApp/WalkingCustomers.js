@@ -45,7 +45,7 @@ function WalkingCustomers() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`http://localhost/zhhs_soft_server/api/walking-output`, {
+    fetch(`https://zahidhd.tk/zahidhd/api/walking-output`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -72,7 +72,7 @@ function WalkingCustomers() {
       });
 
     return () => abortCont.abort();
-  }, [`http://localhost/zhhs_soft_server/api/walking-output`]);
+  }, [`https://zahidhd.tk/zahidhd/api/walking-output`]);
 
   let useData = "";
 
@@ -101,7 +101,7 @@ function WalkingCustomers() {
         if (result.isConfirmed) {
           setIsPending(true);
           setWalkData(null);
-          fetch(`http://localhost/zhhs_soft_server/api/walk/delete?${sendId}`, {
+          fetch(`https://zahidhd.tk/zahidhd/api/walk/delete?${sendId}`, {
             method: "POST",
             // headers: { "content-Type": "application/json" },
             // body: formData,

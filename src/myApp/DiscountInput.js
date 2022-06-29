@@ -31,7 +31,7 @@ function DiscountInput() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`http://localhost/zhhs_soft_server/api/discount-input?${sendId}`, {
+    fetch(`https://zahidhd.tk/zahidhd/api/discount-input?${sendId}`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -58,7 +58,7 @@ function DiscountInput() {
       });
 
     return () => abortCont.abort();
-  }, [`http://localhost/zhhs_soft_server/api/patient-output?${sendId}`]);
+  }, [`https://zahidhd.tk/zahidhd/api/patient-output?${sendId}`]);
 
   let patData = "";
 

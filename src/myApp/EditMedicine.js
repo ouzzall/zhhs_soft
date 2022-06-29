@@ -47,7 +47,7 @@ function EditMedicine() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`http://localhost/zhhs_soft_server/api/medicines/edit-medicine?${sendId}`, {
+    fetch(`https://zahidhd.tk/zahidhd/api/medicines/edit-medicine?${sendId}`, {
       // method: "GET",
       // headers: { "content-Type": "application/json" },
       signal: abortCont.signal,
@@ -83,7 +83,7 @@ function EditMedicine() {
       });
 
     return () => abortCont.abort();
-  }, [`http://localhost/zhhs_soft_server/api/medicines/edit-medicine?${sendId}`]);
+  }, [`https://zahidhd.tk/zahidhd/api/medicines/edit-medicine?${sendId}`]);
 
   const [errorSB, setErrorSB] = useState(false);
   const [errorText, setErrorText] = useState("");
@@ -125,7 +125,7 @@ function EditMedicine() {
     formData.append("stock", count);
     formData.append("estimation_check", estimationCheck);
 
-    fetch(`http://localhost/zhhs_soft_server/api/medicines/edit-medicine?${sendId}`, {
+    fetch(`https://zahidhd.tk/zahidhd/api/medicines/edit-medicine?${sendId}`, {
       method: "POST",
       // headers: { "content-Type": "application/json" },
       body: formData,

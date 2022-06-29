@@ -61,7 +61,7 @@ function NewPatient() {
     formData.append("height", height);
     formData.append("phone", phone);
 
-    fetch("http://localhost/zhhs_soft_server/api/patients/add-patient", {
+    fetch("https://zahidhd.tk/zahidhd/api/patients/add-patient", {
       method: "POST",
       // headers: { "content-Type": "application/json" },
       body: formData,

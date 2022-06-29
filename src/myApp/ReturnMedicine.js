@@ -34,7 +34,7 @@ function ReturnMedicine() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`http://localhost/zhhs_soft_server/api/medicines`, {
+    fetch(`https://zahidhd.tk/zahidhd/api/medicines`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -61,7 +61,7 @@ function ReturnMedicine() {
       });
 
     return () => abortCont.abort();
-  }, [`http://localhost/zhhs_soft_server/api/medicines`]);
+  }, [`https://zahidhd.tk/zahidhd/api/medicines`]);
 
   function handleChange(e) {
     // console.log(e);
@@ -123,7 +123,7 @@ function ReturnMedicine() {
     formData.append("price", returnPrice);
     formData.append("quantity", returnQuantity);
 
-    fetch(`http://localhost/zhhs_soft_server/api/return`, {
+    fetch(`https://zahidhd.tk/zahidhd/api/return`, {
       method: "POST",
       // headers: { "content-Type": "application/json" },
       body: formData,
