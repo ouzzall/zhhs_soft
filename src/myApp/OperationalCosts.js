@@ -164,7 +164,7 @@ function OperationalCosts() {
       columns: [
         { Header: "ID", accessor: "id" },
         { Header: "ITEM NAME", accessor: "name" },
-        { Header: "ITEM QUANTITY", accessor: "quantity" },
+        { Header: "ITEM NOTE", accessor: "quantity" },
         { Header: "ITEM COST", accessor: "cost" },
         { Header: "ACTION", accessor: "action" },
       ],

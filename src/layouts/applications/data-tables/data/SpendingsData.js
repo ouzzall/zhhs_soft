@@ -3,7 +3,7 @@ import ActionCell from "layouts/ecommerce/products/products-list/components/Acti
 export default {
   columns: [
     { Header: "ITEM NAME", accessor: "iName" },
-    { Header: "ITEM QUANTITY", accessor: "iQuantity" },
+    { Header: "ITEM NOTE", accessor: "iQuantity" },
     { Header: "ITEM COST", accessor: "iCost" },
   ],
 
