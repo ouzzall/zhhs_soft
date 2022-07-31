@@ -59,7 +59,7 @@ function Profile() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/patients/profile?${sendId}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/patients/profile?${sendId}`, {
       // method: "GET",
       // headers: { "content-Type": "application/json" },
       signal: abortCont.signal,
@@ -88,7 +88,7 @@ function Profile() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/patients/profile?${sendId}`]);
+  }, [`http://localhost/zhhs_soft_server/api/patients/profile?${sendId}`]);
 
   let useData = "";
 
@@ -117,7 +117,7 @@ function Profile() {
         if (result.isConfirmed) {
           setIsPending(true);
           setGetData(null);
-          fetch(`https://zahidhd.tk/zahidhd/api/check-ups/profile/delete?${sendId2}`, {
+          fetch(`http://localhost/zhhs_soft_server/api/check-ups/profile/delete?${sendId2}`, {
             method: "POST",
             // headers: { "content-Type": "application/json" },
             // body: formData,

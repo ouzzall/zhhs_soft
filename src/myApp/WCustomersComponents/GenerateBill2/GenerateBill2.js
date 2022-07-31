@@ -72,7 +72,7 @@ function GenerateBill2() {
       bill_type: "walk_bill",
     }).toString();
 
-    window.open(`https://zahidhd.tk/zahidhd/print?${sendId2}`, "_blank");
+    window.open(`http://localhost/zhhs_soft_server/print?${sendId2}`, "_blank");
   }
 
   return (

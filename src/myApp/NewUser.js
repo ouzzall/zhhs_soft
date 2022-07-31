@@ -54,7 +54,7 @@ function NewUser() {
     formData.append("username", username);
     formData.append("password", password);
 
-    fetch("https://zahidhd.tk/zahidhd/api/users/add-user", {
+    fetch("http://localhost/zhhs_soft_server/api/users/add-user", {
       method: "POST",
       // headers: { "content-Type": "application/json" },
       body: formData,

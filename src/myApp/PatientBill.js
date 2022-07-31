@@ -37,7 +37,7 @@ function PatientBill() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/view-bill?${sendId}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/view-bill?${sendId}`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -64,7 +64,7 @@ function PatientBill() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/view-bill?${sendId}`]);
+  }, [`http://localhost/zhhs_soft_server/api/view-bill?${sendId}`]);
 
   const { borderWidth } = borders;
   const { light } = colors;
@@ -77,7 +77,7 @@ function PatientBill() {
       bill_type: "patient_bill",
     }).toString();
 
-    window.open(`https://zahidhd.tk/zahidhd/print?${sendId2}`, "_blank");
+    window.open(`http://localhost/zhhs_soft_server/print?${sendId2}`, "_blank");
 
     // console.log("patient_bill", billData, localStorage.getItem("phone"));
 
@@ -92,7 +92,7 @@ function PatientBill() {
     // // formData.append("self_medicines", selfMedList[0]);
     // // formData.append("shelf_medicines", shelfMedList[0]);
 
-    // fetch("https://zahidhd.tk/zahidhd/api/print", {
+    // fetch("http://localhost/zhhs_soft_server/api/print", {
     //   method: "POST",
     //   // headers: { "content-Type": "application/json" },
     //   body: formData,

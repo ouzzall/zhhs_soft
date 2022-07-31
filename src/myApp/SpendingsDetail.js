@@ -34,7 +34,7 @@ function SpendingsDetail() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/costs?${sendId}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/costs?${sendId}`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -61,7 +61,7 @@ function SpendingsDetail() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/costs?${sendId}`]);
+  }, [`http://localhost/zhhs_soft_server/api/costs?${sendId}`]);
 
   let cosData = "";
 

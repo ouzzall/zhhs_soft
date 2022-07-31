@@ -32,7 +32,7 @@ function Patients() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/patients`, {
+    fetch(`http://localhost/zhhs_soft_server/api/patients`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -59,7 +59,7 @@ function Patients() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/patients`]);
+  }, [`http://localhost/zhhs_soft_server/api/patients`]);
 
   let patData = "";
 
@@ -93,7 +93,7 @@ function Patients() {
         if (result.isConfirmed) {
           setIsPending(true);
           setPatientsData(null);
-          fetch(`https://zahidhd.tk/zahidhd/api/patients/delete-patient?${sendId}`, {
+          fetch(`http://localhost/zhhs_soft_server/api/patients/delete-patient?${sendId}`, {
             method: "POST",
             // headers: { "content-Type": "application/json" },
             // body: formData,

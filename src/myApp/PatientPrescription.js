@@ -41,7 +41,7 @@ function PatientPrescription() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/view-bill?${sendId}`, {
+    fetch(`http://localhost/zhhs_soft_server/api/view-bill?${sendId}`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -68,7 +68,7 @@ function PatientPrescription() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/view-bill?${sendId}`]);
+  }, [`http://localhost/zhhs_soft_server/api/view-bill?${sendId}`]);
 
   const { borderWidth } = borders;
   const { light } = colors;
@@ -89,14 +89,14 @@ function PatientPrescription() {
       bill_type: "patient_prescription",
     }).toString();
 
-    window.open(`https://zahidhd.tk/zahidhd/print?${sendId2}`, "_blank");
+    window.open(`http://localhost/zhhs_soft_server/print?${sendId2}`, "_blank");
 
     // console.log(selfMedList[0]);
     // console.log(shelfMedList[0]);
     // formData.append("self_medicines", selfMedList[0]);
     // formData.append("shelf_medicines", shelfMedList[0]);
 
-    // fetch("https://zahidhd.tk/zahidhd/api/print", {
+    // fetch("http://localhost/zhhs_soft_server/api/print", {
     //   method: "POST",
     //   // headers: { "content-Type": "application/json" },
     //   body: formData,
@@ -442,14 +442,14 @@ function PatientPrescription() {
                       <SuiBox
                         className="only_cursor"
                         component="img"
-                        src={`https://zahidhd.tk/zahidhd/public/storage/pictures/${value.report_name}`}
+                        src={`http://localhost/zhhs_soft_server/public/storage/pictures/${value.report_name}`}
                         alt="Product Image"
                         borderRadius="lg"
                         shadow="lg"
                         style={{ width: "200px" }}
                         onClick={() => {
                           window.open(
-                            `https://zahidhd.tk/zahidhd/public/storage/pictures/${value.report_name}`,
+                            `http://localhost/zhhs_soft_server/public/storage/pictures/${value.report_name}`,
                             "_blank"
                           );
                         }}

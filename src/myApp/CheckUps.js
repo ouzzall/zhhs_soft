@@ -57,7 +57,7 @@ function CheckUps() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/patient-output`, {
+    fetch(`http://localhost/zhhs_soft_server/api/patient-output`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -84,7 +84,7 @@ function CheckUps() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/patient-output`]);
+  }, [`http://localhost/zhhs_soft_server/api/patient-output`]);
 
   let useData = "";
 
@@ -113,7 +113,7 @@ function CheckUps() {
         if (result.isConfirmed) {
           setIsPending(true);
           setCheckData(null);
-          fetch(`https://zahidhd.tk/zahidhd/api/check-ups/delete?${sendId}`, {
+          fetch(`http://localhost/zhhs_soft_server/api/check-ups/delete?${sendId}`, {
             method: "POST",
             // headers: { "content-Type": "application/json" },
             // body: formData,

@@ -62,7 +62,7 @@ function MyHomeDashboard() {
   useEffect(() => {
     const abortCont = new AbortController();
 
-    fetch(`https://zahidhd.tk/zahidhd/api/my-dashboard`, {
+    fetch(`http://localhost/zhhs_soft_server/api/my-dashboard`, {
       signal: abortCont.signal,
     })
       .then((res) => {
@@ -89,7 +89,7 @@ function MyHomeDashboard() {
       });
 
     return () => abortCont.abort();
-  }, [`https://zahidhd.tk/zahidhd/api/my-dashboard`]);
+  }, [`http://localhost/zhhs_soft_server/api/my-dashboard`]);
 
   let useData = "";
   let chartData = "";
@@ -119,7 +119,7 @@ function MyHomeDashboard() {
         if (result.isConfirmed) {
           setIsPending(true);
           setCheckData(null);
-          fetch(`https://zahidhd.tk/zahidhd/api/check-ups/delete?${sendId}`, {
+          fetch(`http://localhost/zhhs_soft_server/api/check-ups/delete?${sendId}`, {
             method: "POST",
             // headers: { "content-Type": "application/json" },
             // body: formData,
